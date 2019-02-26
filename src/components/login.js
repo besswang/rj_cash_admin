@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import {
-  Button, Form, Input
-} from 'element-react';
-import './login.less'
+import { Button, Form, Input } from 'element-react';
+// import Fetch from '../../fetch/fetch'
+import history from '../routes/history'
+import '../styles/login.less'
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -66,8 +66,15 @@ class Login extends Component {
       currentIndex: id
     });
   }
+
   loginFn(e){
     e.preventDefault();
+    history.push('/home');
+    return false;
+// Fetch('http://192.168.0.199:8080/selectAdminByrole', {
+//   method:'GET',
+// })
+
     console.log(this.state.currentIndex)
     if (this.state.currentIndex===0){
       this.refs.form1.validate((valid) => {
@@ -147,5 +154,4 @@ class Login extends Component {
     )
   }
 }
-
 export default Login;
