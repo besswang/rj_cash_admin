@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import { Menu } from 'element-react';
 import { SIDE_BAR_TEXT } from '../meta/sidebarText'
 export default class Sidebar extends React.Component{
@@ -11,13 +12,15 @@ export default class Sidebar extends React.Component{
   }
   render(){
     return (
-        <Menu defaultActive="2" className="el-menu-vertical-demo" onOpen={this.onOpen.bind(this)} onClose={this.onClose.bind(this)}>
+        <Menu theme="dark" onOpen={this.onOpen.bind(this)} onClose={this.onClose.bind(this)} style={{width:230}}>
         {SIDE_BAR_TEXT.map((item,index)=>{
           return (
-            <Menu.SubMenu index={item.index} title={<span><i className="el-icon-message"></i>{item.title}</span>} key={index}>
-            {item.subMenu.map((list,key)=>{
+            <Menu.SubMenu index={item.subIndex} title={<span>{item.title}</span>} key={index}>
+            {item.menuItem.map((list,key)=>{
               return (
-                <Menu.Item index={list.index} key={key}>{list.title}</Menu.Item>
+                <Link to={`${list.path}`} key={key}>
+                  <Menu.Item index={list.itemIndex}>{list.title}</Menu.Item>
+                </Link>
               )
             })}
             </Menu.SubMenu>

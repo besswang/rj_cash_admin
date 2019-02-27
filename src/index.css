@@ -27,6 +27,10 @@ ul,li{
   margin:0;
   list-style: none;
 }
+p{
+  padding:0;
+  margin:0;
+}
 .flex{
   display: -webkit-box;
   /* Chrome 4+, Safari 3.1, iOS Safari 3.2+ */
@@ -117,4 +121,13 @@ ul,li{
   -ms-flex: 1;
   -webkit-flex: 1;
   flex: 1;
+}
+.margin_auto{
+  margin:0 auto;
+}
+.margin_left15{
+  margin-left:15px;
+}
+.bgc1{
+  background-color: #F0F2F5
 }

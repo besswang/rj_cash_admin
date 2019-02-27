@@ -69,12 +69,7 @@ class Login extends Component {
 
   loginFn(e){
     e.preventDefault();
-    history.push('/home');
-    return false;
-// Fetch('http://192.168.0.199:8080/selectAdminByrole', {
-//   method:'GET',
-// })
-
+    history.push('/');
     console.log(this.state.currentIndex)
     if (this.state.currentIndex===0){
       this.refs.form1.validate((valid) => {
