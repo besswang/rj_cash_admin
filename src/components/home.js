@@ -6,8 +6,12 @@ import Sidebar from './common/sidebar';
 import Welcome from '../components/welcome'
 // 会员管理-会员列表
 import Mlist from '../components/member/mlist'
+// 会员管理-会员列表
+import Detail from '../components/member/detail'
 // 会员管理-注册未申请
 import Apply from '../components/member/apply'
+// 会员管理-正常还款未借
+import Normal from '../components/member/normal'
 import '../styles/home.less'
 class Home extends React.Component{
 	render(){
@@ -25,7 +29,9 @@ class Home extends React.Component{
 							<Switch>
 								<Route exact path="/" component={Welcome}></Route>
 								<Route exact path="/member/mlist" component={Mlist}></Route>
+								<Route exact path="/member/mlist/detail" component={Detail}></Route>
 								<Route exact path="/member/apply" component={Apply}></Route>
+								<Route exact path="/member/normal" component={Normal}></Route>
 							</Switch>
 						</div>
 					</li>

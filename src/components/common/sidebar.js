@@ -18,8 +18,10 @@ export default class Sidebar extends React.Component{
             <Menu.SubMenu index={item.subIndex} title={<span>{item.title}</span>} key={index}>
             {item.menuItem.map((list,key)=>{
               return (
-                <Link to={`${list.path}`} key={key}>
-                  <Menu.Item index={list.itemIndex}>{list.title}</Menu.Item>
+                <Link to={`${list.path}`} key={key} style={{block:'block'}}>
+                  <Menu.Item index={list.itemIndex}>
+                    {list.title}
+                  </Menu.Item>
                 </Link>
               )
             })}

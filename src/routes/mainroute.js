@@ -6,8 +6,10 @@ class  MainRouter extends Component {
     return(
         <Switch>
           <Route exact path="/" />
-          <Route exact path="/member/l/mist"/>
-          <Route exact path="/member/l/apply"/>
+          <Route exact path="/member/mlist"/>
+          <Route exact path="/member/mlist/detail"/>
+          <Route exact path="/member/apply"/>
+          <Route exact path="/member/normal"/>
         </Switch>
     )
   }

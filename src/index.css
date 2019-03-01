@@ -17,6 +17,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+a{
+  text-decoration: none;
+}
 h1,h2,h3,h4,h5,h6{
   font-weight: normal;
   padding:0;
@@ -128,6 +131,12 @@ p{
 .margin_left15{
   margin-left:15px;
 }
+.margin_right10{
+  margin-right:10px;
+}
 .bgc1{
   background-color: #F0F2F5
+}
+.pagination-con{
+  padding-top:15px;
 }

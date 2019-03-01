@@ -13,11 +13,13 @@ export const SIDE_BAR_TEXT = [
         title: '注册未申请'
       }, {
         itemIndex: '1-3',
+        path:'/member/normal',
         title: '正常还款未借'
-      }, {
-        itemIndex: '1-4',
-        title: '全部会员'
-      }
+      },
+      // {
+      //   itemIndex: '1-4',
+      //   title: '全部会员'
+      // }
     ]
   }, {
     subIndex: '2',

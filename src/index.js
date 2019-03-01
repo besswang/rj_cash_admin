@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'element-theme-default';
 import './index.css';
+import './mock/mock';
 // import App from './App';
 // import Login from './components/login'
 import SetRouter from './routes/index'
