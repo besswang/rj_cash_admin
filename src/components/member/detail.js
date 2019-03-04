@@ -1,5 +1,6 @@
 import React from 'react';
 import {Breadcrumb} from 'element-react'
+import {Link} from 'react-router-dom';
 class Detail extends React.Component{
 	constructor(props){
 		super(props);
@@ -11,8 +12,12 @@ class Detail extends React.Component{
 		return(
 			<div>
 				<Breadcrumb separator="/">
-					<Breadcrumb.Item>会员管理</Breadcrumb.Item>
-					<Breadcrumb.Item>会员列表</Breadcrumb.Item>
+					{/* <Breadcrumb.Item>会员管理</Breadcrumb.Item> */}
+					<Breadcrumb.Item>
+						<Link to='/member/mlist'>
+							会员列表
+						</Link>
+					</Breadcrumb.Item>
 					<Breadcrumb.Item>会员详情</Breadcrumb.Item>
 				</Breadcrumb>
 			</div>
