@@ -45,3 +45,76 @@ export const NORMAL_COLUMNS = [
     prop: "num"
   },
 ]
+export const TODAY_DITCH = [
+  {
+    type: 'index'
+  }, {
+    label: "日期",
+    prop: "time",
+    width: 180
+  }, {
+    label: "注册人数",
+    prop: "num"
+  }, {
+    label: "个人信息",
+    prop: "self"
+  }, {
+    label: "身份认证",
+    prop: "approve"
+  }, {
+    label: "手机认证",
+    prop: "tel"
+  }, {
+    label: "银行认证",
+    prop: "bank"
+  }, {
+    label: "申请单数",
+    prop: "applynum"
+  }, {
+    label: "申请率",
+    prop: "apply"
+  }, {
+    label: "放款人数",
+    prop: "moneynum"
+  }, {
+    label: "放款率",
+    prop: "money"
+  }
+]
+export const ALL_DITCH = [{
+    type: 'index'
+  }, {
+    label: "渠道名称",
+    prop: "daiName"
+  }, {
+    label: "日注册量",
+    prop: "dayregister"
+  }, {
+    label: "日申请量",
+    prop: "apply"
+  }, {
+    label: "日申请率",
+    prop: "dayapplycount"
+  }, {
+    label: "日下单量",
+    prop: "dayorder"
+  }, {
+    label: "日转化率",
+    prop: "bank"
+  }, {
+    label: "总注册量",
+    prop: "zregister"
+  }, {
+    label: "总申请量",
+    prop: "zapply"
+  }, {
+    label: "总申请率",
+    prop: "applycount"
+  }, {
+    label: "总下单量",
+    prop: "zloanNum"
+  }, {
+    label: "总转化率",
+    prop: "zloanNumcount"
+  }
+]

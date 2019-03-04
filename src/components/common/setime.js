@@ -1,7 +1,7 @@
 // 开始-结束时间组建
-import React from 'react';
+import React,{ Component } from 'react';
 import { DateRangePicker } from 'element-react'
-export default class SetEndTime extends React.Component {
+export default class SetEndTime extends Component {
 	constructor(props) {
 	  super(props)
 	  this.state = {

@@ -1,7 +1,7 @@
-import React from 'react';
+import React,{ Component } from 'react';
 import {Breadcrumb} from 'element-react'
 import {Link} from 'react-router-dom';
-class Detail extends React.Component{
+class Detail extends Component{
 	constructor(props){
 		super(props);
 		this.state = {

@@ -26,6 +26,7 @@ export const SIDE_BAR_TEXT = [
     title: '报表统计',
     menuItem: [{
         itemIndex: '2-1',
+        path:'/statistics/ditch',
         title: '渠道统计'
       }, {
         itemIndex: '2-2',

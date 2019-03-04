@@ -10,6 +10,8 @@ class  MainRouter extends Component {
           <Route exact path="/member/mlist/detail"/>
           <Route exact path="/member/apply"/>
           <Route exact path="/member/normal"/>
+          <Route exact path = "/statistics/ditch"/>
+          <Route exact path = "/statistics/ditch/ditchinside"/>
         </Switch>
     )
   }

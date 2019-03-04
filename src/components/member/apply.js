@@ -1,9 +1,9 @@
-import React from 'react';
+import React,{ Component } from 'react';
 import {Form,Button,Table,Pagination} from 'element-react'
 import Time from '../common/setime'
 import { APPLY_COLUMNS } from '../meta/columns'
 
-class Apply extends React.Component{
+class Apply extends Component{
 	constructor(props){
 		super(props);
 		this.state = {

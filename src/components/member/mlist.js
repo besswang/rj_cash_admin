@@ -1,9 +1,9 @@
-import React from 'react';
-import { Input,Form,Button,Table,MessageBox,Message,Pagination } from 'element-react';
+import React,{ Component } from 'react';
+import { Input,Form,Button,Table,MessageBox,Message,Pagination,Select } from 'element-react';
 import Time from '../common/setime'
 import {Link} from 'react-router-dom';
-// import { MLIST_SELECT } from '../meta/select'
-class Mlist extends React.Component{
+import { MLIST_SELECT } from '../meta/select'
+class Mlist extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -178,8 +178,8 @@ class Mlist extends React.Component{
 		return (
 			<div>
 				<Form inline={true}>
-					{/* <Form.Item>
-						<Select value={this.state.value} clearable={true} placeholder="请选择类型">
+					<Form.Item>
+						<Select value={this.state.value} clearable={true} placeholder="搜索类型">
 							{
 								MLIST_SELECT.map(el => {
 									return <Select.Option key={el.value} label={el.label} value={el.value} />
@@ -189,8 +189,8 @@ class Mlist extends React.Component{
 					</Form.Item>
 					<Form.Item>
 						<Input placeholder="请输入内容" />
-					</Form.Item> */}
-					<Form.Item>
+					</Form.Item>
+					{/* <Form.Item>
 						<Input placeholder="请输入会员姓名" />
 					</Form.Item>
 					<Form.Item>
@@ -198,7 +198,7 @@ class Mlist extends React.Component{
 					</Form.Item>
 					<Form.Item>
 						<Input placeholder="请输入身份证号" />
-					</Form.Item>
+					</Form.Item> */}
 					<Form.Item>
 						<Time></Time>
 					</Form.Item>

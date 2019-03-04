@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ Component } from 'react';
 // 引入 ECharts 主模块
 var echarts = require('echarts');
 // import echarts from 'echarts/lib/echarts';
@@ -7,7 +7,7 @@ var echarts = require('echarts');
 // import 'echarts/lib/component/tooltip';
 // import 'echarts/lib/component/title';
 
-export default class Echarts extends React.Component {
+export default class Echarts extends Component {
     componentDidMount() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('main'));

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, Input } from 'element-react';
+import { Redirect } from 'react-router-dom'
 // import Fetch from '../../fetch/fetch'
 import history from '../routes/history'
 import '../styles/login.less'
@@ -7,6 +8,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loginSuccess:false,//登陆状态
       form1: {
         username: '',
         password: '',
@@ -69,13 +71,14 @@ class Login extends Component {
 
   loginFn(e){
     e.preventDefault();
-    history.push('/');
+    // history.push('/');
     console.log(this.state.currentIndex)
     if (this.state.currentIndex===0){
       this.refs.form1.validate((valid) => {
         if (valid) {
-          alert('submit!');
-          console.log(this.state.form1)
+          // alert('submit!');
+          // console.log(this.state.form1)
+          history.push('/');
         } else {
           console.log('error submit!!');
           return false;
@@ -107,46 +110,50 @@ class Login extends Component {
     let that = this;
     let show1 = this.state.currentIndex === 0 ? 'block' : 'none';
     let show2 = this.state.currentIndex === 1 ? 'block' : 'none';
-    return (
-      <div className="login-con">
-        <div className="form-con">
-          <ul className="tab-con flex flex-direction_row">
-            {this.state.tab.map((item,index) => {
-              return (
-                <li className={["flex_auto",index===this.state.currentIndex ? "active":""].join(' ')} key={index} onClick={this.tabChoiced.bind(that,item.id)}>{item.text}</li>
-              )
-            })}
-          </ul>
-          <Form style={{"display":show1}} ref="form1" model={this.state.form1} rules={this.state.rules1}>
-            <Form.Item prop="username">
-              <Input value={this.state.form1.username} placeholder="请输入用户名"
-              onChange={this.onChange.bind(this, 'username')}></Input>
-            </Form.Item>
-            <Form.Item prop="password">
-              <Input value={this.state.form1.password} placeholder="请输入密码"
-              onChange={this.onChange.bind(this, 'password')}></Input>
-            </Form.Item>
-          </Form>
-          <Form style={{"display":show2}} ref="form2" model={this.state.form2} rules={this.state.rules2}>
-            <Form.Item prop="tel">
-              <Input value={this.state.form2.tel} placeholder="请输入手机号"
-              onChange={this.onChange.bind(this, 'tel')}></Input>
-            </Form.Item>
-            <div className="flex flex-direction_row">
-            <Form.Item prop="code">
-              <Input value={this.state.form2.code} placeholder="请输入验证码"
-              onChange={this.onChange.bind(this, 'code')}></Input>
-            </Form.Item>
-            <Form.Item className="flex_1">
-              <Button type="text">获取验证码</Button>
-            </Form.Item>
-            </div>
-          </Form>
-          <Button type="primary" size="large" className="login-btn"
-                    onClick={this.loginFn.bind(this)}>登陆</Button>
+    if (this.state.loginSuccess) {
+      return (<Redirect to='/' />)
+    } else {
+      return (
+        <div className="login-con">
+          <div className="form-con">
+            <ul className="tab-con flex flex-direction_row">
+              {this.state.tab.map((item, index) => {
+                return (
+                  <li className={["flex_auto", index === this.state.currentIndex ? "active" : ""].join(' ')} key={index} onClick={this.tabChoiced.bind(that, item.id)}>{item.text}</li>
+                )
+              })}
+            </ul>
+            <Form style={{ "display": show1 }} ref="form1" model={this.state.form1} rules={this.state.rules1}>
+              <Form.Item prop="username">
+                <Input value={this.state.form1.username} placeholder="请输入用户名"
+                  onChange={this.onChange.bind(this, 'username')}></Input>
+              </Form.Item>
+              <Form.Item prop="password">
+                <Input value={this.state.form1.password} placeholder="请输入密码"
+                  onChange={this.onChange.bind(this, 'password')}></Input>
+              </Form.Item>
+            </Form>
+            <Form style={{ "display": show2 }} ref="form2" model={this.state.form2} rules={this.state.rules2}>
+              <Form.Item prop="tel">
+                <Input value={this.state.form2.tel} placeholder="请输入手机号"
+                  onChange={this.onChange.bind(this, 'tel')}></Input>
+              </Form.Item>
+              <div className="flex flex-direction_row">
+                <Form.Item prop="code">
+                  <Input value={this.state.form2.code} placeholder="请输入验证码"
+                    onChange={this.onChange.bind(this, 'code')}></Input>
+                </Form.Item>
+                <Form.Item className="flex_1">
+                  <Button type="text">获取验证码</Button>
+                </Form.Item>
+              </div>
+            </Form>
+            <Button type="primary" size="large" className="login-btn"
+              onClick={this.loginFn.bind(this)}>登陆</Button>
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
 }
 export default Login;

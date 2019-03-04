@@ -1,5 +1,5 @@
-import React from 'react';
-import {Route, Switch} from 'react-router-dom';
+import React,{ Component } from 'react';
+import {Router, Route, Switch} from 'react-router-dom';
 import {} from 'element-react';
 import Header from './common/header';
 import Sidebar from './common/sidebar';
@@ -12,8 +12,13 @@ import Detail from '../components/member/detail'
 import Apply from '../components/member/apply'
 // 会员管理-正常还款未借
 import Normal from '../components/member/normal'
+// 报表统计-渠道统计
+import Ditch from '../components/statistics/ditch'
+// 报表统计-渠道统计-当天/总转化/渠道费用
+import Ditchinside from '../components/statistics/ditchinside'
+import history from '../routes/history'
 import '../styles/home.less'
-class Home extends React.Component{
+class Home extends Component{
 	render(){
 		return(
 			<div className="flex flex-direction_column">
@@ -26,13 +31,17 @@ class Home extends React.Component{
 					</li>
 					<li className="main">
 						<div className="content">
-							<Switch>
-								<Route exact path="/" component={Welcome}></Route>
-								<Route exact path="/member/mlist" component={Mlist}></Route>
-								<Route exact path="/member/mlist/detail" component={Detail}></Route>
-								<Route exact path="/member/apply" component={Apply}></Route>
-								<Route exact path="/member/normal" component={Normal}></Route>
-							</Switch>
+							<Router history={history}>
+								<Switch>
+									<Route exact path="/" component={Welcome}/>
+									<Route exact path="/member/mlist" component={Mlist}/>
+									<Route exact path="/member/mlist/detail" component={Detail}/>
+									<Route exact path="/member/apply" component={Apply}/>
+									<Route exact path="/member/normal" component={Normal}/>
+									<Route exact path="/statistics/ditch" component={Ditch}/>
+									<Route exact path="/statistics/ditch/ditchinside" component={Ditchinside}/>
+								</Switch>
+							</Router>
 						</div>
 					</li>
 				</ul>

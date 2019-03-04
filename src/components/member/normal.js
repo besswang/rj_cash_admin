@@ -1,9 +1,9 @@
-import React from 'react';
-import {Form,Button,Table,Pagination} from 'element-react'
+import React,{ Component } from 'react';
+import {Form,Button,Table,Pagination,Select,Input} from 'element-react'
 import Time from '../common/setime'
 import { NORMAL_COLUMNS } from '../meta/columns'
-
-class Apply extends React.Component{
+import { MLIST_SELECT } from '../meta/select'
+class Apply extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
@@ -26,6 +26,18 @@ class Apply extends React.Component{
 		return(
 			<div>
 				<Form inline={true}>
+									<Form.Item>
+						<Select value={this.state.value} clearable={true} placeholder="搜索类型">
+							{
+								MLIST_SELECT.map(el => {
+									return <Select.Option key={el.value} label={el.label} value={el.value} />
+								})
+							}
+						</Select>
+					</Form.Item>
+					<Form.Item>
+						<Input placeholder="请输入内容" />
+					</Form.Item>
 					<Form.Item label="注册时间">
 						<Time></Time>
 					</Form.Item>

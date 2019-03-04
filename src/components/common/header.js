@@ -1,6 +1,6 @@
-import React from 'react';
+import React,{ Component } from 'react';
 import '../../styles/header.less';
-export default class Header extends React.Component{
+export default class Header extends Component{
   render() {
     return (
       < ul className = "header-ul flex flex-direction_row justify-content_flex-justify align-items_center" >
