@@ -2,35 +2,30 @@ import React, {Component} from 'react';
 import {
   Pagination,
   Tabs,
-  Breadcrumb
+  Breadcrumb,
+  Table
 } from 'element-react'
 import {Link} from 'react-router-dom'
 // import Time from '../common/setime'
 // import Tabtable from '../common/tabtable'
-import Todaytable from '../common/ditchTodayTable'
-import Alltable from '../common/ditchAllTable'
-import Costtable from '../common/ditchCostTable'
+import {TODAY_DITCH,ALL_DITCH,COST_DITCH} from '../meta/columns'
 class Ditchinside extends Component {
   constructor(props){
     super(props);
     this.state = {
       activeName:'1',
+      columns:TODAY_DITCH,
       data: [{
-        daiName: 'a',
-        register: 10,
-        person: 4,
-        idcard: 20,
-        phone: 30,
-        bank: 40,
-        loanNum: 12
-      }, {
-        daiName: 'b',
-        register: 10,
-        person: 4,
-        idcard: 20,
-        phone: 30,
-        bank: 24,
-        apply: 6
+        daiName: 'dkfj',
+        num: '11',
+        self: '457485',
+        approve: '343',
+        tel: 58457,
+        bank: 787,
+        applynum: 5475,
+        apply: 84574,
+        moneynum: 475,
+        money: 78
       }],
       tabValue:null,
       total:15,
@@ -45,29 +40,24 @@ class Ditchinside extends Component {
     switch(e.props.name){
       case '1':
       this.setState({
+        columns:TODAY_DITCH,
         data: [{
-        daiName: 'a',
-          register: 10,
-          person: 4,
-          idcard: 20,
-          phone: 30,
-          bank: 40,
-          apply: 2,
-          loanNum: 12
-        }, {
-          daiName: 'b',
-          register: 10,
-          person: 4,
-          idcard: 20,
-          phone: 30,
-          bank: 40,
-          apply: 2,
-          loanNum: 12
+          daiName: 'dkfj',
+          num: '11',
+          self: '457485',
+          approve: '343',
+          tel: 58457,
+          bank: 787,
+          applynum: 5475,
+          apply: 84574,
+          moneynum: 475,
+          money: 78
         }]
       });
       break;
       case '2':
       this.setState({
+        columns:ALL_DITCH,
         data: [{
           daiName: '2345',
           dayregister: '11',
@@ -83,8 +73,9 @@ class Ditchinside extends Component {
         }]
       });
       break;
-      default :
+      case '3':
        this.setState({
+        columns:COST_DITCH,
         data: [{
           daiName: '2345',
           dayregister: '11',
@@ -96,6 +87,7 @@ class Ditchinside extends Component {
           addupPrice: '84574.00'
         }]
        });
+       break;
     }
   }
   render(){
@@ -118,16 +110,17 @@ class Ditchinside extends Component {
 					<Breadcrumb.Item>当天</Breadcrumb.Item>
 				</Breadcrumb>
         <Tabs activeName={this.state.activeName} onTabClick={this.tabChange}>
-          <Tabs.Pane label="当天" name='1'>
-            <Todaytable data={this.state.data}/>
-          </Tabs.Pane>
-          <Tabs.Pane label="总转化" name='2'>
-            <Alltable data={this.state.data}/>
-          </Tabs.Pane>
-          <Tabs.Pane label="渠道费用" name='3'>
-            <Costtable data={this.state.data}/>
-          </Tabs.Pane>
+          <Tabs.Pane label="当天" name='1'></Tabs.Pane>
+          <Tabs.Pane label="总转化" name='2'>总转化</Tabs.Pane>
+          <Tabs.Pane label="渠道费用" name='3'>渠道费用</Tabs.Pane>
         </Tabs>
+				<Table
+					style={{width: '100%'}}
+					columns={this.state.columns}
+					data={this.state.data}
+					border={true}>
+					</Table>
+          {/* <Tabtable tabvalue={this.state.activeName}></Tabtable> */}
           <div className="pagination-con flex flex-direction_row justify-content_flex-center">
 						<Pagination
 						layout="total, sizes, prev, pager, next, jumper"

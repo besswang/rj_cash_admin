@@ -49,9 +49,8 @@ export const TODAY_DITCH = [
   {
     type: 'index'
   }, {
-    label: "日期",
-    prop: "time",
-    width: 180
+    label: "渠道名称",
+    prop: "daiName"
   }, {
     label: "注册人数",
     prop: "num"
@@ -116,5 +115,54 @@ export const ALL_DITCH = [{
   }, {
     label: "总转化率",
     prop: "zloanNumcount"
+  }
+]
+export const COST_DITCH = [
+  {
+    type: 'index'
+  }, {
+    label: "名称",
+    prop: "daiName"
+  }, {
+    label: "日注册量",
+    prop: "dayregister"
+  }, {
+    label: "日结算量",
+    prop: "daynum"
+  }, {
+    label: "累计结算量",
+    prop: "settlementAll"
+  }, {
+    label: "推广方式",
+    prop: "channelWay"
+  }, {
+    label: "结算价格",
+    prop: "settlementPrice"
+  }, {
+    label: "日结算金额",
+    prop: "dayPrice"
+  }, {
+    label: "累计结算金额",
+    prop: "addupPrice"
+  }
+]
+export const OVERDUE = [
+  {
+    type: 'index'
+  }, {
+    label: "日期",
+    prop: "theDate"
+  }, {
+    label: "应还单数",
+    prop: "orderNumber"
+  }, {
+    label: "应还金额",
+    prop: "orderMoney"
+  }, {
+    label: "已还单数",
+    prop: "newOrderNumber"
+  }, {
+    label: "已还金额",
+    prop: "newOrderMoney"
   }
 ]

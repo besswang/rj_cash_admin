@@ -30,12 +30,15 @@ export const SIDE_BAR_TEXT = [
         title: '渠道统计'
       }, {
         itemIndex: '2-2',
+        path: '/statistics/overdue',
         title: '逾期统计'
       }, {
         itemIndex: '2-3',
+        path: '/statistics/loan',
         title: '放款统计'
       }, {
         itemIndex: '2-4',
+        path: '/statistics/repayment/1',
         title: '还款统计'
       }, {
         itemIndex: '2-5',

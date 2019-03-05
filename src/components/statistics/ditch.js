@@ -1,7 +1,9 @@
+// 报表统计-渠道统计
 import React, {Component} from 'react';
 import {Table, Button, Form, Pagination } from 'element-react'
 import {Link} from 'react-router-dom';
 import Time from '../common/setime'
+import num from '../../global/num'
 class Ditch extends Component {
   constructor(props){
     super(props)
@@ -12,38 +14,54 @@ class Ditch extends Component {
       currentPage:1,
       columns:[
         {
-						type: 'index'
+					type: 'index'
 				}, {
 					label: "日期",
-          prop: "time",
-          width:180
+          prop: "sjDate",
+          width:150
 				}, {
 				  label: "注册人数",
-				  prop: "num"
+				  prop: "register"
 				}, {
 				  label: "个人信息",
-				  prop: "self"
+				  prop: "person"
 				}, {
 				  label: "身份认证",
-				  prop: "approve"
+				  prop: "idcard"
 				}, {
 				  label: "手机认证",
-				  prop: "tel"
+				  prop: "phone"
 				}, {
 				  label: "银行认证",
 				  prop: "bank"
 				}, {
 				  label: "申请单数",
-				  prop: "applynum"
+          prop: "apply"
 				}, {
-				  label: "申请率",
-				  prop: "apply"
+          label: "申请率",
+          render: (row) => {
+            // 申请率 = 申请单数/注册人数
+            if (row.apply && row.register){
+              let applyConversion = parseInt(row.apply) / parseInt(row.register)
+              return (num.toDecimal(applyConversion))
+            }else{
+              return ('0.00%')
+            }
+          }
 				}, {
 				  label: "放款人数",
-				  prop: "moneynum"
+				  prop: "loanNum"
 				}, {
 				  label: "放款率",
-				  prop: "money"
+          render: (row) => {
+            // 放款率 = 放款人数/注册人数
+            if (row.loanNum && row.register) {
+              let loanConversion = parseInt(row.loanNum) / parseInt(row.register)
+              return (num.toDecimal(loanConversion))
+            } else {
+              return ('0.00%')
+            }
+          }
 				}, {
 				  label: "操作",
           prop: "operate",
@@ -60,7 +78,7 @@ class Ditch extends Component {
       ],
       data: [
         {
-          time: '2019-12-22 12:23:33',
+          time: '2019-12-22',
           num: '11',
           self: '457485',
           approve: '343',

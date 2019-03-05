@@ -16,6 +16,15 @@ import Normal from '../components/member/normal'
 import Ditch from '../components/statistics/ditch'
 // 报表统计-渠道统计-当天/总转化/渠道费用
 import Ditchinside from '../components/statistics/ditchinside'
+// 报表统计-逾期统计
+import Overdue from '../components/statistics/overdue'
+// 报表统计-放款统计
+import Loan from '../components/statistics/loan'
+// 报表统计-还款统计
+import Repayment from '../components/statistics/repayment'
+// 报表统计-还款统计-查看
+import Repayinside from '../components/statistics/repayinside'
+
 import history from '../routes/history'
 import '../styles/home.less'
 class Home extends Component{
@@ -40,6 +49,10 @@ class Home extends Component{
 									<Route exact path="/member/normal" component={Normal}/>
 									<Route exact path="/statistics/ditch" component={Ditch}/>
 									<Route exact path="/statistics/ditch/ditchinside" component={Ditchinside}/>
+									<Route exact path="/statistics/overdue" component={Overdue}/>
+									<Route exact path="/statistics/loan" component={Loan}/>
+									<Route exact path="/statistics/repayment/:tabName" component={Repayment}/>
+									<Route exact path="/statistics/repayment/repayinside/:tabName/:id" component={Repayinside}/>
 								</Switch>
 							</Router>
 						</div>
