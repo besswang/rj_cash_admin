@@ -42,12 +42,15 @@ export const SIDE_BAR_TEXT = [
         title: '还款统计'
       }, {
         itemIndex: '2-5',
+        path: '/statistics/consume',
         title: '消耗费用'
       }, {
         itemIndex: '2-6',
+        path: '/statistics/turnover',
         title: '进出账'
       }, {
         itemIndex: '2-7',
+        path: '/statistics/look',
         title: '数据看版'
       }
     ]
@@ -56,6 +59,7 @@ export const SIDE_BAR_TEXT = [
     title: '借款管理',
     menuItem: [{
       itemIndex: '3-1',
+      path: '/borrow/audit',
       title: '待审核'
     }, {
       itemIndex: '3-2',

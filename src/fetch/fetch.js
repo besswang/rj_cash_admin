@@ -1,8 +1,8 @@
-require('whatwg-fetch');
-require('es6-promise').polyfill();
-// 前置拼接url,process.env.luoHost取的是config--dev.env.js--tbtHost
-// const luoHost = process.env.luoHost && process.env.luoHost.url
-// const luoHost = '/luoye_admin/'
+// 处理promise和fetch的兼容性以及引入
+require('es6-promise').polyfill()
+require('whatwg-fetch')
+//前置拼接url,process.env.tbtHost取的是config--dev.env.js--tbtHost
+// const tHost = process.env.tbtHost && process.env.tbtHost.url;
 // 自定义headers
 const headers = {
   'Accept': 'application/json; version=3.13.0'
@@ -20,9 +20,9 @@ const formatUrl = obj => {
  */
 const Fetch = (url, option = {}) => {
   // 设置请求超时的时间，默认10秒
-  const timeout = option.timeout || 30000
+  const timeout = option.timeout || 10000
   option.headers = option.headers || headers
-  option.headers['token'] = `${window.sessionStorage.getItem('token')}`
+  option.headers['token'] = `${window.localStorage.getItem('token')}`;
   option.method = (option.method || 'get').toLocaleLowerCase()
   // 格式化get请求的数据(fetch的get请求需要需要将参数拼接到url后面)
   if (option.method === 'get') {
@@ -34,10 +34,15 @@ const Fetch = (url, option = {}) => {
   // 对非get类请求头和请求体做处理
   if (option.method === 'post' || option.method === 'put' || option.method === 'delete') {
     option.headers['Content-Type'] = option.headers['Content-Type'] || 'application/json'
+
+    // 非get类请求传参时，需要将参数挂在body上
     option.body = JSON.stringify(option.body)
+
+    // 根据后台要求，如果有时候是java请求会用qs转
+    // option.body = qs.stringify(option.data)
   }
   delete option.data
-  // return addTimeout(fetch(luoHost + url, option), timeout)
+  // return addTimeout(fetch(tHost + url, option), timeout)
   return addTimeout(fetch(url, option), timeout)
 }
 
@@ -58,17 +63,14 @@ function addTimeout(fetchPromise, timeout) {
   // 请求超时的Promise
   var timeoutPromise = new Promise((resolve, reject) => {
     timeoutFn = function () {
-      reject(new Error('请求超时，请重试'))
-      // reject({
-      //   code: 'timeOut',
-      //   text: '请求超时，请重试'
-      // })
+      reject({
+        code: 'timeOut',
+        text: '请求超时，请重试'
+      })
     }
   })
 
   // 声明Promise.race
-  // 类似于Promise.all(), 区别在于 它有任意一个返回成功后， 就算完成， 但是 进程不会立即停止
-  // 常见使用场景： 把异步操作和定时器放到一起， 如果定时器先触发， 认为超时， 告知用户
   const racePromise = Promise.race([
     fetchPromise,
     timeoutPromise
@@ -91,27 +93,15 @@ function addTimeout(fetchPromise, timeout) {
         // 将状态码添加到返回结果中，以备后用
         response.status = status
         // 如果返回码在300到900之间，将以错误返回，如果需要对错误统一处理，可以放在下面判断中
-        if (response.code === 401) {
-          vm.$message({
-            message: '请登陆',
-            type: 'warning'
-          })
-          setTimeout(() => {
-            vm.$router.push('/')
-          }, 800)
-          return false
-        } else if (/^[3-9]\d{2}$/.test(response.status) || !response.success || response.code === 400) {
-          /* global vm */
-          vm.$message({
-            message: response.msg,
-            type: 'warning'
-          })
+        if (/^[3-9]\d{2}$/.test(response.status) || !response.success || response.code === 400) {
+          // vm.$vux.toast.text(response.msg, 'top')
           reject(response)
-          return false
+          return false;
         } else {
           // 否则以正确值返回
           resolve(response)
         }
+
       })
       .catch(error => {
         // 请求出错则报错 Fetch Error: ***

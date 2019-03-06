@@ -24,6 +24,14 @@ import Loan from '../components/statistics/loan'
 import Repayment from '../components/statistics/repayment'
 // 报表统计-还款统计-查看
 import Repayinside from '../components/statistics/repayinside'
+// 报表统计-消耗费用
+import Consume from '../components/statistics/consume'
+// 报表统计-进出账
+import Turnover from '../components/statistics/turnover'
+// 报表统计-数据看版
+import Look from '../components/statistics/look'
+// 借款管理-待审核
+import Audit from '../components/borrow/audit'
 
 import history from '../routes/history'
 import '../styles/home.less'
@@ -53,6 +61,10 @@ class Home extends Component{
 									<Route exact path="/statistics/loan" component={Loan}/>
 									<Route exact path="/statistics/repayment/:tabName" component={Repayment}/>
 									<Route exact path="/statistics/repayment/repayinside/:tabName/:id" component={Repayinside}/>
+									<Route exact path="/statistics/consume" component={Consume}/>
+									<Route exact path="/statistics/turnover" component={Turnover}/>
+									<Route exact path="/statistics/look" component={Look}/>
+									<Route exact path="/borrow/audit" component={Audit}/>
 								</Switch>
 							</Router>
 						</div>

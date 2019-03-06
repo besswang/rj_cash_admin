@@ -13,3 +13,15 @@ export const MLIST_SELECT = [
     label: '身份证号'
   }
 ]
+export const AUDIT_SELECT = [
+  {
+    value: '1',
+    label: '客户姓名'
+  }, {
+    value: '2',
+    label: '手机号码'
+  }, {
+    value: '3',
+    label: '身份证号'
+  }
+]

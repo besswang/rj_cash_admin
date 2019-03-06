@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Form, Input } from 'element-react';
 import { Redirect } from 'react-router-dom'
-import api from '../api/index'
-// import http from '../axios/index'
+// import api from '../api/index'
+import http from '../axios/index'
 import history from '../routes/history'
 import '../styles/login.less'
 class Login extends Component {
@@ -69,17 +69,16 @@ class Login extends Component {
       currentIndex: id
     });
   }
+  async axiosFn(){
+    const res = await http.get('/globalconfig/selectGlobalconfig')
+    console.log(res)
+  }
   loginFn(e){
     e.preventDefault();
     // history.push('/');
-    // api.a().then((res) => {
-    //   console.log("1")
-    // }).catch((res) => {
-    //   console.log("2")
-    // })
-
-
-    // this.axiosFn()
+    // let x = api.a()
+    // console.log(x)
+    this.axiosFn()
     return false
     console.log(this.state.currentIndex)
     if (this.state.currentIndex===0){

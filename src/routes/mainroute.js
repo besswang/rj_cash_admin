@@ -16,6 +16,10 @@ class  MainRouter extends Component {
           <Route exact path = "/statistics/loan"/>
           <Route exact path = "/statistics/repayment"/>
           <Route exact path = "/statistics/repayment/repayinside"/>
+          <Route exact path = "/statistics/consume"/>
+          <Route exact path = "/statistics/turnover"/>
+          <Route exact path = "/statistics/look"/>
+          <Route exact path = "/borrow/audit"/>
         </Switch>
     )
   }

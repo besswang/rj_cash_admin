@@ -80,7 +80,8 @@ export const TODAY_DITCH = [
     prop: "money"
   }
 ]
-export const ALL_DITCH = [{
+export const ALL_DITCH = [
+  {
     type: 'index'
   }, {
     label: "渠道名称",
@@ -164,5 +165,75 @@ export const OVERDUE = [
   }, {
     label: "已还金额",
     prop: "newOrderMoney"
+  }
+]
+export const CONSUME = [
+  {
+    type: 'index'
+  }, {
+    label: "日期",
+    prop: "sj"
+  }, {
+    label: "总费用",
+    prop: "allMoney"
+  }, {
+    label: "短信条数",
+    prop: "messageNum"
+  }, {
+    label: "短信金额",
+    prop: "messageMoney"
+  }, {
+    label: "身份人数",
+    prop: "idcardNum"
+  }, {
+    label: "身份金额",
+    prop: "idcardMoney"
+  }, {
+    label: "手机人数",
+    prop: "phoneNum"
+  }, {
+    label: "手机金额",
+    prop: "phoneMoney"
+  }, {
+    label: "风控人数",
+    prop: "managementNum"
+  }, {
+    label: "风控金额",
+    prop: "managementMoney"
+  }
+]
+export const TURNOVER = [
+  {
+    type: 'index'
+  }, {
+    label: "进账日期",
+    prop: "sj"
+  }, {
+    label: "总进账",
+    prop: "allIncome"
+  }, {
+    label: "微信",
+    prop: ""
+  }, {
+    label: "支付宝",
+    prop: "alipayIncome"
+  }, {
+    label: "银联收款",
+    prop: "bankIncome"
+  }, {
+    label: "线下微信",
+    prop: "xxwxIncome"
+  }, {
+    label: "线下支付宝",
+    prop: "xxAlipayIncome"
+  }, {
+    label: "线下银联",
+    prop: "xxybank"
+  }, {
+    label: "出账日期",
+    prop: "theDate"
+  }, {
+    label: "银联出账",
+    prop: "bankExpend"
   }
 ]
