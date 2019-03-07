@@ -1,6 +1,6 @@
 // 报表统计-放款统计
-import React, {Component} from 'react';
-import {Button, Form, Pagination } from 'element-react'
+import React, { Component } from 'react'
+import { Button, Form, Pagination } from 'element-react'
 import Time from '../common/setime'
 import Loantable from '../common/loanTable'
 class Ditch extends Component {
@@ -9,7 +9,7 @@ class Ditch extends Component {
     this.state = {
       total:15,
       pageSize:5,
-      pageSizes:[5,10,15],
+      pageSizes:[ 5, 10, 15 ],
       currentPage:1,
       data: [
         {
@@ -24,22 +24,23 @@ class Ditch extends Component {
   render(){
     return (
       <div>
-      	<Form inline={true}>
-					<Form.Item>
-            <Time></Time>
+        <Form inline>
+          <Form.Item>
+            <Time />
           </Form.Item>
           <Form.Item>
             <Button nativeType="submit" type="primary">搜索</Button>
           </Form.Item>
         </Form>
-        <Loantable data={this.state.data}/>
+        <Loantable data={ this.state.data } />
         <div className="pagination-con flex flex-direction_row justify-content_flex-center">
           <Pagination
           layout="total, sizes, prev, pager, next, jumper"
-          total={this.state.total}
-          pageSizes={this.state.pageSizes}
-          pageSize={this.state.pageSize}
-          currentPage={this.state.currentPage}/>
+          total={ this.state.total }
+          pageSizes={ this.state.pageSizes }
+          pageSize={ this.state.pageSize }
+          currentPage={ this.state.currentPage }
+          />
         </div>
       </div>
     )

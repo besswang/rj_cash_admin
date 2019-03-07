@@ -20,7 +20,6 @@
     "element-react": "^1.4.32",
     "element-theme-default": "^1.4.13",
     "es6-promise": "^4.2.6",
-    "eslint": "5.12.0",
     "eslint-config-react-app": "^3.0.7",
     "eslint-loader": "2.1.1",
     "eslint-plugin-flowtype": "2.50.1",
@@ -45,12 +44,15 @@
     "postcss-loader": "3.0.0",
     "postcss-preset-env": "6.5.0",
     "postcss-safe-parser": "4.0.1",
+    "prop-types": "^15.7.2",
     "qs": "^6.6.0",
     "react": "^16.8.3",
     "react-app-polyfill": "^0.2.1",
     "react-dev-utils": "^7.0.3",
     "react-dom": "^16.8.3",
+    "react-redux": "^6.0.1",
     "react-router": "^4.3.1",
+    "redux": "^4.0.1",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.1",
@@ -68,7 +70,108 @@
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "parser": "babel-eslint",
+    "plugins": [
+      "react"
+    ],
+    "rules": {
+      "no-multi-spaces": 1,
+      "react/jsx-space-before-closing": 1,
+      "jsx-quotes": 1,
+      "react/jsx-closing-bracket-location": 1,
+      "react/jsx-boolean-value": 1,
+      "react/no-string-refs": 1,
+      "react/self-closing-comp": 1,
+      "react/jsx-no-bind": "off",
+      "react/sort-comp": 1,
+      "react/jsx-pascal-case": 1,
+      "no-console": "off",
+      "space-in-parens": [
+        0,
+        "always"
+      ],
+      "template-curly-spacing": [
+        1,
+        "always"
+      ],
+      "array-bracket-spacing": [
+        1,
+        "always"
+      ],
+      "object-curly-spacing": [
+        1,
+        "always"
+      ],
+      "computed-property-spacing": [
+        1,
+        "always"
+      ],
+      "no-multiple-empty-lines": [
+        1,
+        {
+          "max": 1,
+          "maxEOF": 0,
+          "maxBOF": 0
+        }
+      ],
+      "quotes": [
+        1,
+        "single",
+        "avoid-escape"
+      ],
+      "no-use-before-define": [
+        1,
+        {
+          "functions": false
+        }
+      ],
+      "semi": [
+        0,
+        "never"
+      ],
+      "prefer-const": 1,
+      "react/prefer-es6-class": 0,
+      "react/jsx-filename-extension": 0,
+      "react/jsx-curly-spacing": [
+        1,
+        "always"
+      ],
+      "react/jsx-indent": [
+        1,
+        2
+      ],
+      "react/prop-types": [
+        1
+      ],
+      "react/no-array-index-key": [
+        1
+      ],
+      "class-methods-use-this": "off",
+      "no-undef": [
+        1
+      ],
+      "no-case-declarations": [
+        1
+      ],
+      "no-return-assign": [
+        1
+      ],
+      "no-param-reassign": [
+        1
+      ],
+      "no-shadow": [
+        1
+      ],
+      "camelcase": [
+        1
+      ],
+      "no-unused-vars": "off",
+      "no-underscore-dangle": [
+        0,
+        "always"
+      ]
+    }
   },
   "browserslist": [
     ">0.2%",
@@ -128,8 +231,11 @@
   },
   "devDependencies": {
     "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
+    "eslint": "^5.12.0",
     "mockjs": "^1.0.1-beta3",
-    "react-router-dom": "^4.3.1"
+    "react-router-dom": "^4.3.1",
+    "redux-devtools": "^3.5.0"
   },
   "proxy": "https://xyy.51xingdai.com"
 }

@@ -1,6 +1,6 @@
-import React,{ Component } from 'react';
-import {Link} from 'react-router-dom';
-import { Menu } from 'element-react';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import { Menu } from 'element-react'
 import { SIDE_BAR_TEXT } from '../meta/sidebarText'
 export default class Sidebar extends Component{
   onOpen() {

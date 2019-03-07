@@ -1,5 +1,5 @@
 // 报表统计-数据看版
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import { Card } from 'element-react'
 import solt from '../../global/solt'
 import '../../styles/look.less'
@@ -55,9 +55,9 @@ class Look extends Component {
         {
           this.state.data.map((item,index) => {
             return (
-              <Card className="look-card" bodyStyle={{backgroundColor:solt.getColor()}} key={index}>
-                <p>{item.num}</p>
-                <p>{item.text}</p>
+              <Card className="look-card" bodyStyle={ { backgroundColor:solt.getColor() } } key={ item.text }>
+                <p>{ item.num }</p>
+                <p>{ item.text }</p>
               </Card>
             )
           })

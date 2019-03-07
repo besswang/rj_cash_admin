@@ -1,15 +1,23 @@
+import 'babel-polyfill'
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore } from 'redux'
+import { Provider,connect } from 'react-redux'
 import 'element-theme-default';
 import './index.css';
 import './mock/mock';
 // import App from './App';
 // import Login from './components/login'
-import SetRouter from './routes/index'
+import Routes from './routes/index'
 import * as serviceWorker from './serviceWorker';
-
+const store = createStore(connect)
 // ReactDOM.render(<App />, document.getElementById('root'));
-ReactDOM.render( <SetRouter / > , document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={ store }>
+    <Routes />
+  </Provider>,
+  document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

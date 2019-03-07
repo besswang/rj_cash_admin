@@ -3,7 +3,7 @@
 import Mock from 'mockjs'
 import { mlisttable } from './mlisttable'
 // page-product-editor --end
-let data = [].concat(mlisttable);
+const data = [].concat(mlisttable);
 data.forEach(function (res) {
   if (res) {
     Mock.mock(res.path, res.data);

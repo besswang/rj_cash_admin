@@ -1,5 +1,5 @@
 import React,{ Component } from 'react';
-import {Form,Button,Table,Pagination,Select,Input} from 'element-react'
+import { Form,Button,Table,Pagination,Select,Input } from 'element-react'
 import Time from '../common/setime'
 import { NORMAL_COLUMNS } from '../meta/columns'
 import { MLIST_SELECT } from '../meta/select'

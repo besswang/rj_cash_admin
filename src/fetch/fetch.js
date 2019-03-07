@@ -26,8 +26,11 @@ const Fetch = (url, option = {}) => {
   option.method = (option.method || 'get').toLocaleLowerCase()
   // 格式化get请求的数据(fetch的get请求需要需要将参数拼接到url后面)
   if (option.method === 'get') {
-    if (option.data) {
-      url = url + formatUrl(option.data)
+    // if (option.data) {
+    //   url = url + formatUrl(option.data)
+    // }
+    if (option.body) {
+      url = url + formatUrl(option.body)
     }
   }
 
@@ -39,9 +42,10 @@ const Fetch = (url, option = {}) => {
     option.body = JSON.stringify(option.body)
 
     // 根据后台要求，如果有时候是java请求会用qs转
-    // option.body = qs.stringify(option.data)
+    // option.body = qs.stringify(option.body)
   }
-  delete option.data
+  // delete option.data
+  delete option.body
   // return addTimeout(fetch(tHost + url, option), timeout)
   return addTimeout(fetch(url, option), timeout)
 }
@@ -63,10 +67,11 @@ function addTimeout(fetchPromise, timeout) {
   // 请求超时的Promise
   var timeoutPromise = new Promise((resolve, reject) => {
     timeoutFn = function () {
-      reject({
-        code: 'timeOut',
-        text: '请求超时，请重试'
-      })
+      reject(new Error('请求超时，请重试'))
+      // reject({
+      //   code: 'timeOut',
+      //   text: '请求超时，请重试'
+      // })
     }
   })
 

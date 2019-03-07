@@ -1,6 +1,6 @@
-import React,{ Component } from 'react';
-import {Breadcrumb} from 'element-react'
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react'
+import { Breadcrumb } from 'element-react'
+import { Link } from 'react-router-dom'
 class Detail extends Component{
 	constructor(props){
 		super(props);
@@ -24,4 +24,4 @@ class Detail extends Component{
 		);
 	}
 }
-export default Detail;
+export default Detail

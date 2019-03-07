@@ -24,7 +24,8 @@ export const SIDE_BAR_TEXT = [
   }, {
     subIndex: '2',
     title: '报表统计',
-    menuItem: [{
+    menuItem: [
+      {
         itemIndex: '2-1',
         path:'/statistics/ditch',
         title: '渠道统计'
@@ -57,18 +58,21 @@ export const SIDE_BAR_TEXT = [
   }, {
     subIndex: '3',
     title: '借款管理',
-    menuItem: [{
+    menuItem: [
+      {
       itemIndex: '3-1',
       path: '/borrow/audit',
       title: '待审核'
     }, {
       itemIndex: '3-2',
       title: '审核拒绝'
-    }]
+    }
+  ]
   }, {
     subIndex: '4',
     title: '催收管理',
-    menuItem: [{
+    menuItem: [
+    {
       itemIndex: '4-1',
       title: '逾期列表'
     }, {
@@ -77,11 +81,13 @@ export const SIDE_BAR_TEXT = [
     }, {
       itemIndex: '4-3',
       title: '个人对账'
-    }]
+    }
+  ]
   }, {
     subIndex: '5',
     title: '财务管理',
-    menuItem: [{
+    menuItem: [
+      {
       itemIndex: '5-1',
       title: '待放款'
     }, {
@@ -96,14 +102,17 @@ export const SIDE_BAR_TEXT = [
     }, {
       itemIndex: '5-5',
       title: '当日到期'
-    }]
+    }
+  ]
   }, {
     subIndex: '6',
     title: '黑名单管理',
-    menuItem: [{
+    menuItem: [
+    {
       itemIndex: '6-1',
       title: '黑名单用户'
-    }]
+    }
+  ]
   }, {
     subIndex: '7',
     title: '认证管理',

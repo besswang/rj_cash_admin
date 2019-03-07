@@ -69,7 +69,7 @@ class Login extends Component {
       currentIndex: id
     });
   }
-  async axiosFn(){
+  axiosFn = async () => {
     const res = await http.get('/globalconfig/selectGlobalconfig')
     console.log(res)
   }

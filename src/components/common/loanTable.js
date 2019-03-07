@@ -1,6 +1,7 @@
-import React,{ Component } from 'react';
-import {Table} from 'element-react'
+import React, { Component } from 'react'
+import { Table } from 'element-react'
 import num from '../../global/num'
+import PropTypes from 'prop-types'
 export default class AllTable extends Component {
   constructor(props){
     super(props)
@@ -43,7 +44,7 @@ export default class AllTable extends Component {
           render: (row) => {
             // 老客单数 = 总放款单数 - 新客单数
             if (row.orderNumber && parseInt(row.orderNumber) > 0) {
-              let oldorder = parseInt(row.orderNumber) - parseInt(row.newOrderNumber)
+              const oldorder = parseInt(row.orderNumber) - parseInt(row.newOrderNumber)
               return (oldorder)
             }else{
               return (0)
@@ -54,7 +55,7 @@ export default class AllTable extends Component {
           render: (row) => {
             // 新客放款率 = 新客单数/总放款单数
             if (row.newOrderNumber && row.orderNumber){
-              let conversion = parseInt(row.newOrderNumber)/parseInt(row.orderNumber)
+              const conversion = parseInt(row.newOrderNumber)/parseInt(row.orderNumber)
               return (num.toDecimal(conversion))
             }else{
               return ('0.00%')
@@ -65,7 +66,7 @@ export default class AllTable extends Component {
           render: (row) => {
             // 老客放款率 = 老客单数/总放款单数
             if (row.newOrderNumber && row.orderNumber) {
-              let conversion = parseInt(row.newOrderNumber) / parseInt(row.orderNumber)
+              const conversion = parseInt(row.newOrderNumber) / parseInt(row.orderNumber)
               return (num.toDecimal(conversion))
             }else{
               return ('0.00%')
@@ -79,13 +80,17 @@ export default class AllTable extends Component {
     }
   }
   render() {
-    let [...arrObj] = this.props.data
+    const [ ...arrObj ] = this.props.data
     return (
       <Table
-        style={{width: '100%'}}
-        columns={this.state.column}
-        data={arrObj}
-        border={true}/>
+        style={ { width: '100%' } }
+        columns={ this.state.column }
+        data={ arrObj }
+        border
+      />
     )
   }
+}
+AllTable.propTypes = {
+  data: PropTypes.array
 }

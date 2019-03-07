@@ -1,10 +1,10 @@
 export default {
   toDecimal(x,flag) {
-    let f = parseFloat(x);
+    const f = parseFloat(x);
     if (isNaN(f)) {
       return false;
     }
-    let m = Math.round(x * 100) / 100;
+    const m = Math.round(x * 100) / 100;
     var s = m.toString();
     var rs = s.indexOf('.');
     if (rs < 0) {

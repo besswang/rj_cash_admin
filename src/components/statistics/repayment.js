@@ -1,5 +1,5 @@
 // 报表统计-还款统计
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   Pagination,
   Tabs,
@@ -9,7 +9,7 @@ import Ordertable from '../common/repayOrderTable'
 import Moneytable from '../common/repayMoneyTable'
 class Ditchinside extends Component {
   constructor(props){
-    console.log("constructor()")
+    console.log('constructor()')
     super(props);
     this.state = {
       activeName:'',

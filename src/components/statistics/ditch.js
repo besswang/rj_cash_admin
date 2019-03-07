@@ -1,48 +1,48 @@
 // 报表统计-渠道统计
-import React, {Component} from 'react';
-import {Table, Button, Form, Pagination } from 'element-react'
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react'
+import { Table, Button, Form, Pagination } from 'element-react'
+import { Link } from 'react-router-dom'
 import Time from '../common/setime'
 import num from '../../global/num'
 class Ditch extends Component {
   constructor(props){
     super(props)
     this.state = {
-      total:15,
-      pageSize:5,
-      pageSizes:[5,10,15],
-      currentPage:1,
-      columns:[
+      total: 15,
+      pageSize: 5,
+      pageSizes: [ 5, 10, 15],
+      currentPage: 1,
+      columns: [
         {
 					type: 'index'
 				}, {
-					label: "日期",
-          prop: "sjDate",
+					label: '日期',
+          prop: 'sjDate',
           width:150
 				}, {
-				  label: "注册人数",
-				  prop: "register"
+				  label: '注册人数',
+				  prop: 'register'
 				}, {
-				  label: "个人信息",
-				  prop: "person"
+				  label: '个人信息',
+				  prop: 'person'
 				}, {
-				  label: "身份认证",
-				  prop: "idcard"
+				  label: '身份认证',
+				  prop: 'idcard'
 				}, {
-				  label: "手机认证",
-				  prop: "phone"
+				  label: '手机认证',
+				  prop: 'phone'
 				}, {
-				  label: "银行认证",
-				  prop: "bank"
+				  label: '银行认证',
+				  prop: 'bank'
 				}, {
-				  label: "申请单数",
-          prop: "apply"
+				  label: '申请单数',
+          prop: 'apply'
 				}, {
-          label: "申请率",
+          label: '申请率',
           render: (row) => {
             // 申请率 = 申请单数/注册人数
             if (row.apply && row.register){
-              let applyConversion = parseInt(row.apply) / parseInt(row.register)
+              const applyConversion = parseInt(row.apply) / parseInt(row.register)
               return (num.toDecimal(applyConversion))
             }else{
               return ('0.00%')

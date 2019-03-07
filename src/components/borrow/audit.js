@@ -1,14 +1,14 @@
 import React,{ Component } from 'react';
 import { Input,Form,Button,Table,MessageBox,Message,Pagination,Select } from 'element-react';
 import Time from '../common/setime'
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AUDIT_SELECT } from '../meta/select'
 class Audit extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {
 			total:25,
-			pageSizes:[5,10,20,30],
+			pageSizes: [5,10,20,30],
 			pageSize:5,
 			currentPage:1,
 			value: '',

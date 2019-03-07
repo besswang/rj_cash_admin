@@ -1,11 +1,11 @@
-import React,{ Component } from 'react';
-import {Form,Button,Table,Pagination} from 'element-react'
+import React, { Component } from 'react';
+import { Form, Button, Table, Pagination } from 'element-react'
 import Time from '../common/setime'
 import { APPLY_COLUMNS } from '../meta/columns'
 
-class Apply extends Component{
+class Apply extends Component {
 	constructor(props){
-		super(props);
+		super(props)
 		this.state = {
 			total:25,
 			pageSizes:[5,10,20,30],

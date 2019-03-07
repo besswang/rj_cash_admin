@@ -1,8 +1,9 @@
-import React,{ Component } from 'react';
-import {Table,Form,Button} from 'element-react'
+import React, { Component } from 'react'
+import { Table, Form, Button } from 'element-react'
 // import num from '../../global/num'
 import Time from '../common/setime'
-import {Link} from "react-router-dom"
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
 export default class MoneyTable extends Component {
   constructor(props){
     super(props)
@@ -61,9 +62,9 @@ export default class MoneyTable extends Component {
         },{
           label: '操作',
           render: (row) => {
-            let url = '/statistics/repayment/repayinside/'+this.props.tabName+'/4'
+            const url = `/statistics/repayment/repayinside/${ this.props.tabName }/4`
             return (
-              <Link to={`${url}`}>
+              <Link to={ `${ url }` }>
                 <Button type="text" size="mini">查看</Button>
               </Link>
             )
@@ -73,23 +74,28 @@ export default class MoneyTable extends Component {
     }
   }
   render() {
-    let [...arrObj] = this.props.data
+    const [ ...arrObj ] = this.props.data
     return (
       <div>
-        <Form inline={true}>
-					<Form.Item>
-            <Time></Time>
+        <Form inline>
+          <Form.Item>
+            <Time />
           </Form.Item>
           <Form.Item>
             <Button nativeType="submit" type="primary">搜索</Button>
           </Form.Item>
         </Form>
         <Table
-        style={{width: '100%'}}
-        columns={this.state.column}
-        data={arrObj}
-        border={true}/>
+        style={ { width: '100%' } }
+        columns={ this.state.column }
+        data={ arrObj }
+        border
+        />
       </div>
     )
   }
+}
+MoneyTable.propTypes = {
+  tabName: PropTypes.string,
+  data: PropTypes.array
 }

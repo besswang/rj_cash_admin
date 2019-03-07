@@ -1,14 +1,14 @@
-import React,{ Component } from 'react';
-import { Input,Form,Button,Table,MessageBox,Message,Pagination,Select } from 'element-react';
+import React, { Component } from 'react'
+import { Input,Form,Button,Table,MessageBox,Message,Pagination,Select } from 'element-react'
 import Time from '../common/setime'
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import { MLIST_SELECT } from '../meta/select'
 class Mlist extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {
 			total:25,
-			pageSizes:[5,10,20,30],
+			pageSizes: [5, 10, 20, 30],
 			pageSize:5,
 			currentPage:1,
 			value: '',
@@ -210,27 +210,27 @@ class Mlist extends Component{
 					</Form.Item>
 				</Form>
 				<Table
-					style={{width: '100%'}}
-					columns={this.state.columns}
-					data={this.state.data}
-					border={true}
-					maxHeight={250}>
-						{/* <Table.Column label="操作"
-						render={
-							(row, column, index) => {
-								return (<span><Button type="text" size="small" onClick={this.deleteRow.bind(this, index)}>移除</Button></span>)
-							}
-						}>
-						</Table.Column> */}
-					</Table>
-					<div className="pagination-con flex flex-direction_row justify-content_flex-center">
-						<Pagination
-						layout="total, sizes, prev, pager, next, jumper"
-						total={this.state.total}
-						pageSizes={this.state.pageSizes}
-						pageSize={this.state.pageSize}
-						currentPage={this.state.currentPage}/>
-					</div>
+				style= {{ width: '100%' }}
+				columns= { this.state.columns }
+				data= { this.state.data }
+				border= { true }
+				maxHeight= { 250 }>
+					{/* <Table.Column label="操作"
+					render={
+						(row, column, index) => {
+							return (<span><Button type="text" size="small" onClick={this.deleteRow.bind(this, index)}>移除</Button></span>)
+						}
+					}>
+					</Table.Column> */}
+				</Table>
+				<div className="pagination-con flex flex-direction_row justify-content_flex-center">
+					<Pagination
+					layout="total, sizes, prev, pager, next, jumper"
+					total={this.state.total}
+					pageSizes={this.state.pageSizes}
+					pageSize={this.state.pageSize}
+					currentPage={this.state.currentPage}/>
+				</div>
 			</div>
 		)
 	}

@@ -1,8 +1,7 @@
-import React,{ Component } from 'react';
-import {Router, Route, Switch} from 'react-router-dom';
-import {} from 'element-react';
-import Header from './common/header';
-import Sidebar from './common/sidebar';
+import React, { Component } from 'react'
+import { Router, Route, Switch } from 'react-router-dom'
+import Header from './common/header'
+import Sidebar from './common/sidebar'
 import Welcome from '../components/welcome'
 // 会员管理-会员列表
 import Mlist from '../components/member/mlist'
@@ -32,15 +31,14 @@ import Turnover from '../components/statistics/turnover'
 import Look from '../components/statistics/look'
 // 借款管理-待审核
 import Audit from '../components/borrow/audit'
-
 import history from '../routes/history'
 import '../styles/home.less'
-class Home extends Component{
-	render(){
-		return(
+export default class Home extends Component {
+	render() {
+		return (
 			<div className="flex flex-direction_column">
 				<div className="header">
-					<Header/>
+					<Header />
 				</div>
 				<ul className="flex flex-diredtion_row container">
 					<li className="sidebar">
@@ -48,30 +46,29 @@ class Home extends Component{
 					</li>
 					<li className="main">
 						<div className="content">
-							<Router history={history}>
-								<Switch>
-									<Route exact path="/" component={Welcome}/>
-									<Route exact path="/member/mlist" component={Mlist}/>
-									<Route exact path="/member/mlist/detail" component={Detail}/>
-									<Route exact path="/member/apply" component={Apply}/>
-									<Route exact path="/member/normal" component={Normal}/>
-									<Route exact path="/statistics/ditch" component={Ditch}/>
-									<Route exact path="/statistics/ditch/ditchinside" component={Ditchinside}/>
-									<Route exact path="/statistics/overdue" component={Overdue}/>
-									<Route exact path="/statistics/loan" component={Loan}/>
-									<Route exact path="/statistics/repayment/:tabName" component={Repayment}/>
-									<Route exact path="/statistics/repayment/repayinside/:tabName/:id" component={Repayinside}/>
-									<Route exact path="/statistics/consume" component={Consume}/>
-									<Route exact path="/statistics/turnover" component={Turnover}/>
-									<Route exact path="/statistics/look" component={Look}/>
-									<Route exact path="/borrow/audit" component={Audit}/>
-								</Switch>
-							</Router>
+						<Router history={ history }>
+							<Switch>
+								<Route exact path="/home" component={ Welcome } />
+								<Route exact path="/member/mlist" component={ Mlist } />
+								<Route exact path="/member/mlist/detail" component={ Detail } />
+								<Route exact path="/member/apply" component={ Apply } />
+								<Route exact path="/member/normal" component={ Normal } />
+								<Route exact path="/statistics/ditch" component={ Ditch } />
+								<Route exact path="/statistics/ditch/ditchinside" component={ Ditchinside } />
+								<Route exact path="/statistics/overdue" component={ Overdue } />
+								<Route exact path="/statistics/loan" component={ Loan } />
+								<Route exact path="/statistics/repayment/:tabName" component={ Repayment } />
+								<Route exact path="/statistics/repayment/repayinside/:tabName/:id" component={ Repayinside } />
+								<Route exact path="/statistics/consume" component={ Consume } />
+								<Route exact path="/statistics/turnover" component={ Turnover } />
+								<Route exact path="/statistics/look" component={ Look } />
+								<Route exact path="/borrow/audit" component={ Audit } />
+							</Switch>
+						</Router>
 						</div>
 					</li>
 				</ul>
 			</div>
-		);
+		)
 	}
 }
-export default Home;
