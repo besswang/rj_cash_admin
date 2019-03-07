@@ -135,7 +135,7 @@ class Login extends Component {
                 )
               })}
             </ul>
-            <Form style={ { "display": show1 } } ref="form1" model={ this.state.form1 } rules={ this.state.rules1 }>
+            <Form style={ { 'display': show1 } } ref="form1" model={ this.state.form1 } rules={ this.state.rules1 }>
               <Form.Item prop="username">
                 <Input placeholder="请输入用户名"
                 value={ this.state.form1.username }
