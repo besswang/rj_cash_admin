@@ -8,7 +8,7 @@ class Mlist extends Component{
 		super(props);
 		this.state = {
 			total:25,
-			pageSizes: [5, 10, 20, 30],
+			pageSizes: [ 5, 10, 20, 30 ],
 			pageSize:5,
 			currentPage:1,
 			value: '',
@@ -16,70 +16,70 @@ class Mlist extends Component{
 						type: 'index',
 						fixed: 'left'
 				}, {
-					label: "真实姓名",
-					prop: "name",
+					label: '真实姓名',
+					prop: 'name',
 					width:100,
 					fixed: 'left'
 				},{
-					label: "手机号码",
-					prop: "tel"
+					label: '手机号码',
+					prop: 'tel'
 				},{
-					label: "身份证号",
-					prop: "idcard"
+					label: '身份证号',
+					prop: 'idcard'
 				},
 				{
-					label: "渠道名称",
-					prop: "ditch"
+					label: '渠道名称',
+					prop: 'ditch'
 				},
 				{
-					label: "授信额度",
-					prop: "zip"
+					label: '授信额度',
+					prop: 'zip'
 				},
 				{
-					label: "认证参数",
-					prop: "zip"
+					label: '认证参数',
+					prop: 'zip'
 				}, {
-					label: "借款次数",
-					prop: "zip"
+					label: '借款次数',
+					prop: 'zip'
 				}, {
-					label: "性别",
-					prop: "zip"
+					label: '性别',
+					prop: 'zip'
 				}, {
-					label: "注册时间",
-					prop: "zip"
+					label: '注册时间',
+					prop: 'zip'
 				}, {
-					label: "登陆IP",
-					prop: "zip"
+					label: '登陆IP',
+					prop: 'zip'
 				}, {
-					label: "IP城市",
-					prop: "zip"
+					label: 'IP城市',
+					prop: 'zip'
 				}, {
-					label: "登陆次数",
-					prop: "zip"
+					label: '登陆次数',
+					prop: 'zip'
 				},{
-				 	label: "黑名单",
-				 	prop: "blackType",
+				 	label: '黑名单',
+				 	prop: 'blackType',
 					fixed:'right',
-					 render: (row,column,index) => {
-						 if(row.blackType===1){
+					 render: row => {
+						 if(row.blackType === 1){
 							 return (
-								 <Button type="text" size="mini" onClick={this.openBlackListMessage.bind(this,row.blackType)}>删除</Button>
+								 <Button type="text" size="mini" onClick={ this.openBlackListMessage.bind(this,row.blackType) }>删除</Button>
 							 )
 						 }else{
 								return (
-									<Button type="text" size="mini" onClick={this.openBlackListMessage.bind(this)}>添加</Button>
+									<Button type="text" size="mini" onClick={ this.openBlackListMessage.bind(this) }>添加</Button>
 								)
 						 }
 					 }
 				},{
-					label: "操作",
+					label: '操作',
 					fixed: 'right',
 					width:120,
-					render: (row, column, index)=>{
+					render: row => {
 						if(row.using === 1){
 							return (
 								<div className="flex flex-direction_row">
-									<Button className="margin_right10" type="primary" size="mini" onClick={this.openUsingMessage.bind(this)}>启用</Button>
+									<Button className="margin_right10" type="primary" size="mini" onClick={ this.openUsingMessage.bind(this) }>启用</Button>
 									{/* <Button type="text" size="small" onClick={this.deleteRow.bind(this, index)}>会员详情</Button> */}
 									<Link to="/member/mlist/detail">
 										<Button type="text" size="small">会员详情</Button>
@@ -89,7 +89,7 @@ class Mlist extends Component{
 						}else{
 							return (
 								<div className="flex flex-direction_row">
-									<Button className="margin_right10" type="danger" size="mini" onClick={this.openUsingMessage.bind(this)}>禁用</Button>
+									<Button className="margin_right10" type="danger" size="mini" onClick={ this.openUsingMessage.bind(this) }>禁用</Button>
 									{/* <Button type="text" size="small" onClick={this.deleteRow.bind(this, index)}>会员详情</Button> */}
 									<Link to="/member/mlist/detail">
 										<Button type="text" size="small">会员详情</Button>
@@ -177,12 +177,12 @@ class Mlist extends Component{
 	render() {
 		return (
 			<div>
-				<Form inline={true}>
+				<Form inline>
 					<Form.Item>
-						<Select value={this.state.value} clearable={true} placeholder="搜索类型">
+						<Select value={ this.state.value } clearable placeholder="搜索类型">
 							{
 								MLIST_SELECT.map(el => {
-									return <Select.Option key={el.value} label={el.label} value={el.value} />
+									return <Select.Option key={ el.value } label={ el.label } value={ el.value } />
 								})
 							}
 						</Select>
@@ -200,7 +200,7 @@ class Mlist extends Component{
 						<Input placeholder="请输入身份证号" />
 					</Form.Item> */}
 					<Form.Item>
-						<Time></Time>
+						<Time />
 					</Form.Item>
 					<Form.Item>
 						<Button nativeType="submit" type="primary">搜索</Button>
@@ -210,11 +210,12 @@ class Mlist extends Component{
 					</Form.Item>
 				</Form>
 				<Table
-				style= {{ width: '100%' }}
+				style= { { width: '100%' } }
 				columns= { this.state.columns }
 				data= { this.state.data }
-				border= { true }
-				maxHeight= { 250 }>
+				border
+				maxHeight= { 250 }
+				/>
 					{/* <Table.Column label="操作"
 					render={
 						(row, column, index) => {
@@ -222,17 +223,17 @@ class Mlist extends Component{
 						}
 					}>
 					</Table.Column> */}
-				</Table>
 				<div className="pagination-con flex flex-direction_row justify-content_flex-center">
 					<Pagination
 					layout="total, sizes, prev, pager, next, jumper"
-					total={this.state.total}
-					pageSizes={this.state.pageSizes}
-					pageSize={this.state.pageSize}
-					currentPage={this.state.currentPage}/>
+					total={ this.state.total }
+					pageSizes={ this.state.pageSizes }
+					pageSize={ this.state.pageSize }
+					currentPage={ this.state.currentPage }
+					/>
 				</div>
 			</div>
 		)
 	}
 }
-export default Mlist;
+export default Mlist

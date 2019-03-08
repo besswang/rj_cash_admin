@@ -49,24 +49,24 @@ class Ditch extends Component {
             }
           }
 				}, {
-				  label: "放款人数",
-				  prop: "loanNum"
+				  label: '放款人数',
+				  prop: 'loanNum'
 				}, {
-				  label: "放款率",
+				  label: '放款率',
           render: (row) => {
             // 放款率 = 放款人数/注册人数
             if (row.loanNum && row.register) {
-              let loanConversion = parseInt(row.loanNum) / parseInt(row.register)
+              const loanConversion = parseInt(row.loanNum) / parseInt(row.register)
               return (num.toDecimal(loanConversion))
             } else {
               return ('0.00%')
             }
           }
 				}, {
-				  label: "操作",
-          prop: "operate",
+				  label: '操作',
+          prop: 'operate',
           width:180,
-          fixed:"right",
+          fixed:'right',
           render: (row,columns,index) => {
             return (
               <Link to="/statistics/ditch/ditchinside">
@@ -95,28 +95,29 @@ class Ditch extends Component {
   render(){
     return (
       <div>
-      	<Form inline={true}>
-					<Form.Item>
-            <Time></Time>
+        <Form inline>
+          <Form.Item>
+            <Time />
           </Form.Item>
           <Form.Item>
             <Button nativeType="submit" type="primary">搜索</Button>
           </Form.Item>
         </Form>
-				<Table
-					style={{width: '100%'}}
-					columns={this.state.columns}
-					data={this.state.data}
-					border={true}>
-					</Table>
-          <div className="pagination-con flex flex-direction_row justify-content_flex-center">
-						<Pagination
-						layout="total, sizes, prev, pager, next, jumper"
-						total={this.state.total}
-						pageSizes={this.state.pageSizes}
-						pageSize={this.state.pageSize}
-						currentPage={this.state.currentPage}/>
-					</div>
+        <Table
+          style={ { width: '100%' } }
+          columns={ this.state.columns }
+          data={ this.state.data }
+          border
+        />
+        <div className="pagination-con flex flex-direction_row justify-content_flex-center">
+          <Pagination
+          layout="total, sizes, prev, pager, next, jumper"
+          total={ this.state.total }
+          pageSizes={ this.state.pageSizes }
+          pageSize={ this.state.pageSize }
+          currentPage={ this.state.currentPage }
+          />
+        </div>
       </div>
     )
   }

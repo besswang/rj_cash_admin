@@ -6,15 +6,12 @@ import { Provider,connect } from 'react-redux'
 import 'element-theme-default';
 import './index.css';
 import './mock/mock';
-// import App from './App';
-// import Login from './components/login'
-import Routes from './routes/index'
+import App from './routes/index'
 import * as serviceWorker from './serviceWorker';
 const store = createStore(connect)
-// ReactDOM.render(<App />, document.getElementById('root'));
 ReactDOM.render(
   <Provider store={ store }>
-    <Routes />
+    <App />
   </Provider>,
   document.getElementById('root')
 );

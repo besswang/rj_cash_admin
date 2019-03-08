@@ -14,14 +14,14 @@ class Detail extends Component{
 				<Breadcrumb separator="/">
 					{/* <Breadcrumb.Item>会员管理</Breadcrumb.Item> */}
 					<Breadcrumb.Item>
-						<Link to='/member/mlist'>
+						<Link to="/member/mlist">
 							会员列表
 						</Link>
 					</Breadcrumb.Item>
 					<Breadcrumb.Item>会员详情</Breadcrumb.Item>
 				</Breadcrumb>
 			</div>
-		);
+		)
 	}
 }
 export default Detail

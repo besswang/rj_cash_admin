@@ -15,7 +15,7 @@ class Welcome extends React.Component{
 		return(
 			<div>
 				<div className="section">
-					<Time></Time>
+					<Time />
 					<Button type="primary" className="margin_left15">查询</Button>
 				</div>
 				 <div className="section">
@@ -44,7 +44,7 @@ class Welcome extends React.Component{
 						</ul>
 				 </div>
 				 <div className="section">
-					<Echart></Echart>
+					<Echart/>
 				 </div>
 			</div>
 		);

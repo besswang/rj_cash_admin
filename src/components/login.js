@@ -80,16 +80,14 @@ class Login extends Component {
       currentIndex: id
     });
   }
-  loginFn(e){
+  loginFn = e => {
     e.preventDefault();
     history.push('/home');
-    api.a()
-    console.log(this.state.currentIndex)
+    // api.a()
+    // console.log(this.state.currentIndex)
     if (this.state.currentIndex===0){
-      this.refs.form1.validate((valid) => {
+      this.form1.validate((valid) => {
         if (valid) {
-          // alert('submit!');
-          // console.log(this.state.form1)
           history.push('/');
         } else {
           console.log('error submit!!');
@@ -97,7 +95,7 @@ class Login extends Component {
         }
       });
     }else{
-      this.refs.form2.validate((valid) => {
+      this.form2.validate((valid) => {
         if (valid) {
           alert('submit!');
           console.log(this.state.form2)
@@ -135,7 +133,7 @@ class Login extends Component {
                 )
               })}
             </ul>
-            <Form style={ { 'display': show1 } } ref="form1" model={ this.state.form1 } rules={ this.state.rules1 }>
+            <Form style={ { 'display': show1 } } ref={ e => { this.form1 = e } } model={ this.state.form1 } rules={ this.state.rules1 }>
               <Form.Item prop="username">
                 <Input placeholder="请输入用户名"
                 value={ this.state.form1.username }
@@ -149,7 +147,7 @@ class Login extends Component {
                 />
               </Form.Item>
             </Form>
-            <Form style={ { 'display': show2 } } ref="form2" model={ this.state.form2 } rules={ this.state.rules2 }>
+            <Form style={ { 'display': show2 } } ref={ e => { this.form2 = e } } model={ this.state.form2 } rules={ this.state.rules2 }>
               <Form.Item prop="tel">
                 <Input placeholder="请输入手机号"
                 value={ this.state.form2.tel }
@@ -168,7 +166,7 @@ class Login extends Component {
                 </Form.Item>
               </div>
             </Form>
-            <Button type="primary" size="large" className="login-btn" onClick={ this.loginFn.bind(this) }>登陆</Button>
+            <Button type="primary" size="large" className="login-btn" onClick={ this.loginFn }>登陆</Button>
           </div>
         </div>
       )

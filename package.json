@@ -71,13 +71,16 @@
   },
   "eslintConfig": {
     "extends": "react-app",
+    "env": {
+      "es6": true
+    },
     "parser": "babel-eslint",
     "plugins": [
       "react"
     ],
     "rules": {
       "no-multi-spaces": 1,
-      "react/jsx-space-before-closing": 1,
+      "react/jsx-space-before-closing": 0,
       "jsx-quotes": 1,
       "react/jsx-closing-bracket-location": 1,
       "react/jsx-boolean-value": 1,
@@ -96,7 +99,7 @@
         "always"
       ],
       "array-bracket-spacing": [
-        1,
+        "off",
         "always"
       ],
       "object-curly-spacing": [
@@ -137,10 +140,7 @@
         1,
         "always"
       ],
-      "react/jsx-indent": [
-        1,
-        2
-      ],
+      "react/jsx-indent": 0,
       "react/prop-types": [
         1
       ],
@@ -148,9 +148,8 @@
         1
       ],
       "class-methods-use-this": "off",
-      "no-undef": [
-        1
-      ],
+      "no-empty": 0,
+      "no-undef": 0,
       "no-case-declarations": [
         1
       ],

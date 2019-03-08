@@ -10,7 +10,7 @@ const headers = {
 
 // 处理get请求，传入参数对象拼接
 const formatUrl = obj => {
-  const params = Object.values(obj).reduce((a, b, i) => `${a}${Object.keys(obj)[i]}=${b}&`, '?')
+  const params = Object.values(obj).reduce((a, b, i) => `${ a }${ Object.keys(obj)[ i ] }=${ b }&`, '?')
   return params.substring(0, params.length - 1)
 }
 
@@ -22,7 +22,7 @@ const Fetch = (url, option = {}) => {
   // 设置请求超时的时间，默认10秒
   const timeout = option.timeout || 10000
   option.headers = option.headers || headers
-  option.headers['token'] = `${window.localStorage.getItem('token')}`;
+  option.headers[ 'token' ] = `${ window.localStorage.getItem('token') }`
   option.method = (option.method || 'get').toLocaleLowerCase()
   // 格式化get请求的数据(fetch的get请求需要需要将参数拼接到url后面)
   if (option.method === 'get') {
@@ -30,13 +30,14 @@ const Fetch = (url, option = {}) => {
     //   url = url + formatUrl(option.data)
     // }
     if (option.body) {
-      url = url + formatUrl(option.body)
+      const data = formatUrl(option.body)
+      url += data
     }
   }
 
   // 对非get类请求头和请求体做处理
   if (option.method === 'post' || option.method === 'put' || option.method === 'delete') {
-    option.headers['Content-Type'] = option.headers['Content-Type'] || 'application/json'
+    option.headers[ 'Content-Type' ] = option.headers[ 'Content-Type' ] || 'application/json'
 
     // 非get类请求传参时，需要将参数挂在body上
     option.body = JSON.stringify(option.body)

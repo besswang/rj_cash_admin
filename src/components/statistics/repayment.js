@@ -41,7 +41,7 @@ class Ditchinside extends Component {
     this.tabChange = this.tabChange.bind(this)
   }
   componentDidMount() {
-    console.log("componentDidMount")
+    console.log('componentDidMount')
     this.setState({
       activeName:this.props.match.params.tabName
     })
@@ -53,11 +53,11 @@ class Ditchinside extends Component {
     // }, 2000);
   }
   componentWillUnmount() {
-    console.log("componentWillUnmount")
+    console.log('componentWillUnmount')
   }
   tabChange(e){
     this.props.history.push({
-      pathname: "/statistics/repayment/" + e.props.name
+      pathname: `/statistics/repayment/${ e.props.name }`
     });
     this.setState({
       currentTab:e.props.name
@@ -109,26 +109,28 @@ class Ditchinside extends Component {
     // console.log(this.props.match.params)
     return (
       <div>
-        <Tabs activeName={this.state.activeName} onTabClick={this.tabChange}>
-          <Tabs.Pane label="还款单分析" name='1'>
-          <Loading loading={this.state.loading}>
-            <Ordertable
-            data={this.state.data}
-            tabName={this.state.currentTab}/>
-          </Loading>
+        <Tabs activeName={ this.state.activeName } onTabClick={ this.tabChange }>
+          <Tabs.Pane label="还款单分析" name="1">
+            <Loading loading={ this.state.loading }>
+              <Ordertable
+              data={ this.state.data }
+              tabName={ this.state.currentTab }
+              />
+            </Loading>
           </Tabs.Pane>
-          <Tabs.Pane label="还款金额分析" name='2'>
-            <Moneytable data={this.state.data} tabName={this.state.currentTab}/>
+          <Tabs.Pane label="还款金额分析" name="2">
+            <Moneytable data={ this.state.data } tabName={ this.state.currentTab } />
           </Tabs.Pane>
         </Tabs>
-          <div className="pagination-con flex flex-direction_row justify-content_flex-center">
-						<Pagination
-						layout="total, sizes, prev, pager, next, jumper"
-						total={this.state.total}
-						pageSizes={this.state.pageSizes}
-						pageSize={this.state.pageSize}
-						currentPage={this.state.currentPage}/>
-					</div>
+        <div className="pagination-con flex flex-direction_row justify-content_flex-center">
+          <Pagination
+          layout="total, sizes, prev, pager, next, jumper"
+          total={ this.state.total }
+          pageSizes={ this.state.pageSizes }
+          pageSize={ this.state.pageSize }
+          currentPage={ this.state.currentPage }
+          />
+        </div>
       </div>
     )
   }

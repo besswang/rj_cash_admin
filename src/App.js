@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import {
-  Button
-} from 'element-react';
-import './App.css';
-
+import Login from './components/login'
+import Home from './components/home'
 class App extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      loginSuccess: false, //登陆状态
+    }
+  }
   render() {
-    return (
-      <Button type = "primary" > 登陆 </Button>
-    );
+    return ("333")
   }
 }
 

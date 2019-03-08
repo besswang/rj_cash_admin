@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   Pagination,
   Tabs,
   Breadcrumb
 } from 'element-react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 // import Time from '../common/setime'
 // import Tabtable from '../common/tabtable'
 import Todaytable from '../common/ditchTodayTable'
@@ -101,8 +101,8 @@ class Ditchinside extends Component {
   render(){
     return (
       <div>
-      	{/* <Form inline={true}>
-					<Form.Item>
+        {/* <Form inline={true}>
+          <Form.Item>
             <Time></Time>
           </Form.Item>
           <Form.Item>
@@ -110,32 +110,33 @@ class Ditchinside extends Component {
           </Form.Item>
         </Form> */}
         <Breadcrumb separator="/">
-					<Breadcrumb.Item>
-						<Link to='/statistics/ditch'>
-							渠道统计
-						</Link>
-					</Breadcrumb.Item>
-					<Breadcrumb.Item>当天</Breadcrumb.Item>
-				</Breadcrumb>
-        <Tabs activeName={this.state.activeName} onTabClick={this.tabChange}>
-          <Tabs.Pane label="当天" name='1'>
-            <Todaytable data={this.state.data}/>
+          <Breadcrumb.Item>
+            <Link to="/statistics/ditch">
+              渠道统计
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>当天</Breadcrumb.Item>
+        </Breadcrumb>
+        <Tabs activeName={ this.state.activeName } onTabClick={ this.tabChange }>
+          <Tabs.Pane label="当天" name="1">
+            <Todaytable data={ this.state.data } />
           </Tabs.Pane>
-          <Tabs.Pane label="总转化" name='2'>
-            <Alltable data={this.state.data}/>
+          <Tabs.Pane label="总转化" name="2">
+            <Alltable data={ this.state.data } />
           </Tabs.Pane>
-          <Tabs.Pane label="渠道费用" name='3'>
-            <Costtable data={this.state.data}/>
+          <Tabs.Pane label="渠道费用" name="3">
+            <Costtable data={ this.state.data } />
           </Tabs.Pane>
         </Tabs>
-          <div className="pagination-con flex flex-direction_row justify-content_flex-center">
-						<Pagination
-						layout="total, sizes, prev, pager, next, jumper"
-						total={this.state.total}
-						pageSizes={this.state.pageSizes}
-						pageSize={this.state.pageSize}
-						currentPage={this.state.currentPage}/>
-					</div>
+        <div className="pagination-con flex flex-direction_row justify-content_flex-center">
+          <Pagination
+          layout="total, sizes, prev, pager, next, jumper"
+          total={ this.state.total }
+          pageSizes={ this.state.pageSizes }
+          pageSize={ this.state.pageSize }
+          currentPage={ this.state.currentPage }
+          />
+        </div>
       </div>
     )
   }

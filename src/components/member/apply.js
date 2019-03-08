@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { Form, Button, Table, Pagination } from 'element-react'
 import Time from '../common/setime'
 import { APPLY_COLUMNS } from '../meta/columns'
@@ -22,30 +22,31 @@ class Apply extends Component {
 	render(){
 		return(
 			<div>
-				<Form inline={true}>
+				<Form inline>
 					<Form.Item label="注册时间">
-						<Time></Time>
+						<Time />
 					</Form.Item>
 					<Form.Item>
 						<Button nativeType="submit" type="primary">查询</Button>
 					</Form.Item>
 				</Form>
 				<Table
-					style={{width: '100%'}}
-					columns={APPLY_COLUMNS}
-					data={this.state.data}
-					border={true}>
-				</Table>
+					style={ { width: '100%' } }
+					columns={ APPLY_COLUMNS }
+					data={ this.state.data }
+					border
+				/>
 				<div className="pagination-con flex flex-direction_row justify-content_flex-center">
 					<Pagination
 					layout="total, sizes, prev, pager, next, jumper"
-					total={this.state.total}
-					pageSizes={this.state.pageSizes}
-					pageSize={this.state.pageSize}
-					currentPage={this.state.currentPage}/>
+					total={ this.state.total }
+					pageSizes={ this.state.pageSizes }
+					pageSize={ this.state.pageSize }
+					currentPage={ this.state.currentPage }
+					/>
 				</div>
 			</div>
-		);
+		)
 	}
 }
-export default Apply;
+export default Apply

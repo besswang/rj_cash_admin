@@ -17,9 +17,9 @@ class Consume extends Component {
   render(){
     return (
       <div>
-      	<Form inline>
-					<Form.Item>
-            <Time></Time>
+        <Form inline>
+          <Form.Item>
+            <Time />
           </Form.Item>
           <Form.Item>
             <Button nativeType="submit" type="primary">搜索</Button>
@@ -36,10 +36,10 @@ class Consume extends Component {
         <div className="pagination-con flex flex-direction_row justify-content_flex-center">
           <Pagination
           layout="total, sizes, prev, pager, next, jumper"
-          total={this.state.total}
-          pageSizes={this.state.pageSizes}
-          pageSize={this.state.pageSize}
-          currentPage={this.state.currentPage}
+          total={ this.state.total }
+          pageSizes={ this.state.pageSizes }
+          pageSize={ this.state.pageSize }
+          currentPage={ this.state.currentPage }
           />
         </div>
       </div>

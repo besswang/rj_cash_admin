@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 import {
   Pagination,
   Breadcrumb,
   Table
 } from 'element-react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 class Ditchinside extends Component {
   constructor(props){
-    super(props);
+    super(props)
     this.state = {
       activeName:'1',
       data: [],
@@ -21,24 +21,24 @@ class Ditchinside extends Component {
     };
   }
   componentDidMount() {
-    console.log("componentDidMount")
+    console.log('componentDidMount')
     // console.log(this.state.tabName)
     this.getList(this.state.tabName)
   }
   componentWillUnmount() {
-    console.log("componentWillUnmount")
+    console.log('componentWillUnmount')
   }
-  bread(){
+  bread() {
     // console.log(this.props.match.params)
     // let {tabName,id} = this.props.match.params
     // console.log(this.state.tabName)
-    let tabName = this.state.tabName
+    const tabName = this.state.tabName
     // let tabName = this.props.match.params.tabName
-    let url = '/statistics/repayment/' + tabName
-    let text = (tabName === '1' ? '还款单分析' : '还款金额分析')
+    const url = `/statistics/repayment/${ tabName }`
+    const text = (tabName === '1' ? '还款单分析' : '还款金额分析')
     return (
-      <Link to={`${url}`}>
-        {text}
+      <Link to={ `${ url }` }>
+        { text }
       </Link>
     )
   }
@@ -189,24 +189,26 @@ class Ditchinside extends Component {
     return (
       <div>
         <Breadcrumb separator="/" className="pb15">
-					<Breadcrumb.Item>
-            {this.bread()}
-					</Breadcrumb.Item>
-					<Breadcrumb.Item>详情</Breadcrumb.Item>
-				</Breadcrumb>
+          <Breadcrumb.Item>
+            { this.bread() }
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>详情</Breadcrumb.Item>
+        </Breadcrumb>
         <Table
-        style={{width: '100%'}}
-        columns={this.state.columns}
-        data={this.state.data}
-        border={true}/>
-          <div className="pagination-con flex flex-direction_row justify-content_flex-center">
-						<Pagination
-						layout="total, sizes, prev, pager, next, jumper"
-						total={this.state.total}
-						pageSizes={this.state.pageSizes}
-						pageSize={this.state.pageSize}
-						currentPage={this.state.currentPage}/>
-					</div>
+        style={ { width: '100%' } }
+        columns={ this.state.columns }
+        data={ this.state.data }
+        border
+        />
+        <div className="pagination-con flex flex-direction_row justify-content_flex-center">
+          <Pagination
+          layout="total, sizes, prev, pager, next, jumper"
+          total={ this.state.total }
+          pageSizes={ this.state.pageSizes }
+          pageSize={ this.state.pageSize }
+          currentPage={ this.state.currentPage }
+          />
+        </div>
       </div>
     )
   }

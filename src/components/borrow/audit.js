@@ -1,11 +1,11 @@
-import React,{ Component } from 'react';
-import { Input,Form,Button,Table,MessageBox,Message,Pagination,Select } from 'element-react';
+import React, { Component } from 'react'
+import { Input, Form, Button, Table, MessageBox, Message, Pagination, Select } from 'element-react'
 import Time from '../common/setime'
 import { Link } from 'react-router-dom';
 import { AUDIT_SELECT } from '../meta/select'
 class Audit extends Component{
 	constructor(props) {
-		super(props);
+		super(props)
 		this.state = {
 			total:25,
 			pageSizes: [5,10,20,30],
@@ -16,70 +16,70 @@ class Audit extends Component{
 						type: 'index',
 						fixed: 'left'
 				}, {
-					label: "真实姓名",
-					prop: "name",
-					width:100,
+					label: '真实姓名',
+					prop: 'name',
+					width: 100,
 					fixed: 'left'
 				},{
-					label: "手机号码",
-					prop: "tel"
+					label: '手机号码',
+					prop: 'tel'
 				},{
-					label: "身份证号",
-					prop: "idcard"
+					label: '身份证号',
+					prop: 'idcard'
 				},
 				{
-					label: "渠道名称",
-					prop: "ditch"
+					label: '渠道名称',
+					prop: 'ditch'
 				},
 				{
-					label: "授信额度",
-					prop: "zip"
+					label: '授信额度',
+					prop: 'zip'
 				},
 				{
-					label: "认证参数",
-					prop: "zip"
+					label: '认证参数',
+					prop: 'zip'
 				}, {
-					label: "借款次数",
-					prop: "zip"
+					label: '借款次数',
+					prop: 'zip'
 				}, {
-					label: "性别",
-					prop: "zip"
+					label: '性别',
+					prop: 'zip'
 				}, {
-					label: "注册时间",
-					prop: "zip"
+					label: '注册时间',
+					prop: 'zip'
 				}, {
-					label: "登陆IP",
-					prop: "zip"
+					label: '登陆IP',
+					prop: 'zip'
 				}, {
-					label: "IP城市",
-					prop: "zip"
+					label: 'IP城市',
+					prop: 'zip'
 				}, {
-					label: "登陆次数",
-					prop: "zip"
+					label: '登陆次数',
+					prop: 'zip'
 				},{
-				 	label: "黑名单",
-				 	prop: "blackType",
-					fixed:'right',
-					 render: (row,column,index) => {
-						 if(row.blackType===1){
+				 	label: '黑名单',
+				 	prop: 'blackType',
+					fixed: 'right',
+					 render: row => {
+						 if (row.blackType === 1) {
 							 return (
-								 <Button type="text" size="mini" onClick={this.openBlackListMessage.bind(this,row.blackType)}>删除</Button>
+								 <Button type="text" size="mini" onClick={ this.openBlackListMessage.bind(this,row.blackType) }>删除</Button>
 							 )
 						 }else{
 								return (
-									<Button type="text" size="mini" onClick={this.openBlackListMessage.bind(this)}>添加</Button>
+									<Button type="text" size="mini" onClick={ this.openBlackListMessage.bind(this) }>添加</Button>
 								)
 						 }
 					 }
 				},{
-					label: "操作",
+					label: '操作',
 					fixed: 'right',
 					width:120,
-					render: (row, column, index)=>{
+					render: row => {
 						if(row.using === 1){
 							return (
 								<div className="flex flex-direction_row">
-									<Button className="margin_right10" type="primary" size="mini" onClick={this.openUsingMessage.bind(this)}>启用</Button>
+									<Button className="margin_right10" type="primary" size="mini" onClick={ this.openUsingMessage.bind(this) }>启用</Button>
 									{/* <Button type="text" size="small" onClick={this.deleteRow.bind(this, index)}>会员详情</Button> */}
 									<Link to="/member/mlist/detail">
 										<Button type="text" size="small">会员详情</Button>
@@ -89,7 +89,7 @@ class Audit extends Component{
 						}else{
 							return (
 								<div className="flex flex-direction_row">
-									<Button className="margin_right10" type="danger" size="mini" onClick={this.openUsingMessage.bind(this)}>禁用</Button>
+									<Button className="margin_right10" type="danger" size="mini" onClick={ this.openUsingMessage.bind(this) }>禁用</Button>
 									{/* <Button type="text" size="small" onClick={this.deleteRow.bind(this, index)}>会员详情</Button> */}
 									<Link to="/member/mlist/detail">
 										<Button type="text" size="small">会员详情</Button>
@@ -120,7 +120,7 @@ class Audit extends Component{
 	}
 	openBlackListMessage(type) {
 		console.log(type)
-		if(type===1){
+		if (type === 1) {
 			MessageBox.confirm('将用户从黑明单删除, 是否继续?', '提示', {
 				type: 'warning'
 			}).then(() => {
@@ -177,12 +177,12 @@ class Audit extends Component{
 	render() {
 		return (
 			<div>
-				<Form inline={true}>
+				<Form inline>
 					<Form.Item>
-						<Select value={this.state.value} clearable={true} placeholder="搜索类型">
+						<Select value={ this.state.value } clearable placeholder="搜索类型">
 							{
 								AUDIT_SELECT.map(el => {
-									return <Select.Option key={el.value} label={el.label} value={el.value} />
+									return <Select.Option key={ el.value } label={ el.label } value={ el.value } />
 								})
 							}
 						</Select>
@@ -191,29 +191,30 @@ class Audit extends Component{
 						<Input placeholder="请输入内容" />
 					</Form.Item>
 					<Form.Item>
-						<Time></Time>
+						<Time />
 					</Form.Item>
 					<Form.Item>
 						<Button nativeType="submit" type="primary">搜索</Button>
 					</Form.Item>
 				</Form>
 				<Table
-					style={{width: '100%'}}
-					columns={this.state.columns}
-					data={this.state.data}
-					border={true}
-					maxHeight={250}>
-					</Table>
-					<div className="pagination-con flex flex-direction_row justify-content_flex-center">
-						<Pagination
-						layout="total, sizes, prev, pager, next, jumper"
-						total={this.state.total}
-						pageSizes={this.state.pageSizes}
-						pageSize={this.state.pageSize}
-						currentPage={this.state.currentPage}/>
-					</div>
+					style={ { width: '100%' } }
+					columns={ this.state.columns }
+					data={ this.state.data }
+					border
+					maxHeight={ 250 }
+				/>
+				<div className="pagination-con flex flex-direction_row justify-content_flex-center">
+					<Pagination
+					layout="total, sizes, prev, pager, next, jumper"
+					total={ this.state.total }
+					pageSizes={ this.state.pageSizes }
+					pageSize={ this.state.pageSize }
+					currentPage={ this.state.currentPage }
+					/>
+				</div>
 			</div>
 		)
 	}
 }
-export default Audit;
+export default Audit
