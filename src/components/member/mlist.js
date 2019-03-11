@@ -118,6 +118,9 @@ class Mlist extends Component{
 			}]
 		};
 	}
+	componentDidMount() {
+		console.log(this.props)
+	}
 	openBlackListMessage(type) {
 		console.log(type)
 		if(type===1){

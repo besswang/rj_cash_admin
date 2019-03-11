@@ -142,7 +142,12 @@
       ],
       "react/jsx-indent": 0,
       "react/prop-types": [
-        1
+        1,
+        {
+          "ignore": [
+            "match"
+          ]
+        }
       ],
       "react/no-array-index-key": [
         1

@@ -62,7 +62,7 @@ export default class MoneyTable extends Component {
         },{
           label: '操作',
           render: (row) => {
-            const url = `/statistics/repayment/repayinside/${ this.props.tabName }/4`
+            const url = `/statistics/repayinside/${ this.props.tabName }/4`
             return (
               <Link to={ `${ url }` }>
                 <Button type="text" size="mini">查看</Button>

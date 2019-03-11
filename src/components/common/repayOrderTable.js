@@ -62,7 +62,7 @@ export default class OrderTable extends Component {
         },{
           label: '操作',
           render: (row) => {
-            const url = `/statistics/repayment/repayinside/${ this.props.tabName }/3`
+            const url = `/statistics/repayinside/${ this.props.tabName }/3`
             return (
               <Link to={ `${ url }` }>
                 <Button type="text" size="mini">查看</Button>

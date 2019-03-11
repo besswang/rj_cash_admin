@@ -3,12 +3,20 @@ import { Button, Form, Input } from 'element-react'
 import { Redirect } from 'react-router-dom'
 import api from '../api/index'
 // import http from '../axios/index'
-import history from '../routes/history'
 import '../styles/login.less'
+import PropTypes from 'prop-types'
+import history from '../routes/history'
 class Login extends Component {
+  static propTypes = {
+    // match: PropTypes.object.isRequired,
+    // location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
+  };
   constructor(props) {
     super(props);
     this.state = {
+      propsData:this.props,
+      propsDataHistory:this.props.history,
       loginSuccess:false,//登陆状态
       form1: {
         username: '',
@@ -82,13 +90,13 @@ class Login extends Component {
   }
   loginFn = e => {
     e.preventDefault();
-    history.push('/home');
     // api.a()
     // console.log(this.state.currentIndex)
     if (this.state.currentIndex===0){
       this.form1.validate((valid) => {
         if (valid) {
-          history.push('/');
+          // history.push('/home');
+          this.props.history.push('/home')
         } else {
           console.log('error submit!!');
           return false;
@@ -174,3 +182,7 @@ class Login extends Component {
   }
 }
 export default Login;
+Login.propTypes = {
+  propsData:PropTypes.object,
+  propsDataHistory: PropTypes.object
+}

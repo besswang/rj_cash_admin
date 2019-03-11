@@ -7,12 +7,13 @@ import 'element-theme-default';
 import './index.css';
 import './mock/mock';
 import App from './routes/index'
-import * as serviceWorker from './serviceWorker';
-const store = createStore(connect)
+import * as serviceWorker from './serviceWorker'
+// const store = createStore(connect)
 ReactDOM.render(
-  <Provider store={ store }>
-    <App />
-  </Provider>,
+  // <Provider store={ store }>
+  //   <App />
+  // </Provider>,
+  <App />,
   document.getElementById('root')
 );
 

@@ -5,7 +5,7 @@ export const SIDE_BAR_TEXT = [
     menuItem: [
       {
         itemIndex: '1-1',
-        path:'/member/mlist',
+        path: '/member/mlist',
         title: '会员列表'
       }, {
         itemIndex: '1-2',

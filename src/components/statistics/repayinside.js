@@ -5,7 +5,8 @@ import {
   Table
 } from 'element-react'
 import { Link } from 'react-router-dom'
-class Ditchinside extends Component {
+import { withRouter } from 'react-router-dom'
+class RepayInside extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -20,13 +21,14 @@ class Ditchinside extends Component {
       tabName: this.props.match.params.tabName
     };
   }
+  componentWillMount() {
+    console.log('componentWillMount')
+    console.log(this.props)
+  }
   componentDidMount() {
     console.log('componentDidMount')
     // console.log(this.state.tabName)
     this.getList(this.state.tabName)
-  }
-  componentWillUnmount() {
-    console.log('componentWillUnmount')
   }
   bread() {
     // console.log(this.props.match.params)
@@ -41,6 +43,7 @@ class Ditchinside extends Component {
         { text }
       </Link>
     )
+    // return text
   }
   getList = (name) => {
     switch (name) {
@@ -190,7 +193,9 @@ class Ditchinside extends Component {
       <div>
         <Breadcrumb separator="/" className="pb15">
           <Breadcrumb.Item>
-            { this.bread() }
+              {
+                this.bread()
+              }
           </Breadcrumb.Item>
           <Breadcrumb.Item>详情</Breadcrumb.Item>
         </Breadcrumb>
@@ -213,4 +218,4 @@ class Ditchinside extends Component {
     )
   }
 }
-export default Ditchinside;
+export default withRouter(RepayInside)

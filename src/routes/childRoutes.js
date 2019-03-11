@@ -1,33 +1,33 @@
 import React from 'react'
-import Welcome from '../components/welcome'
+import Welcome from '@components/welcome'
 // 会员管理-会员列表
-import Mlist from '../components/member/mlist'
+import Mlist from '@components/member/mlist'
 // 会员管理-会员列表
-import Detail from '../components/member/detail'
+import Detail from '@components/member/detail'
 // 会员管理-注册未申请
-import Apply from '../components/member/apply'
+import Apply from '@components/member/apply'
 // 会员管理-正常还款未借
-import Normal from '../components/member/normal'
+import Normal from '@components/member/normal'
 // 报表统计-渠道统计
-import Ditch from '../components/statistics/ditch'
+import Ditch from '@components/statistics/ditch'
 // 报表统计-渠道统计-当天/总转化/渠道费用
-import Ditchinside from '../components/statistics/ditchinside'
+import Ditchinside from '@components/statistics/ditchinside'
 // 报表统计-逾期统计
-import Overdue from '../components/statistics/overdue'
+import Overdue from '@components/statistics/overdue'
 // 报表统计-放款统计
-import Loan from '../components/statistics/loan'
+import Loan from '@components/statistics/loan'
 // 报表统计-还款统计
-import Repayment from '../components/statistics/repayment'
+import Repayment from '@components/statistics/repayment'
 // 报表统计-还款统计-查看
-import Repayinside from '../components/statistics/repayinside'
+import Repayinside from '@components/statistics/repayinside'
 // 报表统计-消耗费用
-import Consume from '../components/statistics/consume'
+import Consume from '@components/statistics/consume'
 // 报表统计-进出账
-import Turnover from '../components/statistics/turnover'
+import Turnover from '@components/statistics/turnover'
 // 报表统计-数据看版
-import Look from '../components/statistics/look'
+import Look from '@components/statistics/look'
 // 借款管理-待审核
-import Audit from '../components/borrow/audit'
+import Audit from '@components/borrow/audit'
 export const CHILD_ROUTES = [{
   id: 1,
   path: '/home',
@@ -36,6 +36,7 @@ export const CHILD_ROUTES = [{
 }, {
   id: 2,
   path: '/member/mlist',
+  // path: `${match.url}`,
   exact: true,
   main: () => <Mlist />
 }, {
@@ -80,7 +81,7 @@ export const CHILD_ROUTES = [{
   main: () => <Repayment />
 }, {
   id: 11,
-  path: '/statistics/repayment/repayinside/:tabName/:id',
+  path: '/statistics/repayinside/:tabName/:id',
   exact: true,
   main: () => <Repayinside />
 }, {

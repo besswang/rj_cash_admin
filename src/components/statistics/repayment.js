@@ -7,7 +7,14 @@ import {
 } from 'element-react'
 import Ordertable from '../common/repayOrderTable'
 import Moneytable from '../common/repayMoneyTable'
-class Ditchinside extends Component {
+import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
+class RepayMent extends Component {
+  static propTypes = {
+    // match: PropTypes.object.isRequired,
+    // location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
+  };
   constructor(props){
     console.log('constructor()')
     super(props);
@@ -37,25 +44,31 @@ class Ditchinside extends Component {
       pageSizes:[5,10,15],
       currentPage:1,
       loading:true
-    };
-    this.tabChange = this.tabChange.bind(this)
+    }
+  }
+  componentWillMount() {
+    console.log('componentWillmount')
+    console.log(this.props)
   }
   componentDidMount() {
     console.log('componentDidMount')
+    console.log(this.props.match)
     this.setState({
       activeName:this.props.match.params.tabName
     })
     this.getList(this.props.match.params.tabName)
+    // this.props.history.push({
+    //   pathname: `/statistics/repayment/${ this.state.currentTab }`
+    // })
     // setTimeout(() => {
     //   this.setState({
     //     loading:false
     //   })
     // }, 2000);
   }
-  componentWillUnmount() {
-    console.log('componentWillUnmount')
-  }
-  tabChange(e){
+  tabChange = e => {
+    console.log(e.props.name)
+    console.log(this.props.history)
     this.props.history.push({
       pathname: `/statistics/repayment/${ e.props.name }`
     });
@@ -111,12 +124,12 @@ class Ditchinside extends Component {
       <div>
         <Tabs activeName={ this.state.activeName } onTabClick={ this.tabChange }>
           <Tabs.Pane label="还款单分析" name="1">
-            <Loading loading={ this.state.loading }>
+            {/* <Loading loading={ this.state.loading }> */}
               <Ordertable
               data={ this.state.data }
               tabName={ this.state.currentTab }
               />
-            </Loading>
+            {/* </Loading> */}
           </Tabs.Pane>
           <Tabs.Pane label="还款金额分析" name="2">
             <Moneytable data={ this.state.data } tabName={ this.state.currentTab } />
@@ -135,4 +148,4 @@ class Ditchinside extends Component {
     )
   }
 }
-export default Ditchinside;
+export default withRouter(RepayMent);

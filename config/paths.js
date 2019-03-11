@@ -6,6 +6,7 @@ const url = require('url');
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebook/create-react-app/issues/637
+// 获取npm run start 运行所在的路径
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
@@ -70,8 +71,11 @@ module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
   appBuild: resolveApp('build'),
+//  这就是  一开始  我们的项目 要使用public/index.html作为 默认首页
+//  这里写什么文件名，项目中就要使用什么文件名  包括 也要有public文件夹
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
+  //编译的入口文件的文件名  项目中要包括src文件夹
   appIndexJs: resolveModule(resolveApp, 'src/index'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),

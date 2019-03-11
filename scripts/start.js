@@ -18,6 +18,7 @@ require('../config/env');
 const fs = require('fs');
 const chalk = require('react-dev-utils/chalk');
 const webpack = require('webpack');
+// 启动http服务器
 const WebpackDevServer = require('webpack-dev-server');
 const clearConsole = require('react-dev-utils/clearConsole');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
@@ -28,6 +29,7 @@ const {
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
 const openBrowser = require('react-dev-utils/openBrowser');
+// 要编译的文件路径与生成路径等
 const paths = require('../config/paths');
 const configFactory = require('../config/webpack.config');
 const createDevServerConfig = require('../config/webpackDevServer.config');
@@ -41,6 +43,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 }
 
 // Tools like Cloud9 rely on this.
+//这就是为什么 端口号 不是8080 而是 3000 的原因，在这里可以改成8080，重新npm run start 生效
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 8089;
 const HOST = process.env.HOST || '0.0.0.0';
 
@@ -76,6 +79,7 @@ checkBrowsers(paths.appPath, isInteractive)
       return;
     }
     const config = configFactory('development');
+    // 这里可以设置 http协议, 或者可以在 npm run start 之前 cmd命令窗口中执行 set HTTPS=true&&npm start 改成https 安全协议
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
     const urls = prepareUrls(protocol, HOST, port);

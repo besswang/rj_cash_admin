@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import { Menu } from 'element-react'
 import { SIDE_BAR_TEXT } from '../meta/sidebarText'
 export default class Sidebar extends Component{
+  componentDidMount(){
+    console.log(this.props)
+  }
   onOpen() {
 
   }
@@ -10,12 +13,13 @@ export default class Sidebar extends Component{
   onClose() {
 
   }
-  render(){
+  render(match){
     return (
       <Menu theme="dark" onOpen={ this.onOpen.bind(this) } onClose={ this.onClose.bind(this) } style={ { width:230 } }>
-        {SIDE_BAR_TEXT.map((item,index) => {
+        {SIDE_BAR_TEXT.map(item => {
           return (
             <Menu.SubMenu index={ item.subIndex } title={ <span>{ item.title }</span> } key={ item.title }>
+
               { item.menuItem.map((list) => {
                 return (
                   <Link to={ `${ list.path }` } key={ list.title } style={ { block:'block' } }>
