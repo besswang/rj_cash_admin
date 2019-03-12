@@ -28,6 +28,8 @@ import Turnover from '@components/statistics/turnover'
 import Look from '@components/statistics/look'
 // 借款管理-待审核
 import Audit from '@components/borrow/audit'
+// 借款管理-待审核-详情
+import Auddetail from '@components/borrow/auddetail'
 export const CHILD_ROUTES = [{
   id: 1,
   path: '/home',
@@ -104,4 +106,9 @@ export const CHILD_ROUTES = [{
   path: '/borrow/audit',
   exact: true,
   main: () => <Audit />
+}, {
+  id: 16,
+  path: '/borrow/auddetail',
+  exact: true,
+  main: () => < Auddetail / >
 }]

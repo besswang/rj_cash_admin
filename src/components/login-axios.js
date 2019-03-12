@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 // import api from '../api/index'
 import http from '../axios/index'
 import history from '../routes/history'
-import '../styles/login.less'
+import '../styles/login20190312.less'
 class Login extends Component {
   constructor(props) {
     super(props);

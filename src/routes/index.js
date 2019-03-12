@@ -27,7 +27,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/"
             render={ () => {
-                if(loginSuccess){
+                if(loginSuccess){ //判断是否已经登陆
                   return <Redirect to="/home" />
                 }else{
                   return <Redirect to = "/login" />

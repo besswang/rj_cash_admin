@@ -1,184 +1,105 @@
 import React, { Component } from 'react'
-import { Button, Form, Input } from 'element-react'
-import { Redirect } from 'react-router-dom'
-import api from '../api/index'
-// import http from '../axios/index'
+import { Button, Form, Input,Layout, Checkbox } from 'element-react'
+// import api from '../api/index'
 import '../styles/login.less'
+import icon1 from '../images/login-from-icon1.png';
+import icon2 from '../images/login-from-icon2.png';
+import user from '../images/user.png';
+import code from '../images/code.png';
 import PropTypes from 'prop-types'
-import history from '../routes/history'
 class Login extends Component {
   static propTypes = {
     // match: PropTypes.object.isRequired,
     // location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired
-  };
-  constructor(props) {
+  }
+  constructor(props){
     super(props);
     this.state = {
-      propsData:this.props,
-      propsDataHistory:this.props.history,
-      loginSuccess:false,//登陆状态
-      form1: {
-        username: '',
-        password: '',
-      },
-      form2: {
-        tel: '',
-        code: '',
-      },
-      tab: [
-        {
-          id:0,
-          text:'密码登陆'
-        },{
-          id:1,
-          text:'验证码登陆'
-        }
-      ],
-      currentIndex:0,
-      rules1: {
-        username: [
-          {
-          required: true,
-          message: '请输入用户名',
-          trigger: 'blur'
-          }
-        ],
-        password: [
-          {
-          required: true,
-          message: '请输入密码',
-          trigger: 'blur'
-          }
-        ]
-      },
-      rules2: {
-        tel: [
-          {
-            required: true,
-            message: '请输入手机号',
-            trigger: 'blur'
-          }, {
-            validator: (rule, value, callback) => {
-              const reg = /^1[34578]\d{9}$/
-              setTimeout(() => {
-                if (!reg.test(this.state.form2.tel)) {
-                  callback(new Error('请输入有效的手机号'));
-                } else {
-                  callback();
-                }
-              }, 1000);
-            },
-            trigger: 'change'
-          }
-        ],
-        code: [
-            {
-            required: true,
-            message: '请输入验证码',
-            trigger: 'blur'
-          }
-        ]
-      }
-    };
-  }
-  tabChoiced = (id) => {
-    //tab切换到方法
-    this.setState({
-      currentIndex: id
-    });
+      type:1
+    }
   }
   loginFn = e => {
     e.preventDefault();
-    // api.a()
-    // console.log(this.state.currentIndex)
-    if (this.state.currentIndex===0){
-      this.form1.validate((valid) => {
-        if (valid) {
-          // history.push('/home');
-          this.props.history.push('/home')
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
-    }else{
-      this.form2.validate((valid) => {
-        if (valid) {
-          alert('submit!');
-          console.log(this.state.form2)
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
-    }
+    this.props.history.push('/home')
   }
-  onChange(key, value) {
-    this.setState({
-      form1: Object.assign({}, this.state.form1, {
-        [ key ]: value
-      }),
-      form2: Object.assign({}, this.state.form2, {
-        [ key ]: value
-      })
-    });
-  }
-  render() {
-    const that = this;
-    const show1 = this.state.currentIndex === 0 ? 'block' : 'none';
-    const show2 = this.state.currentIndex === 1 ? 'block' : 'none';
-    if (this.state.loginSuccess) {
-      return (<Redirect to="/home" />)
-    } else {
+  Codeform = () => {
+    const { type } = this.state
+    if (type){
       return (
-        <div className="login-con">
-          <div className="form-con">
-            <ul className="tab-con flex flex-direction_row">
-              {this.state.tab.map((item, index) => {
-                return (
-                  <li className={ [ 'flex_auto', index === this.state.currentIndex ? 'active' : '' ].join(' ') } key={ item.id } onClick={ this.tabChoiced.bind(that, item.id) }>{ item.text }</li>
-                )
-              })}
-            </ul>
-            <Form style={ { 'display': show1 } } ref={ e => { this.form1 = e } } model={ this.state.form1 } rules={ this.state.rules1 }>
-              <Form.Item prop="username">
-                <Input placeholder="请输入用户名"
-                value={ this.state.form1.username }
-                onChange={ this.onChange.bind(this, 'username') }
-                />
-              </Form.Item>
-              <Form.Item prop="password">
-                <Input placeholder="请输入密码"
-                value={ this.state.form1.password }
-                onChange={ this.onChange.bind(this, 'password') }
-                />
-              </Form.Item>
-            </Form>
-            <Form style={ { 'display': show2 } } ref={ e => { this.form2 = e } } model={ this.state.form2 } rules={ this.state.rules2 }>
-              <Form.Item prop="tel">
-                <Input placeholder="请输入手机号"
-                value={ this.state.form2.tel }
-                onChange={ this.onChange.bind(this, 'tel') }
-                />
-              </Form.Item>
-              <div className="flex flex-direction_row">
-                <Form.Item prop="code">
-                  <Input placeholder="请输入验证码"
-                  value={ this.state.form2.code }
-                  onChange={ this.onChange.bind(this, 'code') }
-                  />
-                </Form.Item>
-                <Form.Item className="flex_1">
-                  <Button type="text">获取验证码</Button>
-                </Form.Item>
-              </div>
-            </Form>
-            <Button type="primary" size="large" className="login-btn" onClick={ this.loginFn }>登陆</Button>
+        <Form className="form-con">
+          <Form.Item>
+            <Input placeholder="请输入您的手机号/用户名" prepend={
+                <img src={ user } alt="" />
+              }
+            />
+          </Form.Item>
+          <div className="code-con">
+            <Form.Item>
+              <Input placeholder="请输入您的验证码" prepend={
+                  <img src={ code } alt="" />
+                }
+              />
+            </Form.Item>
+            <Form.Item className="flex_1 code-item">
+              <Button type="text">获取验证码</Button>
+            </Form.Item>
           </div>
-        </div>
+          <Form.Item className="lastitem">
+            <Checkbox label="记住用户名和密码" />
+            <Button className="login-btn" type="primary" onClick={ this.loginFn }>登陆</Button>
+          </Form.Item>
+        </Form>
+      )
+    }else{
+      return (
+        <Form className="form-con">
+          <Form.Item>
+            <Input placeholder="请输入您的手机号/用户名" prepend={
+                <img src={ user } alt="" />
+              }
+            />
+          </Form.Item>
+          <Form.Item>
+            <Input placeholder="请输入您的密码" prepend={
+                <img src={ code } alt="" />
+              }
+            />
+          </Form.Item>
+          <div className="code-con">
+            <Form.Item>
+              <Input placeholder="请输入右侧验证码" />
+            </Form.Item>
+            <Form.Item className="flex_1 code-item">
+              <Button type="text">1234</Button>
+            </Form.Item>
+          </div>
+          <Form.Item className="lastitem">
+            <Checkbox label="记住用户名和密码" />
+            <Button className="login-btn" type="primary">登陆</Button>
+          </Form.Item>
+        </Form>
       )
     }
+  }
+  render() {
+      return (
+        <div className="login-con">
+          <Layout.Row type="flex" justify="center" align="middle" className="row-bg">
+            <Layout.Col span="7" className="grid-content grid-left flex flex-direction_column justify-content_flex-center align-item_center">
+              <img className="icon1" src={ icon1 } alt=""/>
+              <div className="flex flex-direction_row borderb1 align-items_center">
+                <h1 className="wel">欢迎来到</h1>
+                <img className="icon2" src={ icon2 } alt=""/>
+              </div>
+              <h1 className="title">现金滴滴后台登陆系统</h1>
+            </Layout.Col>
+            <Layout.Col span="6" className="grid-content grid-right flex flex-direction_column justify-content_flex-center align-item_center">
+            { this.Codeform() }
+            </Layout.Col>
+          </Layout.Row>
+        </div>
+      )
   }
 }
 export default Login;

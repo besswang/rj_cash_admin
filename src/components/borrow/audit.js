@@ -16,87 +16,65 @@ class Audit extends Component{
 						type: 'index',
 						fixed: 'left'
 				}, {
-					label: '真实姓名',
+					label: '订单号',
 					prop: 'name',
 					width: 100,
 					fixed: 'left'
 				},{
-					label: '手机号码',
+					label: '渠道名称',
 					prop: 'tel'
 				},{
-					label: '身份证号',
+					label: '真实姓名',
 					prop: 'idcard'
 				},
 				{
-					label: '渠道名称',
+					label: '风控分数',
 					prop: 'ditch'
 				},
 				{
-					label: '授信额度',
+					label: '手机号码',
 					prop: 'zip'
 				},
 				{
-					label: '认证参数',
+					label: '身份证号',
 					prop: 'zip'
 				}, {
-					label: '借款次数',
+					label: '申请金额',
 					prop: 'zip'
 				}, {
-					label: '性别',
+					label: '申请期限',
 					prop: 'zip'
 				}, {
-					label: '注册时间',
+					label: '服务费',
 					prop: 'zip'
 				}, {
-					label: '登陆IP',
+					label: '催款次数',
 					prop: 'zip'
 				}, {
-					label: 'IP城市',
+					label: '新老客户',
 					prop: 'zip'
 				}, {
-					label: '登陆次数',
+					label: '申请时间',
 					prop: 'zip'
-				},{
-				 	label: '黑名单',
-				 	prop: 'blackType',
-					fixed: 'right',
-					 render: row => {
-						 if (row.blackType === 1) {
-							 return (
-								 <Button type="text" size="mini" onClick={ this.openBlackListMessage.bind(this,row.blackType) }>删除</Button>
-							 )
-						 }else{
-								return (
-									<Button type="text" size="mini" onClick={ this.openBlackListMessage.bind(this) }>添加</Button>
-								)
-						 }
-					 }
-				},{
+				}, {
+					label: '审核建议',
+					prop: 'zip'
+				}, {
 					label: '操作',
 					fixed: 'right',
-					width:120,
+					width:180,
 					render: row => {
-						if(row.using === 1){
 							return (
 								<div className="flex flex-direction_row">
-									<Button className="margin_right10" type="primary" size="mini" onClick={ this.openUsingMessage.bind(this) }>启用</Button>
+									<Button className="margin_right10" type="success" size="mini" onClick={ this.openUsingMessage.bind(this) }>通过</Button>
+									<Button className="margin_right10" type="danger" size="mini" onClick={ this.openUsingMessage.bind(this) }>拒绝</Button>
+
 									{/* <Button type="text" size="small" onClick={this.deleteRow.bind(this, index)}>会员详情</Button> */}
-									<Link to="/member/mlist/detail">
-										<Button type="text" size="small">会员详情</Button>
+									<Link to="/borrow/auddetail">
+										<Button type="text" size="small">用户详情</Button>
 									</Link>
 								</div>
 							)
-						}else{
-							return (
-								<div className="flex flex-direction_row">
-									<Button className="margin_right10" type="danger" size="mini" onClick={ this.openUsingMessage.bind(this) }>禁用</Button>
-									{/* <Button type="text" size="small" onClick={this.deleteRow.bind(this, index)}>会员详情</Button> */}
-									<Link to="/member/mlist/detail">
-										<Button type="text" size="small">会员详情</Button>
-									</Link>
-								</div>
-							)
-						}
 					}
       }],
 			data: [{
@@ -118,6 +96,12 @@ class Audit extends Component{
 			}]
 		};
 	}
+	componentWillMount() {
+		console.log(this.props)
+	}
+  componentDidMount() {
+
+  }
 	openBlackListMessage(type) {
 		console.log(type)
 		if (type === 1) {

@@ -20,6 +20,9 @@ code {
 a{
   text-decoration: none;
 }
+img{
+  display:block;
+}
 h1,h2,h3,h4,h5,h6{
   font-weight: normal;
   padding:0;
@@ -29,6 +32,10 @@ ul,li{
   padding:0;
   margin:0;
   list-style: none;
+}
+dl,dd{
+  padding: 0;
+  margin: 0;
 }
 p{
   padding:0;
@@ -142,4 +149,7 @@ p{
 }
 .pagination-con{
   padding-top:15px;
+}
+.borderb1{
+  border-bottom: .0625rem solid #fff;
 }
