@@ -5,6 +5,9 @@ import { BrowserRouter as Router,Route, Switch, Redirect } from 'react-router-do
 import Login from '@components/login'
 import Home from '@components/home'
 import { CHILD_ROUTES } from './childRoutes'
+
+import { Provider } from 'react-redux'
+import store from '../redux/store'
 //路由操作
 class App extends Component {
   constructor(props){
@@ -13,36 +16,31 @@ class App extends Component {
       loginSuccess:false
     }
   }
-  componentDidMount() {
-    // console.log(this.props.match)
-  }
-  componentWillUnmount() {
-
-  }
   render() {
     const { loginSuccess } = this.state
     return(
-      // <HashRouter></HashRouter>
-      <Router>
-        <Switch>
-          <Route exact path="/"
-            render={ () => {
-                if(loginSuccess){ //判断是否已经登陆
-                  return <Redirect to="/home" />
-                }else{
-                  return <Redirect to = "/login" />
+      <Provider store={ store }>
+        <Router>
+          <Switch>
+            <Route exact path="/"
+              render={ () => {
+                  if(loginSuccess){ //判断是否已经登陆
+                    return <Redirect to="/home" />
+                  }else{
+                    return <Redirect to = "/login" />
+                  }
                 }
               }
-            }
-          />
-          <Route exact path="/login" component={ Login } />
-          <Home>
-            { CHILD_ROUTES.map(item => {
-              return <Route key={ item.id } path={ item.path } component={ item.main } />
-            }) }
-          </Home>
-        </Switch>
-      </Router>
+            />
+            <Route exact path="/login" component={ Login } />
+            <Home>
+              { CHILD_ROUTES.map(item => {
+                return <Route key={ item.id } path={ item.path } component={ item.main } />
+              }) }
+            </Home>
+          </Switch>
+        </Router>
+      </Provider>
     )
   }
 }

@@ -65,7 +65,8 @@ export const SIDE_BAR_TEXT = [
       title: '待审核'
     }, {
       itemIndex: '3-2',
-      title: '审核拒绝'
+      path: '/text/TodoList',
+      title: '审核拒绝（测试）'
     }
   ]
   }, {

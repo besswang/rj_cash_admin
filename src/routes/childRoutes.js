@@ -30,6 +30,8 @@ import Look from '@components/statistics/look'
 import Audit from '@components/borrow/audit'
 // 借款管理-待审核-详情
 import Auddetail from '@components/borrow/auddetail'
+//测试
+import Todolist from '@components/text/App'
 export const CHILD_ROUTES = [{
   id: 1,
   path: '/home',
@@ -110,5 +112,10 @@ export const CHILD_ROUTES = [{
   id: 16,
   path: '/borrow/auddetail',
   exact: true,
-  main: () => < Auddetail / >
+  main: () => <Auddetail />
+}, {
+  id: 17,
+  path: '/text/TodoList',
+  exact: true,
+  main: () => <Todolist />
 }]
