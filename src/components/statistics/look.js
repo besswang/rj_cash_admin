@@ -5,7 +5,7 @@ import solt from '../../global/solt'
 import '../../styles/look.less'
 class Look extends Component {
   constructor(props){
-    super(props);
+    super(props)
     this.state={
       data:[
         {
@@ -68,4 +68,4 @@ class Look extends Component {
   }
 }
 
-export default Look;
+export default Look

@@ -33,5 +33,5 @@ class Home extends Component {
 }
 Home.propTypes = {
 	children: PropTypes.node.isRequired
-};
+}
 export default withRouter(Home)

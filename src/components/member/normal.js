@@ -1,11 +1,11 @@
-import React,{ Component } from 'react';
+import React,{ Component } from 'react'
 import { Form,Button,Table,Pagination,Select,Input } from 'element-react'
 import Time from '../common/setime'
 import { NORMAL_COLUMNS } from '../meta/columns'
 import { MLIST_SELECT } from '../meta/select'
 class Apply extends Component{
 	constructor(props){
-		super(props);
+		super(props)
 		this.state = {
 			total:25,
 			pageSizes:[5,10,20,30],
@@ -45,7 +45,7 @@ class Apply extends Component{
 						<Time />
 					</Form.Item>
 					<Form.Item>
-						<Button nativeType="submit" type="primary">查询</Button>
+						<Button nativeType="submit" type="primary">{'查询'}</Button>
 					</Form.Item>
 				</Form>
 				<Table
@@ -67,4 +67,4 @@ class Apply extends Component{
 		)
 	}
 }
-export default Apply;
+export default Apply

@@ -52,4 +52,4 @@ class Ditch extends Component {
     )
   }
 }
-export default Ditch;
+export default Ditch

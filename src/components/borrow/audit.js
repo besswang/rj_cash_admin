@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Input, Form, Button, Table, MessageBox, Message, Pagination, Select } from 'element-react'
 import Time from '../common/setime'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import { AUDIT_SELECT } from '../meta/select'
 class Audit extends Component{
 	constructor(props) {
@@ -94,66 +94,66 @@ class Audit extends Component{
 				blackType: 0, //1:在黑名单，0:不在黑明单
 				using:0 //1:启用状态；0:禁用状态
 			}]
-		};
+		}
 	}
 	componentWillMount() {
 		console.log(this.props)
 	}
-  componentDidMount() {
+  // componentDidMount() {
 
-  }
-	openBlackListMessage(type) {
-		console.log(type)
-		if (type === 1) {
-			MessageBox.confirm('将用户从黑明单删除, 是否继续?', '提示', {
-				type: 'warning'
-			}).then(() => {
-				Message({
-					type: 'success',
-					message: '删除成功!'
-				});
-			}).catch(() => {
-				Message({
-					type: 'info',
-					message: '已取消删除'
-				});
-			});
-		}else{
-			MessageBox.confirm('将该用户拉入黑名单, 是否继续?', '提示', {
-				type: 'warning'
-			}).then(() => {
-				Message({
-					type: 'success',
-					message: '拉黑成功!'
-				});
-			}).catch(() => {
-				Message({
-					type: 'info',
-					message: '已取消拉黑'
-				});
-			});
-		}
-	}
-	openUsingMessage() {
-		MessageBox.confirm('将该用户禁用, 是否继续?', '提示', {
-			type: 'warning'
-		}).then(() => {
-			Message({
-				type: 'success',
-				message: '禁用成功!'
-			});
-		}).catch(() => {
-			Message({
-				type: 'info',
-				message: '已取消禁用'
-			});
-		});
-	}
+  // }
+	// openBlackListMessage(type) {
+	// 	console.log(type)
+	// 	if (type === 1) {
+	// 		MessageBox.confirm('将用户从黑明单删除, 是否继续?', '提示', {
+	// 			type: 'warning'
+	// 		}).then(() => {
+	// 			Message({
+	// 				type: 'success',
+	// 				message: '删除成功!'
+	// 			})
+	// 		}).catch(() => {
+	// 			Message({
+	// 				type: 'info',
+	// 				message: '已取消删除'
+	// 			})
+	// 		})
+	// 	}else{
+	// 		MessageBox.confirm('将该用户拉入黑名单, 是否继续?', '提示', {
+	// 			type: 'warning'
+	// 		}).then(() => {
+	// 			Message({
+	// 				type: 'success',
+	// 				message: '拉黑成功!'
+	// 			})
+	// 		}).catch(() => {
+	// 			Message({
+	// 				type: 'info',
+	// 				message: '已取消拉黑'
+	// 			})
+	// 		})
+	// 	}
+	// }
+	// openUsingMessage() {
+	// 	MessageBox.confirm('将该用户禁用, 是否继续?', '提示', {
+	// 		type: 'warning'
+	// 	}).then(() => {
+	// 		Message({
+	// 			type: 'success',
+	// 			message: '禁用成功!'
+	// 		})
+	// 	}).catch(() => {
+	// 		Message({
+	// 			type: 'info',
+	// 			message: '已取消禁用'
+	// 		})
+	// 	})
+	// }
 	deleteRow(index) {
 		const {
 			data
-		} = this.state;
-		data.splice(index, 1);
+		} = this.state
+		data.splice(index, 1)
 		this.setState({
 			data: [...data]
 		})

@@ -46,4 +46,4 @@ class Turnover extends Component {
     )
   }
 }
-export default Turnover;
+export default Turnover

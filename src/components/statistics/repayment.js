@@ -2,8 +2,7 @@
 import React, { Component } from 'react'
 import {
   Pagination,
-  Tabs,
-  Loading
+  Tabs
 } from 'element-react'
 import Ordertable from '../common/repayOrderTable'
 import Moneytable from '../common/repayMoneyTable'
@@ -17,7 +16,7 @@ class RepayMent extends Component {
   };
   constructor(props){
     console.log('constructor()')
-    super(props);
+    super(props)
     this.state = {
       activeName:'',
       currentTab:'1',
@@ -71,7 +70,7 @@ class RepayMent extends Component {
     console.log(this.props.history)
     this.props.history.push({
       pathname: `/statistics/repayment/${ e.props.name }`
-    });
+    })
     this.setState({
       currentTab:e.props.name
     })
@@ -101,8 +100,8 @@ class RepayMent extends Component {
             apply: 2,
             loanNum: 12
           }]
-        });
-        break;
+        })
+        break
       default:
         this.setState({
           data: [{
@@ -115,7 +114,7 @@ class RepayMent extends Component {
             dayPrice: '33.00',
             addupPrice: '84574.00'
           }]
-        });
+        })
     }
   }
   render(){
@@ -148,4 +147,4 @@ class RepayMent extends Component {
     )
   }
 }
-export default withRouter(RepayMent);
+export default withRouter(RepayMent)

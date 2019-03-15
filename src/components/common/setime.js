@@ -1,5 +1,5 @@
 // 开始-结束时间组建
-import React,{ Component } from 'react';
+import React,{ Component } from 'react'
 import { DateRangePicker } from 'element-react'
 export default class SetEndTime extends Component {
 	constructor(props) {
@@ -27,9 +27,9 @@ export default class SetEndTime extends Component {
 						{
 							text: '最近一周',
 							onClick: () => {
-								const end = new Date();
-								const start = new Date();
-								start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+								const end = new Date()
+								const start = new Date()
+								start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
 
 								this.setState({ value2: [start, end] })
 								this.daterangepicker2.togglePickerVisible()
@@ -37,18 +37,18 @@ export default class SetEndTime extends Component {
 						}, {
 							text: '最近一个月',
 							onClick: () => {
-								const end = new Date();
-								const start = new Date();
-								start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+								const end = new Date()
+								const start = new Date()
+								start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
 								this.setState({ value2: [start, end] })
 								this.daterangepicker2.togglePickerVisible()
 							}
 						}, {
 								text: '最近三个月',
 								onClick: ()=> {
-									const end = new Date();
-									const start = new Date();
-									start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+									const end = new Date()
+									const start = new Date()
+									start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
 									this.setState({ value2: [start, end] })
 									this.daterangepicker2.togglePickerVisible()
 								}

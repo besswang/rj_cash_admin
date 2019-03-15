@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { Button, Form, Input,Layout, Checkbox } from 'element-react'
 // import api from '../api/index'
 import '../styles/login.less'
-import icon1 from '../images/login-from-icon1.png';
-import icon2 from '../images/login-from-icon2.png';
-import user from '../images/user.png';
-import code from '../images/code.png';
+import icon1 from '../images/login-from-icon1.png'
+import icon2 from '../images/login-from-icon2.png'
+import user from '../images/user.png'
+import code from '../images/code.png'
 import PropTypes from 'prop-types'
 class Login extends Component {
   static propTypes = {
@@ -14,13 +14,13 @@ class Login extends Component {
     history: PropTypes.object.isRequired
   }
   constructor(props){
-    super(props);
+    super(props)
     this.state = {
       type:1
     }
   }
   loginFn = e => {
-    e.preventDefault();
+    e.preventDefault()
     this.props.history.push('/home')
   }
   Codeform = () => {
@@ -102,7 +102,7 @@ class Login extends Component {
       )
   }
 }
-export default Login;
+export default Login
 Login.propTypes = {
   propsData:PropTypes.object,
   propsDataHistory: PropTypes.object

@@ -3,7 +3,7 @@ import { Table, Form, Button } from 'element-react'
 // import num from '../../global/num'
 import Time from '../common/setime'
 import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 export default class MoneyTable extends Component {
   constructor(props){
     super(props)
@@ -65,7 +65,7 @@ export default class MoneyTable extends Component {
             const url = `/statistics/repayinside/${ this.props.tabName }/4`
             return (
               <Link to={ `${ url }` }>
-                <Button type="text" size="mini">查看</Button>
+                <Button type="text" size="mini">{'查看'}</Button>
               </Link>
             )
           }
@@ -82,7 +82,7 @@ export default class MoneyTable extends Component {
             <Time />
           </Form.Item>
           <Form.Item>
-            <Button nativeType="submit" type="primary">搜索</Button>
+            <Button nativeType="submit" type="primary">{'搜索'}</Button>
           </Form.Item>
         </Form>
         <Table

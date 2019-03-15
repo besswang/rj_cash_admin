@@ -11,7 +11,7 @@ import store from '../redux/store'
 //路由操作
 class App extends Component {
   constructor(props){
-    super(props);
+    super(props)
     this.state = {
       loginSuccess:false
     }

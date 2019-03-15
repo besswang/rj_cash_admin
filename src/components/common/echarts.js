@@ -10,7 +10,7 @@ var echarts = require('echarts')
 export default class Echarts extends Component {
     componentDidMount() {
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('main'));
+        var myChart = echarts.init(document.getElementById('main'))
         // 绘制图表
         myChart.setOption({
             title: { text: '放/还款统计' },
@@ -33,7 +33,7 @@ export default class Echarts extends Component {
                 type: 'line',
                 data: [1, 40, 20, 99, 67, 23, 89]
             }]
-        });
+        })
     }
     render() {
         return <div id="main" style={ { width: 600, height: 400 } } />

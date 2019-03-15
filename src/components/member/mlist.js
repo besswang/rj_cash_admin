@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { MLIST_SELECT } from '../meta/select'
 class Mlist extends Component{
 	constructor(props) {
-		super(props);
+		super(props)
 		this.state = {
 			total:25,
 			pageSizes: [ 5, 10, 20, 30 ],
@@ -63,11 +63,11 @@ class Mlist extends Component{
 					 render: row => {
 						 if(row.blackType === 1){
 							 return (
-								 <Button type="text" size="mini" onClick={ this.openBlackListMessage.bind(this,row.blackType) }>删除</Button>
+								 <Button type="text" size="mini" onClick={ this.openBlackListMessage.bind(this,row.blackType) }>{'删除'}</Button>
 							 )
 						 }else{
 								return (
-									<Button type="text" size="mini" onClick={ this.openBlackListMessage.bind(this) }>添加</Button>
+									<Button type="text" size="mini" onClick={ this.openBlackListMessage.bind(this) }>{'添加'}</Button>
 								)
 						 }
 					 }
@@ -79,20 +79,20 @@ class Mlist extends Component{
 						if(row.using === 1){
 							return (
 								<div className="flex flex-direction_row">
-									<Button className="margin_right10" type="primary" size="mini" onClick={ this.openUsingMessage.bind(this) }>启用</Button>
+									<Button className="margin_right10" type="primary" size="mini" onClick={ this.openUsingMessage.bind(this) }>{'启用'}</Button>
 									{/* <Button type="text" size="small" onClick={this.deleteRow.bind(this, index)}>会员详情</Button> */}
 									<Link to="/member/mlist/detail">
-										<Button type="text" size="small">会员详情</Button>
+										<Button type="text" size="small">{'会员详情'}</Button>
 									</Link>
 								</div>
 							)
 						}else{
 							return (
 								<div className="flex flex-direction_row">
-									<Button className="margin_right10" type="danger" size="mini" onClick={ this.openUsingMessage.bind(this) }>禁用</Button>
+									<Button className="margin_right10" type="danger" size="mini" onClick={ this.openUsingMessage.bind(this) }>{'禁用'}</Button>
 									{/* <Button type="text" size="small" onClick={this.deleteRow.bind(this, index)}>会员详情</Button> */}
 									<Link to="/member/mlist/detail">
-										<Button type="text" size="small">会员详情</Button>
+										<Button type="text" size="small">{'会员详情'}</Button>
 									</Link>
 								</div>
 							)
@@ -116,7 +116,7 @@ class Mlist extends Component{
 				blackType: 0, //1:在黑名单，0:不在黑明单
 				using:0 //1:启用状态；0:禁用状态
 			}]
-		};
+		}
 	}
 	componentDidMount() {
 		console.log(this.props)
@@ -130,13 +130,13 @@ class Mlist extends Component{
 				Message({
 					type: 'success',
 					message: '删除成功!'
-				});
+				})
 			}).catch(() => {
 				Message({
 					type: 'info',
 					message: '已取消删除'
-				});
-			});
+				})
+			})
 		}else{
 			MessageBox.confirm('将该用户拉入黑名单, 是否继续?', '提示', {
 				type: 'warning'
@@ -144,13 +144,13 @@ class Mlist extends Component{
 				Message({
 					type: 'success',
 					message: '拉黑成功!'
-				});
+				})
 			}).catch(() => {
 				Message({
 					type: 'info',
 					message: '已取消拉黑'
-				});
-			});
+				})
+			})
 		}
 	}
 	openUsingMessage() {
@@ -160,19 +160,19 @@ class Mlist extends Component{
 			Message({
 				type: 'success',
 				message: '禁用成功!'
-			});
+			})
 		}).catch(() => {
 			Message({
 				type: 'info',
 				message: '已取消禁用'
-			});
-		});
+			})
+		})
 	}
 	deleteRow(index) {
 		const {
 			data
-		} = this.state;
-		data.splice(index, 1);
+		} = this.state
+		data.splice(index, 1)
 		this.setState({
 			data: [...data]
 		})
@@ -206,10 +206,10 @@ class Mlist extends Component{
 						<Time />
 					</Form.Item>
 					<Form.Item>
-						<Button nativeType="submit" type="primary">搜索</Button>
+						<Button nativeType="submit" type="primary">{'搜索'}</Button>
 					</Form.Item>
 					<Form.Item>
-						<Button nativeType="submit" type="primary">导出列表</Button>
+						<Button nativeType="submit" type="primary">{'导出列表'}</Button>
 					</Form.Item>
 				</Form>
 				<Table

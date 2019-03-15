@@ -70,7 +70,7 @@ class Ditch extends Component {
           render: (row,columns,index) => {
             return (
               <Link to="/statistics/ditch/ditchinside">
-                <Button type="text" size="mini">当天/总转化/渠道费用</Button>
+                <Button type="text" size="mini">{'当天/总转化/渠道费用'}</Button>
               </Link>
             )
           }
@@ -100,7 +100,7 @@ class Ditch extends Component {
             <Time />
           </Form.Item>
           <Form.Item>
-            <Button nativeType="submit" type="primary">搜索</Button>
+            <Button nativeType="submit" type="primary">{'搜索'}</Button>
           </Form.Item>
         </Form>
         <Table
@@ -122,4 +122,4 @@ class Ditch extends Component {
     )
   }
 }
-export default Ditch;
+export default Ditch

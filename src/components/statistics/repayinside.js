@@ -19,7 +19,7 @@ class RepayInside extends Component {
       pageSizes:[5,10,15],
       currentPage:1,
       tabName: this.props.match.params.tabName
-    };
+    }
   }
   componentWillMount() {
     console.log('componentWillMount')
@@ -120,8 +120,8 @@ class RepayInside extends Component {
             apply: 2,
             loanNum: 12
           }]
-        });
-        break;
+        })
+        break
       default:
         this.setState({
           columns: [{
@@ -185,7 +185,7 @@ class RepayInside extends Component {
             dayPrice: '33.00',
             addupPrice: '84574.00'
           }]
-        });
+        })
     }
   }
   render(){
@@ -197,7 +197,7 @@ class RepayInside extends Component {
                 this.bread()
               }
           </Breadcrumb.Item>
-          <Breadcrumb.Item>详情</Breadcrumb.Item>
+          <Breadcrumb.Item>{'详情'}</Breadcrumb.Item>
         </Breadcrumb>
         <Table
         style={ { width: '100%' } }

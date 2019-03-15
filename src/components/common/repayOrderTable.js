@@ -65,7 +65,7 @@ export default class OrderTable extends Component {
             const url = `/statistics/repayinside/${ this.props.tabName }/3`
             return (
               <Link to={ `${ url }` }>
-                <Button type="text" size="mini">查看</Button>
+                <Button type="text" size="mini">{'查看'}</Button>
               </Link>
             )
           }
@@ -82,7 +82,7 @@ export default class OrderTable extends Component {
             <Time />
           </Form.Item>
           <Form.Item>
-            <Button nativeType="submit" type="primary">搜索</Button>
+            <Button nativeType="submit" type="primary">{'搜索'}</Button>
           </Form.Item>
         </Form>
         <Table

@@ -12,7 +12,7 @@ import Alltable from '../common/ditchAllTable'
 import Costtable from '../common/ditchCostTable'
 class Ditchinside extends Component {
   constructor(props){
-    super(props);
+    super(props)
     this.state = {
       activeName:'1',
       data: [{
@@ -37,7 +37,7 @@ class Ditchinside extends Component {
       pageSize:5,
       pageSizes:[5,10,15],
       currentPage:1
-    };
+    }
     this.tabChange = this.tabChange.bind(this)
   }
   tabChange(e){
@@ -64,8 +64,8 @@ class Ditchinside extends Component {
           apply: 2,
           loanNum: 12
         }]
-      });
-      break;
+      })
+      break
       case '2':
       this.setState({
         data: [{
@@ -81,8 +81,8 @@ class Ditchinside extends Component {
           zloanNum: 78,
           zloanNumcount: '12%'
         }]
-      });
-      break;
+      })
+      break
       default :
        this.setState({
         data: [{
@@ -95,7 +95,7 @@ class Ditchinside extends Component {
           dayPrice: '33.00',
           addupPrice: '84574.00'
         }]
-       });
+       })
     }
   }
   render(){
@@ -112,10 +112,10 @@ class Ditchinside extends Component {
         <Breadcrumb separator="/">
           <Breadcrumb.Item>
             <Link to="/statistics/ditch">
-              渠道统计
+              {'渠道统计'}
             </Link>
           </Breadcrumb.Item>
-          <Breadcrumb.Item>当天</Breadcrumb.Item>
+          <Breadcrumb.Item>{'当天'}</Breadcrumb.Item>
         </Breadcrumb>
         <Tabs activeName={ this.state.activeName } onTabClick={ this.tabChange }>
           <Tabs.Pane label="当天" name="1">
@@ -141,4 +141,4 @@ class Ditchinside extends Component {
     )
   }
 }
-export default Ditchinside;
+export default Ditchinside

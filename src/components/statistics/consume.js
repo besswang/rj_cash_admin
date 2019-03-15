@@ -22,7 +22,7 @@ class Consume extends Component {
             <Time />
           </Form.Item>
           <Form.Item>
-            <Button nativeType="submit" type="primary">搜索</Button>
+            <Button nativeType="submit" type="primary">{'搜索'}</Button>
           </Form.Item>
         </Form>
         <Loading>
