@@ -27,7 +27,7 @@ class Apply extends Component {
 						<Time />
 					</Form.Item>
 					<Form.Item>
-						<Button nativeType="submit" type="primary">查询</Button>
+						<Button nativeType="submit" type="primary">{'查询'}</Button>
 					</Form.Item>
 				</Form>
 				<Table

@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Input, Form, Button, Table, Pagination, Select, Message, MessageBox } from 'element-react'
-import Time from '../common/setime'
+import { Button, Table, Pagination, Message, MessageBox } from 'element-react'
+import TypeSearch from '@components/common/search/typeSearch'
 import { Link } from 'react-router-dom'
-import { AUDIT_SELECT } from '../meta/select'
-class Audit extends Component{
+class AuditRefuse extends Component{
 	constructor(props) {
 		super(props)
 		this.state = {
+			searchType: 1,
 			total:25,
 			pageSizes: [5,10,20,30],
 			pageSize:5,
@@ -166,28 +166,10 @@ class Audit extends Component{
 		})
 	}
 	render() {
+		const {searchType} = this.state
 		return (
 			<div>
-				<Form inline>
-					<Form.Item>
-						<Select value={ this.state.value } clearable placeholder="搜索类型">
-							{
-								AUDIT_SELECT.map(el => {
-									return <Select.Option key={ el.value } label={ el.label } value={ el.value } />
-								})
-							}
-						</Select>
-					</Form.Item>
-					<Form.Item>
-						<Input placeholder="请输入内容" />
-					</Form.Item>
-					<Form.Item>
-						<Time />
-					</Form.Item>
-					<Form.Item>
-						<Button nativeType="submit" type="primary">{'搜索'}</Button>
-					</Form.Item>
-				</Form>
+				<TypeSearch searchType={ searchType }/>
 				<Table
 					style={ { width: '100%' } }
 					columns={ this.state.columns }
@@ -208,4 +190,4 @@ class Audit extends Component{
 		)
 	}
 }
-export default Audit
+export default AuditRefuse

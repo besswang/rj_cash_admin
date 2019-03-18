@@ -80,6 +80,7 @@
       "react"
     ],
     "rules": {
+      "jsx-a11y/anchor-is-valid": 0,
       "react/jsx-closing-tag-location": 1,
       "react/jsx-no-literals":1,
       "no-multi-spaces": 1,

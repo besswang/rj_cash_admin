@@ -61,11 +61,11 @@ class Auddetail extends Component{
 					render: row => {
 							return (
 								<div className="flex flex-direction_row">
-									<Button className="margin_right10" type="success" size="mini" onClick={ this.openUsingMessage.bind(this) }>通过</Button>
-									<Button className="margin_right10" type="danger" size="mini" onClick={ this.openUsingMessage.bind(this) }>拒绝</Button>
+									<Button className="margin_right10" type="success" size="mini" onClick={ this.openUsingMessage.bind(this) }>{'通过'}</Button>
+									<Button className="margin_right10" type="danger" size="mini" onClick={ this.openUsingMessage.bind(this) }>{'拒绝'}</Button>
 									{/* <Button type="text" size="small" onClick={this.deleteRow.bind(this, index)}>会员详情</Button> */}
 									<Link to="/borrow/auddetail">
-										<Button type="text" size="small">用户详情</Button>
+										<Button type="text" size="small">{'用户详情'}</Button>
 									</Link>
 								</div>
 							)
@@ -151,9 +151,7 @@ class Auddetail extends Component{
 			<div>
 				<Breadcrumb separator="/">
 					<Breadcrumb.Item>
-						<Link to="/borrow/audit">
-              {'待审核'}
-            </Link>
+						<Link to="/borrow/audit">{'待审核'}</Link>
 					</Breadcrumb.Item>
 					<Breadcrumb.Item>{'审核详情'}</Breadcrumb.Item>
 				</Breadcrumb>

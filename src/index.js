@@ -1,18 +1,12 @@
 import 'babel-polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore } from 'redux'
-import { Provider,connect } from 'react-redux'
 import 'element-theme-default'
 import './index.css'
 import './mock/mock'
 import App from './routes/index'
 import * as serviceWorker from './serviceWorker'
-// const store = createStore(connect)
 ReactDOM.render(
-  // <Provider store={ store }>
-  //   <App />
-  // </Provider>,
   <App />,
   document.getElementById('root')
 )
