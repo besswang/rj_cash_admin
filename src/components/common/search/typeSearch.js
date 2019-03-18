@@ -27,9 +27,8 @@ export default class TypeSearch extends Component {
   onSubmit = e => {
     e.preventDefault()
     console.log(this.state.form)
-    if(this.state.form.selectValue === "2"){//手机号码
+    if(this.state.form.selectValue === '2'){//手机号码
       const tel = this.state.form.content
-      /* eslint-disable */
       const regex = /^((\+)?86|((\+)?86)?)0?1[3458]\d{9}$/
       if(tel){
         if (!regex.test(tel)) {
@@ -38,6 +37,30 @@ export default class TypeSearch extends Component {
             message: '请输入正确的手机号码',
             type: 'warning'
           })
+          this.setState({
+            form: Object.assign(this.state.form, {
+              content: ''
+            })
+          })
+          return false
+        }
+      }
+    } else if (this.state.form.selectValue === '3'){
+      const code = this.state.form.content
+      const reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+      if (code) {
+        if (!regex.test(code)) {
+          Notification({
+            title: '警告',
+            message: '请输入有效的身份证号',
+            type: 'warning'
+          })
+          this.setState({
+            form: Object.assign(this.state.form, {
+              content: ''
+            })
+          })
+          return false
         }
       }
     }
