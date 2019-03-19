@@ -67,10 +67,6 @@ export const SIDE_BAR_TEXT = [
       itemIndex: '3-2',
       path: '/borrow/auditrefuse',
       title: '审核拒绝'
-    }, {
-      itemIndex: '3-3',
-      path: '/text/TodoList',
-      title: '（测试）'
     }
   ]
   }, {

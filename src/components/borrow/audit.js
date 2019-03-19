@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
-import { Input, Form, Button, Table, Pagination, Select, Message, MessageBox } from 'element-react'
+import { Input, Form, Button, Table, Pagination, Select, Message, MessageBox, Loading } from 'element-react'
 import Time from '../common/setime'
 import { Link } from 'react-router-dom'
 import { AUDIT_SELECT } from '../meta/select'
+import { connect } from 'react-redux'
+import { auditList } from '@redux/actions'
+import PropTypes from 'prop-types'
 class Audit extends Component{
 	constructor(props) {
 		super(props)
@@ -105,6 +108,8 @@ class Audit extends Component{
 	}
 	componentWillMount() {
 		console.log(this.props)
+		const { dispatch } = this.props
+		dispatch(auditList())
 	}
   // componentDidMount() {
 
@@ -166,6 +171,8 @@ class Audit extends Component{
 		})
 	}
 	render() {
+		console.log(this.props)
+		const { loading } = this.props
 		return (
 			<div>
 				<Form inline>
@@ -188,13 +195,15 @@ class Audit extends Component{
 						<Button nativeType="submit" type="primary">{'搜索'}</Button>
 					</Form.Item>
 				</Form>
-				<Table
-					style={ { width: '100%' } }
-					columns={ this.state.columns }
-					data={ this.state.data }
-					border
-					maxHeight={ 250 }
-				/>
+				<Loading loading={ loading }>
+					<Table
+						style={ { width: '100%' } }
+						columns={ this.state.columns }
+						data={ this.state.data }
+						border
+						maxHeight={ 250 }
+					/>
+				</Loading>
 				<div className="pagination-con flex flex-direction_row justify-content_flex-center">
 					<Pagination
 					layout="total, sizes, prev, pager, next, jumper"
@@ -208,4 +217,9 @@ class Audit extends Component{
 		)
 	}
 }
-export default Audit
+const mapStateToProps = state => (state.redAudit)
+Audit.propTypes = {
+	loading: PropTypes.bool.isRequired,
+	dispatch: PropTypes.func.isRequired
+}
+export default connect(mapStateToProps)(Audit)

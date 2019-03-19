@@ -7,9 +7,9 @@
 // import {createStore} from 'redux';
 // import todoApp from './reducers'
 // let store = createStore(todoApp)
-import {
-  createStore
-} from 'redux'
-import reducers from './reducers/index'
-const store = createStore(reducers)
+import { createStore, applyMiddleware, compose } from 'redux'
+import reducers from './reducers'
+import thunk from 'redux-thunk'
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose
+const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)))
 export default store

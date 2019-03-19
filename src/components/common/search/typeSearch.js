@@ -4,7 +4,9 @@ import { Input, Form, Button, Select, Notification} from 'element-react'
 import { AUDIT_SELECT } from '@components/meta/select'
 import Time from '@components/common/setime'
 import PropTypes from 'prop-types'
-export default class TypeSearch extends Component {
+import { connect } from 'react-redux'
+import { auditRefuseList } from '@redux/actions'
+class TypeSearch extends Component {
   static propTypes = {
     searchType: PropTypes.number
   }
@@ -47,9 +49,9 @@ export default class TypeSearch extends Component {
       }
     } else if (this.state.form.selectValue === '3'){
       const code = this.state.form.content
-      const reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+      const reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
       if (code) {
-        if (!regex.test(code)) {
+        if (!reg.test(code)) {
           Notification({
             title: '警告',
             message: '请输入有效的身份证号',
@@ -64,6 +66,9 @@ export default class TypeSearch extends Component {
         }
       }
     }
+    console.log(this.props)
+    const { dispatch } = this.props
+    dispatch(auditRefuseList(this.state.form))
   }
   onChange(key, value) {
     this.setState({
@@ -101,3 +106,4 @@ export default class TypeSearch extends Component {
     )
   }
 }
+export default connect()(TypeSearch)

@@ -1,23 +1,30 @@
 //存放分发的 action函数
 // 使用 action 来描述“ 发生了什么”
-// import * as types from './actionTypes'
-let nextTodoId = 0
-export const addTodo = text => {
-  return {
-    type: 'ADD_TODO',
-    id: nextTodoId++,
-    text
+import * as type from '../actionTypes'
+import api from '@api/index'
+const list = data => ({
+  type: type.AUDIT_LIST,
+  loading: false,
+  payload: data
+})
+const refuseList = data => ({
+  type: type.AUDIT_REFUSE_LIST,
+  loading: false,
+  payload: data
+})
+// 借款管理-待审核
+export const auditList = () => {
+  return async dispatch => {
+    const l = await api.auditList()
+    dispatch(list(l))
   }
 }
-export const setVisibilityFilter = filter => {
-  return {
-    type: 'SET_VISIBILITY_FILTER',
-    filter
+// 借款管理-审核拒绝
+export const auditRefuseList = (data) => {
+  return async dispatch => {
+    const li = await api.auditRefuseList(data)
+    dispatch(refuseList(li))
   }
 }
-export const toggleTodo = id => {
-  return {
-    type: 'TOGGLE_TODO',
-    id
-  }
-}
+// 借款管理-审核拒绝-开放申请
+

@@ -5,12 +5,12 @@
 import {
   combineReducers
 } from 'redux'
-import todos from './todos'
-import visibilityFilter from './visibilityFilter'
+import redAuditRefuse from './redAuditRefuse'
+import redAudit from './redAudit'
 
 const todoApp = combineReducers({
-  todos,
-  visibilityFilter
+  redAuditRefuse,
+  redAudit
 })
 
 export default todoApp

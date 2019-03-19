@@ -269,7 +269,9 @@ module.exports = function(webpackEnv) {
         'react-native': 'react-native-web',
         // '@': paths.appSrc,// 用法 @/components
         '@components': path.join(__dirname, '../src/components'),
-        '@styles': path.join(__dirname, '../src/styles')
+        '@styles': path.join(__dirname, '../src/styles'),
+        '@redux': path.join(__dirname, '../src/redux'),
+        '@api': path.join(__dirname, '../src/api')
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding

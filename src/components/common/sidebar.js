@@ -4,7 +4,7 @@ import { Menu } from 'element-react'
 import { SIDE_BAR_TEXT } from '../meta/sidebarText'
 export default class Sidebar extends Component{
   componentDidMount(){
-    console.log(this.props)
+    // console.log(this.props)
   }
   onOpen() {
 

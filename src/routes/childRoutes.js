@@ -32,8 +32,6 @@ import Audit from '@components/borrow/audit'
 import Auddetail from '@components/borrow/auddetail'
 // 借款管理-审核拒绝
 import Auditrefuse from '@components/borrow/auditRefuse'
-//测试
-import Todolist from '@components/text/App'
 export const CHILD_ROUTES = [{
   id: 1,
   path: '/home',
@@ -115,12 +113,7 @@ export const CHILD_ROUTES = [{
   path: '/borrow/auddetail',
   exact: true,
   main: () => <Auddetail />
-}, {
-  id: 777777,
-  path: '/text/TodoList',
-  exact: true,
-  main: () => < Todolist / >
-}, {
+},{
   id: 17,
   path: '/borrow/auditrefuse',
   exact: true,

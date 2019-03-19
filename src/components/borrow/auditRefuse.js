@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
-import { Button, Table, Pagination, Message, MessageBox } from 'element-react'
+import { Button, Table, Pagination, Message, MessageBox, Loading } from 'element-react'
 import TypeSearch from '@components/common/search/typeSearch'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { auditRefuseList } from '@redux/actions'
+import PropTypes from 'prop-types'
 class AuditRefuse extends Component{
 	constructor(props) {
 		super(props)
@@ -17,12 +20,12 @@ class AuditRefuse extends Component{
 						fixed: 'left'
 				}, {
 					label: '订单号',
-					prop: 'name',
+					prop: 'gmt',
 					width: 100,
 					fixed: 'left'
 				},{
 					label: '渠道名称',
-					prop: 'tel'
+					prop: 'configKey'
 				},{
 					label: '真实姓名',
 					prop: 'idcard'
@@ -69,12 +72,7 @@ class AuditRefuse extends Component{
 									<Button className="margin_right10" type="success" size="mini"
 										onClick={ this.openUsingMessage.bind(this) }
 									>
-										{'通过'}
-									</Button>
-									<Button className="margin_right10" type="danger" size="mini"
-										onClick={ this.openUsingMessage.bind(this) }
-									>
-										{'拒绝'}
+										{'开放申请'}
 									</Button>
 									{/* <Button type="text" size="small" onClick={this.deleteRow.bind(this, index)}>会员详情</Button> */}
 									<Link to="/borrow/auddetail">
@@ -105,12 +103,14 @@ class AuditRefuse extends Component{
 	}
 	componentWillMount() {
 		console.log(this.props)
+		const { dispatch } = this.props
+		dispatch(auditRefuseList())
 	}
-  // componentDidMount() {
+  componentDidMount() {
 
-  // }
+  }
 	openBlackListMessage(type) {
-		console.log(type)
+		// console.log(type)
 		if (type === 1) {
 			MessageBox.confirm('将用户从黑明单删除, 是否继续?', '提示', {
 				type: 'warning'
@@ -166,17 +166,21 @@ class AuditRefuse extends Component{
 		})
 	}
 	render() {
-		const {searchType} = this.state
+		console.log(this.props)
+		const { list, loading } = this.props
+		const { searchType } = this.state
 		return (
 			<div>
 				<TypeSearch searchType={ searchType }/>
-				<Table
-					style={ { width: '100%' } }
-					columns={ this.state.columns }
-					data={ this.state.data }
-					border
-					maxHeight={ 250 }
-				/>
+				<Loading loading={ loading }>
+					<Table
+						style={ { width: '100%' } }
+						columns={ this.state.columns }
+						data={ list }
+						border
+						maxHeight={ 500 }
+					/>
+				</Loading>
 				<div className="pagination-con flex flex-direction_row justify-content_flex-center">
 					<Pagination
 					layout="total, sizes, prev, pager, next, jumper"
@@ -190,4 +194,11 @@ class AuditRefuse extends Component{
 		)
 	}
 }
-export default AuditRefuse
+//取redux里默认list列表
+const mapStateToProps = state => (state.redAuditRefuse)
+AuditRefuse.propTypes = {
+	list: PropTypes.array.isRequired,
+	loading: PropTypes.bool.isRequired,
+	dispatch: PropTypes.func.isRequired
+}
+export default connect(mapStateToProps)(AuditRefuse)

@@ -6,8 +6,8 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 class Home extends Component {
 	componentDidMount() {
-		console.log(this.props)
-		console.log(this.props.match)
+		// console.log(this.props)
+		// console.log(this.props.match)
 	}
 	render() {
 		// console.log(this.props.children)

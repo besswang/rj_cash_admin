@@ -43,7 +43,7 @@ let Fetch = (url, option = {}) => {
             //没有权限返回状态码
           }
         }
-        resolve(response);
+        resolve(response)
       })
       .catch(error => {
         console.log('err', error);
