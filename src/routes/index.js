@@ -18,6 +18,8 @@ class App extends Component {
   }
   render() {
     const { loginSuccess } = this.state
+    console.log(loginSuccess)
+    // console.log(`${match.url}`)
     return(
       <Provider store={ store }>
         <Router>

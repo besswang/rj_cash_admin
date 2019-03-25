@@ -5,13 +5,19 @@
 
 //初始化列表数据
 const auditRefuseListState = {
-  loading:true,
+  loading: false,
   list:[]
 }
 const redAuditRefuse = (state = {...auditRefuseListState}, action) => {
   switch (action.type) {
+    case 'REQUEST_POSTS':
+      // return Object.assign({}, state, {
+      //   loading: true
+      // })
+      return {...state,loading:true}
     case 'AUDIT_REFUSE_LIST':
-      return Object.assign({}, state, {list: action.payload},{loading:action.loading})
+      // return Object.assign({}, state, {list: action.payload},{loading:false})
+      return {...state,list:action.payload,loading:false}
     default:
       return state
   }

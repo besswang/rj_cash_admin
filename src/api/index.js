@@ -3,8 +3,8 @@ import Fetch from '../fetch/fetch'
 export default {
   // a: () => Fetch('/globalconfig/selectGlobalconfig', {method: 'get'}),
   // list: params => Fetch('/globalconfig/selectGlobalconfig', { method: 'post', body: params})
-  auditRefuseList: params => Fetch('/users', {method: 'get',body:params}),
-  auditList: () => Fetch('/users/octocat/gists', {method: 'get'})
+  auditRefuseList: params => Fetch('/overdue/selectoverdue', {method: 'get',body:params}),
+  auditList: (params) => Fetch('/overdue/selectOverdueByAdminId', {method: 'post',body:params})
 }
 
 //fetch.1.js 写法 get 使用query传入字段，其他请求使用body,这里的get和body是请求参数对象

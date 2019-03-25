@@ -19,6 +19,12 @@ class Login extends Component {
       type:1
     }
   }
+	componentWillMount() {
+	  // console.log(this.props)
+	}
+	componentDidMount() {
+
+	}
   loginFn = e => {
     e.preventDefault()
     this.props.history.push('/home')

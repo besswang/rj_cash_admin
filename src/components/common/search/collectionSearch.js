@@ -1,7 +1,7 @@
 // 开始-结束时间组建
 import React,{ Component } from 'react'
 import { Input, Form, Button, Select, Notification} from 'element-react'
-import { AUDIT_SELECT } from '@components/meta/select'
+import { AUDIT_SELECT, CUSTOMER_SELECT, TIME_SELECT } from '@components/meta/select'
 import Time from '@components/common/setime'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -96,6 +96,33 @@ class TypeSearch extends Component {
         </Form.Item>
         <Form.Item>
           <Input value={ content } placeholder="请输入内容" onChange={ this.onChange.bind(this,'content') } />
+        </Form.Item>
+        <Form.Item>
+          <Select value={ selectValue } clearable placeholder="请选择催收人员" onChange={ this.onChange.bind(this,'selectValue') }>
+            {
+              AUDIT_SELECT.map(el => {
+                return <Select.Option key={ el.value } label={ el.label } value={ el.value } />
+              })
+            }
+          </Select>
+        </Form.Item>
+        <Form.Item>
+          <Select value={ selectValue } clearable placeholder="请选择客户类型" onChange={ this.onChange.bind(this,'selectValue') }>
+            {
+              CUSTOMER_SELECT.map(el => {
+                return <Select.Option key={ el.value } label={ el.label } value={ el.value } />
+              })
+            }
+          </Select>
+        </Form.Item>
+        <Form.Item>
+          <Select value={ selectValue } clearable placeholder="请选择时间类型" onChange={ this.onChange.bind(this,'selectValue') }>
+            {
+              TIME_SELECT.map(el => {
+                return <Select.Option key={ el.value } label={ el.label } value={ el.value } />
+              })
+            }
+          </Select>
         </Form.Item>
         {this.TIME()}
         {/* {TIME} */}

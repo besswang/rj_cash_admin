@@ -237,3 +237,56 @@ export const TURNOVER = [
     prop: 'bankExpend'
   }
 ]
+export const BANK = [{
+  type: 'index',
+}, {
+  label: '银行卡号',
+  prop: ''
+}, {
+  label: '所属银行',
+  prop: ''
+}, {
+  label: '开户行地址',
+  prop: ''
+}, {
+  label: '预留号码',
+  prop: ''
+}, {
+  label: '状态',
+  prop: ''
+}, {
+  label: '认证时间',
+  prop: ''
+}]
+export const ADDRESS = [{
+  type: 'index',
+}, {
+  label: '姓名',
+  prop: ''
+}, {
+  label: '电话',
+  prop: ''
+}, {
+  label: '通话次数',
+  prop: ''
+}]
+//通话记录
+export const CALL_LOG = [{
+  type: 'index',
+}, {
+  label: '通讯号码',
+  prop: ''
+}, {
+  label: '通讯时间',
+  prop: ''
+}, {
+  label: '通讯方式',
+  prop: ''
+}, {
+  label: '通话时长/秒',
+  prop: ''
+}, {
+  label: '通话地点',
+  prop: ''
+}]
+

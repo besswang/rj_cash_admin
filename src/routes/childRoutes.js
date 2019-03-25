@@ -32,6 +32,8 @@ import Audit from '@components/borrow/audit'
 import Auddetail from '@components/borrow/auddetail'
 // 借款管理-审核拒绝
 import Auditrefuse from '@components/borrow/auditRefuse'
+// 催收管理-逾期列表
+import Colloverdue from '@components/collection/overdue'
 export const CHILD_ROUTES = [{
   id: 1,
   path: '/home',
@@ -117,5 +119,10 @@ export const CHILD_ROUTES = [{
   id: 17,
   path: '/borrow/auditrefuse',
   exact: true,
-  main: () => <Auditrefuse / >
+  main: () => <Auditrefuse />
+}, {
+  id: 18,
+  path: '/collection/overdue',
+  exact: true,
+  main: () => <Colloverdue />
 }]

@@ -75,6 +75,7 @@ export const SIDE_BAR_TEXT = [
     menuItem: [
     {
       itemIndex: '4-1',
+      path: '/collection/overdue',
       title: '逾期列表'
     }, {
       itemIndex: '4-2',

@@ -104,7 +104,15 @@ class AuditRefuse extends Component{
 	componentWillMount() {
 		console.log(this.props)
 		const { dispatch } = this.props
-		dispatch(auditRefuseList())
+		const trans = {
+			typeid: 0,
+			typename:'',
+			state: -1,
+			thetime: 0,
+			page: 1,
+			limit: 10,
+		}
+		dispatch(auditRefuseList(trans))
 	}
   componentDidMount() {
 

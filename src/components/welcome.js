@@ -10,6 +10,15 @@ class Welcome extends React.Component{
 
 		}
 	}
+	componentWillMount() {
+		console.log(this.props)
+	}
+	componentDidMount() {
+
+	}
+	componentWillReceiveProps(nextProps) {
+
+	}
 	render(){
 
 		return(

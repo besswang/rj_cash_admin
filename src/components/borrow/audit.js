@@ -109,7 +109,20 @@ class Audit extends Component{
 	componentWillMount() {
 		console.log(this.props)
 		const { dispatch } = this.props
-		dispatch(auditList())
+		const trans = {
+			typeid: 0,
+			typename:'',
+			neicuiTracker:'',
+			newClient: 0,
+			typedate: 0,
+			starttime:'',
+			endtime:'',
+			state: 0,
+			id: 'df34aa7874e9486ba7f444c041c37f03',
+			page: 1,
+			limit: 10
+		}
+		dispatch(auditList(trans))
 	}
   // componentDidMount() {
 
