@@ -1,4 +1,5 @@
 import React,{ Component } from 'react'
+import { Dropdown } from 'element-react'
 import '../../styles/header.less'
 export default class Header extends Component {
   render() {
@@ -9,7 +10,17 @@ export default class Header extends Component {
           <span>{'欢迎王立娟'}</span>
         </li>
         <li>
-          {'退出系统'}
+          <Dropdown menu={(
+            <Dropdown.Menu>
+              <Dropdown.Item>修改<i class="el-icon-edit el-icon--right"></i></Dropdown.Item>
+              <Dropdown.Item>退出</Dropdown.Item>
+            </Dropdown.Menu>
+            )}
+          >
+            <span className="el-dropdown-link">
+              设置<i className="el-icon-caret-bottom el-icon--right"></i>
+            </span>
+          </Dropdown>
         </li>
       </ul>
     )

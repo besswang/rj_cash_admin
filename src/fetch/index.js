@@ -1,16 +1,19 @@
+import 'whatwg-fetch'
+import qs from 'qs'
 // 处理promise和fetch的兼容性以及引入
 require('es6-promise').polyfill()
-require('whatwg-fetch')
-//前置拼接url,process.env.tbtHost取的是config--dev.env.js--tbtHost
-// const tHost = process.env.tbtHost && process.env.tbtHost.url;
+// 前置拼接url,process.env.luoHost取的是config--dev.env.js--tbtHost
+// const luoHost = process.env.luoHost && process.env.luoHost.url
+const luoHost = '/rjwl/'
 // 自定义headers
 const headers = {
-  'Accept': 'application/json; version=3.13.0'
+  'Accept': 'application/json',
+  'Content-Type': 'application/x-www-form-urlencoded'
 }
 
 // 处理get请求，传入参数对象拼接
 const formatUrl = obj => {
-  const params = Object.values(obj).reduce((a, b, i) => `${ a }${ Object.keys(obj)[ i ] }=${ b }&`, '?')
+  const params = Object.values(obj).reduce((a, b, i) => `${ a }${ Object.keys(obj)[i] }=${ b }&`, '?')
   return params.substring(0, params.length - 1)
 }
 
@@ -20,42 +23,26 @@ const formatUrl = obj => {
  */
 const Fetch = (url, option = {}) => {
   // 设置请求超时的时间，默认10秒
-  const timeout = option.timeout || 10000
+  const timeout = option.timeout || 30000
   option.headers = option.headers || headers
-  option.headers[ 'token' ] = `${ window.localStorage.getItem('token') }`
+  // option.headers['token'] = `${window.sessionStorage.getItem('token')}`
   option.method = (option.method || 'get').toLocaleLowerCase()
   // 格式化get请求的数据(fetch的get请求需要需要将参数拼接到url后面)
   if (option.method === 'get') {
-    // if (option.data) {
-    //   url = url + formatUrl(option.data)
-    // }
-    if (option.body) {
-      const data = formatUrl(option.body)
-      url += data
+    if (option.data) {
+      url = url + formatUrl(option.data)
     }
   }
 
   // 对非get类请求头和请求体做处理
   if (option.method === 'post' || option.method === 'put' || option.method === 'delete') {
-    option.headers[ 'Content-Type' ] = option.headers[ 'Content-Type' ] || 'application/json'
-
-    // 非get类请求传参时，需要将参数挂在body上
-    option.body = JSON.stringify(option.body)
-
-    // 根据后台要求，如果有时候是java请求会用qs转
-    // option.body = qs.stringify(option.body)
+    option.headers['Content-Type'] = option.headers['Content-Type'] || 'application/json'
+    option.body = qs.stringify(option.body)
+    // option.body = JSON.stringify(option.body)
   }
-  // delete option.data
-  delete option.body
-  // return addTimeout(fetch(tHost + url, option), timeout)
-  return addTimeout(fetch(url, option), timeout)
+  delete option.data
+  return addTimeout(fetch(luoHost + url, option), timeout)
 }
-
-// 对请求结果进行处理：fetch请求成功后返回的是json对象
-function parseJSON(response) {
-  return response.json()
-}
-
 //
 /**
  * 增加超时处理：fetch本身是没有请求超时处理的，所以可以通过
@@ -88,21 +75,26 @@ function addTimeout(fetchPromise, timeout) {
 
   // 将racePromise的结果返回
   return new Promise((resolve, reject) => {
-    let status = 0
+    // let status = 0
     racePromise
-      .then(response => {
-        status = response.status
-        return response
-      })
-      .then(parseJSON)
+      // .then(response => {
+      //   status = response.status
+      //   return response
+      // })
+      // .then(parseJSON)
+      .then(response => response.json())
       .then(response => {
         // 将状态码添加到返回结果中，以备后用
-        response.status = status
-        //如果返回码在300到900之间，将以错误返回，如果需要对错误统一处理，可以放在下面判断中
-        // /^[3-9]\d{2}$/.test(response.status) || !response.success ||
-        if (response.code === 400) {
-          // vm.$vux.toast.text(response.msg, 'top')
+        // response.status = status
+        // 如果返回码在300到900之间，将以错误返回，如果需要对错误统一处理，可以放在下面判断中
+        if (/^[3-9]\d{2}$/.test(response.status) || response.code === 400) {
+          /* global vm */
+          // vm.$message({
+          //   message: response.msg,
+          //   type: 'warning'
+          // })
           reject(response)
+          return false
         } else {
           // 否则以正确值返回
           resolve(response)

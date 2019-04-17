@@ -30,6 +30,7 @@
     "fork-ts-checker-webpack-plugin-alt": "0.4.14",
     "fs-extra": "7.0.1",
     "html-webpack-plugin": "4.0.0-alpha.2",
+    "http-proxy-middleware": "^0.19.1",
     "identity-obj-proxy": "3.0.0",
     "jest": "23.6.0",
     "jest-pnp-resolver": "1.0.2",
@@ -45,7 +46,7 @@
     "postcss-preset-env": "6.5.0",
     "postcss-safe-parser": "4.0.1",
     "prop-types": "^15.7.2",
-    "qs": "^6.6.0",
+    "qs": "^6.7.0",
     "react": "^16.8.3",
     "react-app-polyfill": "^0.2.1",
     "react-dev-utils": "^7.0.3",
@@ -82,7 +83,7 @@
     "rules": {
       "jsx-a11y/anchor-is-valid": 0,
       "react/jsx-closing-tag-location": 1,
-      "react/jsx-no-literals":1,
+      "react/jsx-no-literals": 1,
       "no-multi-spaces": 1,
       "jsx-quotes": 1,
       "react/jsx-closing-bracket-location": 1,
@@ -91,20 +92,53 @@
       "react/self-closing-comp": 1,
       "react/sort-comp": 1,
       "react/jsx-pascal-case": 1,
-      "template-curly-spacing": [1, "always"],
-      "quotes": [1,"single",{"avoidEscape": true}],
+      "template-curly-spacing": [
+        1,
+        "always"
+      ],
+      "quotes": [
+        1,
+        "single",
+        {
+          "avoidEscape": true
+        }
+      ],
       "no-use-before-define": 1,
-      "semi": [1,"never",{"beforeStatementContinuationChars": "always"}],
+      "semi": [
+        1,
+        "never",
+        {
+          "beforeStatementContinuationChars": "always"
+        }
+      ],
       "prefer-const": 1,
       "react/prefer-es6-class": 1,
-      "react/jsx-filename-extension": [1, {"extensions": [".js", ".jsx"]}],
-      "react/jsx-curly-spacing": [1, "always"],
-      "react/no-deprecated":1,
-      "react/jsx-no-undef":1,
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
+        }
+      ],
+      "react/jsx-curly-spacing": [
+        1,
+        "always"
+      ],
+      "react/no-deprecated": 1,
+      "react/jsx-no-undef": 1,
       "react/jsx-no-duplicate-props": 1,
       "react/jsx-key": 1,
       "no-undef": 1,
-      "react/prop-types": [1,{"ignore": ["match"]}],
+      "react/prop-types": [
+        1,
+        {
+          "ignore": [
+            "match"
+          ]
+        }
+      ],
       "react/no-array-index-key": 1,
       "class-methods-use-this": 0,
       "no-empty": 1,
@@ -180,6 +214,5 @@
     "react-router-dom": "^4.3.1",
     "redux-devtools": "^3.5.0",
     "redux-devtools-extension": "^2.13.8"
-  },
-  "proxy": "https://xjsd.ahmiwuyou.com"
+  }
 }
