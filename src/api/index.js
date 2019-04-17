@@ -1,8 +1,17 @@
 // api文件存放接口文件夹
 import Fetch from '../fetch/fetch'
+import jk from './jk'
 export default {
   // a: () => Fetch('/globalconfig/selectGlobalconfig', {method: 'get'}),
   // list: params => Fetch('/globalconfig/selectGlobalconfig', { method: 'post', body: params})
+  verifycode: params => Fetch(jk.verifycode, {
+    method: 'get',
+    body: params
+  }),
+  managelogin: params=> Fetch(jk.managelogin, {
+    method: 'post',
+    body: params
+  }),
   auditRefuseList: params => Fetch('/overdue/selectoverdue', {method: 'get',body:params}),
   auditList: (params) => Fetch('/overdue/selectOverdueByAdminId', {method: 'post',body:params})
 }

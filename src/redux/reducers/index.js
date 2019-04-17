@@ -8,11 +8,18 @@ import {
 import redAuditRefuse from './redAuditRefuse'
 import redAudit from './redAudit'
 import redBankDetail from './redBankDetail'
+import user from './user'
 
-const todoApp = combineReducers({
+export default combineReducers({
   redAuditRefuse,
   redAudit,
-  redBankDetail
+  redBankDetail,
+  user
 })
+// const todoApp = combineReducers({
+//   redAuditRefuse,
+//   redAudit,
+//   redBankDetail
+// })
 
-export default todoApp
+// export default todoApp

@@ -7,6 +7,8 @@ import icon2 from '../images/login-from-icon2.png'
 import user from '../images/user.png'
 import code from '../images/code.png'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { managelogin } from '@redux/actions'
 class Login extends Component {
   static propTypes = {
     // match: PropTypes.object.isRequired,
@@ -27,7 +29,14 @@ class Login extends Component {
 	}
   loginFn = e => {
     e.preventDefault()
-    this.props.history.push('/home')
+    console.log(this.props)
+    const { dispatch } = this.props
+    let trans = {
+      adminName: '',
+      password: ''
+    }
+    dispatch(managelogin(trans))
+    // this.props.history.push('/home')
   }
   Codeform = () => {
     const { type } = this.state
@@ -35,7 +44,7 @@ class Login extends Component {
       return (
         <Form className="form-con">
           <Form.Item>
-            <Input placeholder="请输入您的手机号/用户名" prepend={
+            <Input placeholder="请输入您的手机号" prepend={
                 <img src={ user } alt="" />
               }
             />
@@ -108,8 +117,10 @@ class Login extends Component {
       )
   }
 }
-export default Login
+// export default Login
 Login.propTypes = {
   propsData:PropTypes.object,
   propsDataHistory: PropTypes.object
 }
+const mapStateToProps = state => (state.user)
+export default connect(mapStateToProps)(Login)

@@ -42,5 +42,5 @@ export default class Detailtable extends Component {
 }
 Detailtable.propTypes = {
   // tabName: PropTypes.string,
-  // data: PropTypes.array
+  columns: PropTypes.array
 }

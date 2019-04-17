@@ -60,4 +60,28 @@ export const auditRefuseList = (data) => {
 //       }
 //   }
 // }
+function registerFail(msg) {
+  return {
+    msg,
+    type: type.TODO_ERRSHOW
+  }
+}
 
+function registerSuccess(data) {
+  return {
+    data,
+    type: type.REGISTER_SUCCESS
+  }
+}
+export const managelogin = (data) => {
+  console.log(data)
+  // if (!data.adminName || !data.password) {
+  //   registerFail('账号验证码不能为空')
+  // }
+  // return async dispatch => {
+  //   dispatch(requestPosts())
+  //   const info = await api.managelogin(data)
+  //   // dispatch(refuseList(li))
+  //   dispatch(registerSuccess(info))
+  // }
+}

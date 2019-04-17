@@ -29,7 +29,7 @@ class App extends Component {
                   if(loginSuccess){ //判断是否已经登陆
                     return <Redirect to="/home" />
                   }else{
-                    return <Redirect to = "/login" />
+                    return <Redirect to="/login" />
                   }
                 }
               }
