@@ -3,6 +3,7 @@ import { Input,Form,Button,Table,MessageBox,Message,Pagination,Select } from 'el
 import Time from '../common/setime'
 import { Link } from 'react-router-dom'
 import { MLIST_SELECT } from '../meta/select'
+import api from '../../api/index'
 class Mlist extends Component{
 	constructor(props) {
 		super(props)
@@ -176,6 +177,13 @@ class Mlist extends Component{
 		this.setState({
 			data: [...data]
 		})
+	}
+	fetchList = () => {
+		let trans = {
+
+		}
+		const res = api.selectUserBySeachApi()
+		console.log(res)
 	}
 	render() {
 		return (

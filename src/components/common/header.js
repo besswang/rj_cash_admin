@@ -1,13 +1,25 @@
-import React,{ Component } from 'react'
+import React, { Component } from 'react'
 import { Dropdown } from 'element-react'
 import '../../styles/header.less'
-export default class Header extends Component {
-  handleCommand = () => {
-
+import api from '../../api/index'
+// import PropTypes from 'prop-types'
+// import { connect } from 'react-redux'
+class Header extends Component {
+  // static propTypes = {
+  //   history: PropTypes.object.isRequired
+  // }
+  handleCommand = async e => {
+    if(e === '0'){
+      console.log('tui')
+      const res = await api.logoutApi()
+      if(res.success){
+        // this.props.history.push('/login')
+      }
+    }
   }
   render() {
     return (
-      <ul className = "header-ul flex flex-direction_row justify-content_flex-justify align-items_center" >
+      <ul className= "header-ul flex flex-direction_row justify-content_flex-justify align-items_center" >
         <li className="flex flex-direction_row">
           <h4>{'管理系统'}</h4>
           <span>{'欢迎王立娟'}</span>
@@ -15,8 +27,8 @@ export default class Header extends Component {
         <li>
           <Dropdown onCommand={ this.handleCommand } menu={ (
             <Dropdown.Menu>
-              <Dropdown.Item>{'修改'}<i class="el-icon-edit el-icon--right" /></Dropdown.Item>
-              <Dropdown.Item>{'退出'}</Dropdown.Item>
+              <Dropdown.Item command="1">{'修改'}<i className="el-icon-edit el-icon--right" /></Dropdown.Item>
+              <Dropdown.Item command="0">{'退出'}</Dropdown.Item>
             </Dropdown.Menu>
             ) }
           >
@@ -27,3 +39,8 @@ export default class Header extends Component {
     )
   }
 }
+// Header.propTypes = {
+//   propsData: PropTypes.object,
+//   propsDataHistory: PropTypes.object
+// }
+export default Header

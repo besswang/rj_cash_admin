@@ -4,15 +4,10 @@ import jk from './jk'
 export default {
   manageloginApi: params => Fetch(jk.managelogin, {method: 'post', body: params}),
   verifycodeApi: params => Fetch(jk.verifycode, {method: 'get', data: params}),
-  logoutApi: () => Fetch(jk.logout, {method: 'get'})
+  logoutApi: () => Fetch(jk.logout, {method: 'get'}),
+  selectQuApi: () => Fetch(jk.selectQu, {method: 'get'}),
+  channelloginApi: params => Fetch(jk.channellogin, {method: 'post', body: params}),
+  selectLoanRepaymentApi: params => Fetch(jk.selectLoanRepayment, {method: 'get', data: params}),
+  selectTotalLogByTimeApi: params => Fetch(jk.selectTotalLogByTime, {method: 'get', data: params}),
+  selectUserBySeachApi: params => Fetch(jk.selectUserBySeach, {method: 'post', body: params})
 }
-
-//fetch.1.js 写法 get 使用query传入字段，其他请求使用body,这里的get和body是请求参数对象
-// let res = await this.Fetch('url', {method: 'get',query});
-
-// a: async params => await Fetch('url', {method: 'post', body: params});
-// loginApi: params => Fetch(jk.login, {method: 'post', body: params})
-//  list: async params => await Fetch('/globalconfig/selectGlobalconfig', {
-//    method: 'post',
-//    body: params
-//  }),

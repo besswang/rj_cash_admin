@@ -89,11 +89,6 @@ function addTimeout(fetchPromise, timeout) {
         // response.status = status
         // 如果返回码在300到900之间，将以错误返回，如果需要对错误统一处理，可以放在下面判断中
         if (/^[3-9]\d{2}$/.test(response.status) || response.code === 400) {
-          /* global vm */
-          // vm.$message({
-          //   message: response.msg,
-          //   type: 'warning'
-          // })
           reject(response)
           return false
         } else {

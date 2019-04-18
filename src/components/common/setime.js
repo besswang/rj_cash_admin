@@ -7,8 +7,22 @@ export default class SetEndTime extends Component {
 	  this.state = {
 	    value2: null
 	  }
-  }
+	}
+	handleVal = (e) => {
+		if(e !== null){
+			const beginTime = Math.round(e[0])
+			const endTime = Math.round(e[1])
+			const data = {
+				beginTime: beginTime,
+				endTime: endTime
+			}
+			this.props.handleTime(data)
+		} else {
+			this.props.handleTime({})
+		}
+	}
   render (){
+		console.log(this.state.value2)
     const { value2 } = this.state
     return (
 			<DateRangePicker
@@ -18,8 +32,8 @@ export default class SetEndTime extends Component {
 				align="right"
 				ref={ e => { this.daterangepicker2 = e } }
 				onChange={ date => {
-						console.debug('DateRangePicker2 changed: ', date)
 						this.setState({ value2: date })
+						this.handleVal(date)
 					}
 				}
 				shortcuts={
@@ -30,8 +44,8 @@ export default class SetEndTime extends Component {
 								const end = new Date()
 								const start = new Date()
 								start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-
 								this.setState({ value2: [start, end] })
+								this.handleVal([start, end])
 								this.daterangepicker2.togglePickerVisible()
 							}
 						}, {
@@ -41,6 +55,7 @@ export default class SetEndTime extends Component {
 								const start = new Date()
 								start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
 								this.setState({ value2: [start, end] })
+								this.handleVal([start, end])
 								this.daterangepicker2.togglePickerVisible()
 							}
 						}, {
@@ -50,6 +65,7 @@ export default class SetEndTime extends Component {
 									const start = new Date()
 									start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
 									this.setState({ value2: [start, end] })
+									this.handleVal([start, end])
 									this.daterangepicker2.togglePickerVisible()
 								}
 						}

@@ -20,7 +20,7 @@ class Login extends Component {
       codeText: '获取验证码',
       codeDisabled: false,
       count: 60,
-      type:1,
+      type:false,
       form: {
         tel: '',
         code: ''
@@ -32,7 +32,19 @@ class Login extends Component {
         code: [
           { required: true, message: '请输入验证码', trigger: 'blur' }
         ]
-      }
+      },
+      channelForm: {
+        user: '',
+        password: ''
+      },
+      channelRules: {
+        user: [
+          { required: true, message: '请输入用户名或手机号', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' }
+        ]
+      },
     }
   }
 	componentWillMount() {
@@ -40,6 +52,26 @@ class Login extends Component {
 	}
 	componentDidMount() {
 
+  }
+  fetchChannel = async () => {
+    const res = await api.channelloginApi({
+      adminName: this.state.channelForm.user,
+      password: this.state.channelForm.password
+    })
+    if (res.success) {
+      Message.success(res.msg)
+      setTimeout(() => {
+        this.props.history.push('/home')
+      }, 2000)
+    } else {
+      Message.error(res.msg)
+      this.setState({
+        channelForm: {
+          password: '',
+          user: ''
+        }
+      })
+    }
   }
   fetchLogin = async () => {
     const res = await api.manageloginApi({
@@ -55,7 +87,8 @@ class Login extends Component {
       Message.error(res.msg)
       this.setState({
         form: {
-          password: ''
+          tel: '',
+          code: ''
         }
       })
     }
@@ -103,6 +136,17 @@ class Login extends Component {
       this.fetchCode()
     }
   }
+  channelLogin = e => {
+    e.preventDefault()
+    this.channelForm.validate((valid) => {
+      if (valid) {
+        this.fetchChannel()
+      } else {
+        console.log('error submit!!')
+        return false
+      }
+    })
+  }
   loginFn = e => {
     e.preventDefault()
     this.form.validate((valid) => {
@@ -129,6 +173,11 @@ class Login extends Component {
       form: Object.assign({},this.state.form, {[key]: val})
     })
   }
+  channelOnChange = (key, val) => {
+    this.setState({
+      channelForm: Object.assign({},this.state.channelForm, {[key]: val})
+    })
+  }
   Codeform = () => {
     const { type } = this.state
     if (type){
@@ -152,37 +201,36 @@ class Login extends Component {
             </Form.Item>
           </div>
           <Form.Item className="lastitem">
-            <Checkbox label="记住用户名和密码" />
             <Button className="login-btn" type="primary" onClick={ this.loginFn }>{'登陆'}</Button>
           </Form.Item>
         </Form>
       )
     }else{
       return (
-        <Form className="form-con">
-          <Form.Item>
-            <Input placeholder="请输入您的手机号/用户名" prepend={
+        <Form className="form-con" ref={ e => { this.channelForm = e } } model={ this.state.channelForm } rules={ this.state.channelRules }>
+          <Form.Item prop="user">
+            <Input value={ this.state.channelForm.user } onChange={ this.channelOnChange.bind(this, 'user') } placeholder="请输入您的手机号/用户名" prepend={
                 <img src={ user } alt="" />
               }
             />
           </Form.Item>
-          <Form.Item>
-            <Input placeholder="请输入您的密码" prepend={
+          <Form.Item prop="password">
+            <Input value={ this.state.channelForm.password } onChange={ this.channelOnChange.bind(this, 'password') } placeholder="请输入您的密码" prepend={
                 <img src={ code } alt="" />
               }
             />
           </Form.Item>
-          <div className="code-con">
+          {/* <div className="code-con">
             <Form.Item>
               <Input placeholder="请输入右侧验证码" />
             </Form.Item>
             <Form.Item className="flex_1 code-item">
               <Button type="text">{'1234'}</Button>
             </Form.Item>
-          </div>
+          </div> */}
           <Form.Item className="lastitem">
             <Checkbox label="记住用户名和密码" />
-            <Button className="login-btn" type="primary">{'登陆'}</Button>
+            <Button className="login-btn" type="primary" onClick={ this.channelLogin }>{'登陆'}</Button>
           </Form.Item>
         </Form>
       )
