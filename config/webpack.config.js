@@ -268,10 +268,13 @@ module.exports = function(webpackEnv) {
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
         // '@': paths.appSrc,// 用法 @/components
+        '@api': path.join(__dirname, '../src/api'),
         '@components': path.join(__dirname, '../src/components'),
-        '@styles': path.join(__dirname, '../src/styles'),
+        '@containers': path.join(__dirname, '../src/containers'),
+        '@global': path.join(__dirname, '../src/global'),
+        '@meta': path.join(__dirname, '../src/meta'),
         '@redux': path.join(__dirname, '../src/redux'),
-        '@api': path.join(__dirname, '../src/api')
+        '@styles': path.join(__dirname, '../src/styles')
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding

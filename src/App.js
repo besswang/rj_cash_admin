@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Login from './components/login'
-import Home from './components/home'
+import Login from '@containers/login'
+import Home from '@containers/home'
 class App extends Component {
   constructor(props){
     super(props)

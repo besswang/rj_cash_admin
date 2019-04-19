@@ -2,6 +2,7 @@
 // 使用 action 来描述“ 发生了什么”
 import * as type from '../actionTypes'
 import api from '@api/index'
+
 const list = data => ({
   type: type.AUDIT_LIST,
   payload: data

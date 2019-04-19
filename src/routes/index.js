@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router,Route, Switch, Redirect } from 'react-router-dom'
 // 你如果不想访问到后端， 应该使用HashRouter
 // import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
-import Login from '@components/login'
-import Home from '@components/home'
+import Login from '@containers/login'
+import Home from '@containers/home'
 import { CHILD_ROUTES } from './childRoutes'
 
 import { Provider } from 'react-redux'

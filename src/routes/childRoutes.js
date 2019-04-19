@@ -1,39 +1,39 @@
 import React from 'react'
-import Welcome from '@components/welcome'
+import Welcome from '@containers/welcome'
 // 会员管理-会员列表
-import Mlist from '@components/member/mlist'
+import Mlist from '@containers/member/mlist'
 // 会员管理-会员列表
-import Detail from '@components/member/detail'
+import Detail from '@containers/member/detail'
 // 会员管理-注册未申请
-import Apply from '@components/member/apply'
+import Apply from '@containers/member/apply'
 // 会员管理-正常还款未借
-import Normal from '@components/member/normal'
+import Normal from '@containers/member/normal'
 // 报表统计-渠道统计
-import Ditch from '@components/statistics/ditch'
+import Ditch from '@containers/statistics/ditch'
 // 报表统计-渠道统计-当天/总转化/渠道费用
-import Ditchinside from '@components/statistics/ditchinside'
+import Ditchinside from '@containers/statistics/ditchinside'
 // 报表统计-逾期统计
-import Overdue from '@components/statistics/overdue'
+import Overdue from '@containers/statistics/overdue'
 // 报表统计-放款统计
-import Loan from '@components/statistics/loan'
+import Loan from '@containers/statistics/loan'
 // 报表统计-还款统计
-import Repayment from '@components/statistics/repayment'
+import Repayment from '@containers/statistics/repayment'
 // 报表统计-还款统计-查看
-import Repayinside from '@components/statistics/repayinside'
+import Repayinside from '@containers/statistics/repayinside'
 // 报表统计-消耗费用
-import Consume from '@components/statistics/consume'
+import Consume from '@containers/statistics/consume'
 // 报表统计-进出账
-import Turnover from '@components/statistics/turnover'
+import Turnover from '@containers/statistics/turnover'
 // 报表统计-数据看版
-import Look from '@components/statistics/look'
+import Look from '@containers/statistics/look'
 // 借款管理-待审核
-import Audit from '@components/borrow/audit'
+import Audit from '@containers/borrow/audit'
 // 借款管理-待审核-详情
-import Auddetail from '@components/borrow/auddetail'
+import Auddetail from '@containers/borrow/auddetail'
 // 借款管理-审核拒绝
-import Auditrefuse from '@components/borrow/auditRefuse'
+import Auditrefuse from '@containers/borrow/auditRefuse'
 // 催收管理-逾期列表
-import Colloverdue from '@components/collection/overdue'
+import Colloverdue from '@containers/collection/overdue'
 export const CHILD_ROUTES = [{
   id: 1,
   path: '/home',
