@@ -9,5 +9,6 @@ export default {
   channelloginApi: params => Fetch(jk.channellogin, {method: 'post', body: params}),
   selectLoanRepaymentApi: params => Fetch(jk.selectLoanRepayment, {method: 'get', data: params}),
   selectTotalLogByTimeApi: params => Fetch(jk.selectTotalLogByTime, {method: 'get', data: params}),
-  selectUserBySeachApi: params => Fetch(jk.selectUserBySeach, {method: 'post', body: params})
+  selectUserBySeachApi: params => Fetch(jk.selectUserBySeach, {method: 'post', body: params}),
+  exportUserApi: params => Fetch(jk.exportUser, {method: 'post', body: params})
 }

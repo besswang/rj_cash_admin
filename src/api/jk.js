@@ -8,5 +8,6 @@ export default {
   'selectLoanRepayment': 'api/chart/selectLoanRepayment', // 放/还款统计-折线
   'selectTotalLogByTime': 'api/order/selectTotalLogByTime', // 查询
   // 会员管理
-  'selectUserBySeach': 'api/user/selectUserBySeach' // 会员列表
+  'selectUserBySeach': 'api/user/selectUserBySeach', // 会员列表
+  'exportUser': 'api/user/exportUser'
 }

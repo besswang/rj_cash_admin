@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Input,Form,Button,Table,MessageBox,Message,Pagination } from 'element-react'
+import { Input, Form, Button, Table, MessageBox, Message, Pagination, Loading } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { selectSubreddit, saveTime, selectSearchText, handelSearch } from '../../redux/actions/member'
+import { selectSubreddit, saveTime, selectSearchText, handelSearch, sizeChange, currentChange } from '../../redux/actions/member'
 import { Link } from 'react-router-dom'
 import { MLIST_SELECT } from '@meta/select'
 import SelectPicker from '@components/SelectPicker'
@@ -13,15 +13,12 @@ class Mlist extends Component{
 		time: PropTypes.array,
 		dispatch: PropTypes.func.isRequired,
 		searchAll: PropTypes.object.isRequired,
+		memberList: PropTypes.object.isRequired,
 		memberSearchText: PropTypes.string
 	}
 	constructor(props) {
 		super(props)
 		this.state = {
-			total:25,
-			pageSizes: [ 5, 10, 20, 30 ],
-			pageSize:5,
-			currentPage:1,
 			columns: [{
 						type: 'index',
 						fixed: 'left'
@@ -128,8 +125,12 @@ class Mlist extends Component{
 			}]
 		}
 	}
+	componentWillMount() {
+		// console.log(this.props)
+		this.props.dispatch(handelSearch(this.props.searchAll))
+	}
 	componentDidMount() {
-		console.log(this.props)
+		// console.log(this.props)
 	}
 	openBlackListMessage(type) {
 		console.log(type)
@@ -187,16 +188,10 @@ class Mlist extends Component{
 			data: [...data]
 		})
 	}
-	fetchList = () => {
-		// const res = api.selectUserBySeachApi()
-		// console.log(res)
-	}
 	handleSelectChange = nextSubreddit => {
-		console.log(nextSubreddit)
 		this.props.dispatch(selectSubreddit(nextSubreddit))
 	}
 	handleTimeChange = val => {
-		console.log(val)
 		this.props.dispatch(saveTime(val))
 	}
 	handleTextChange = val => {
@@ -207,9 +202,17 @@ class Mlist extends Component{
 		e.preventDefault()
 		this.props.dispatch(handelSearch(this.props.searchAll))
 	}
+	sizeChange = e => {
+		this.props.dispatch(sizeChange(e))
+		this.props.dispatch(handelSearch(this.props.searchAll))
+	}
+	onCurrentChange = e => {
+		this.props.dispatch(currentChange(e))
+		this.props.dispatch(handelSearch(this.props.searchAll))
+	}
 	render() {
 		console.log(this.props)
-		const { selectedSubreddit,time, memberSearchText } = this.props
+		const { selectedSubreddit,time, memberSearchText, memberList, searchAll } = this.props
 		return (
 			<div>
 				<Form inline>
@@ -240,20 +243,25 @@ class Mlist extends Component{
 						<Button nativeType="submit" type="primary">{'导出列表'}</Button>
 					</Form.Item>
 				</Form>
-				<Table
-				style= { { width: '100%' } }
-				columns= { this.state.columns }
-				data= { this.state.data }
-				border
-				maxHeight= { 250 }
-				/>
+				<Loading loading={ memberList.loading }>
+					<Table
+					style= { { width: '100%' } }
+					columns= { this.state.columns }
+					data= { memberList.data }
+					border
+					maxHeight= { 250 }
+					/>
+				</Loading>
+
 				<div className="pagination-con flex flex-direction_row justify-content_flex-center">
 					<Pagination
 					layout="total, sizes, prev, pager, next, jumper"
-					total={ this.state.total }
-					pageSizes={ this.state.pageSizes }
-					pageSize={ this.state.pageSize }
-					currentPage={ this.state.currentPage }
+					total={ memberList.total }
+					pageSizes={ memberList.pageSizes }
+					pageSize={ searchAll.pageSize }
+					currentPage={ searchAll.pageNum }
+					onSizeChange={ this.sizeChange }
+					onCurrentChange={ this.onCurrentChange }
 					/>
 				</div>
 			</div>

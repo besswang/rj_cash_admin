@@ -1,8 +1,11 @@
 import * as type from '../actionTypes'
+import { Notification } from 'element-react'
 //初始化列表数据
 const list = {
   text: '2233',
   loading: false,
+  total: 0,
+  pageSizes: [5, 10, 20, 30],
   data: []
 }
 const memberList = (state = {
@@ -17,6 +20,10 @@ const memberList = (state = {
         data: action.posts,
         loading: false
       }
+    case type.FAILURE_POSTS:{
+      Notification.warning(action.posts.msg)
+      return {...state, loading: false, data: []}
+    }
     default:
       return state
   }

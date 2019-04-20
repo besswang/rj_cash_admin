@@ -1,5 +1,5 @@
 import 'whatwg-fetch'
-import qs from 'qs'
+// import qs from 'qs'
 //参考： https: //www.2cto.com/kf/201809/778497.html
 // 处理promise和fetch的兼容性以及引入
 require('es6-promise').polyfill()
