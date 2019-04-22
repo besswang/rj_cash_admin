@@ -2,7 +2,8 @@
 // 使用 action 来描述“ 发生了什么”
 import * as type from '../actionTypes'
 import api from '@api/index'
-import {push} from 'react-router-redux';
+import { MessageBox, Message } from 'element-react'
+// import {push} from 'react-router-redux'
 // 搜索类型（0:全部，1:渠道名称，2:会员姓名，3:手机号码，4:身份证号）
 export const selectSubreddit = typeId => ({
   type: type.SELECT_SUBREDDIT,
@@ -53,11 +54,63 @@ export const handelSearch = subreddit => {
     dispatch(requestPosts())
     const data = await api.selectUserBySeachApi(subreddit)
     if(data.success){
-      dispatch(receivePosts(data))
+      dispatch(receivePosts(data.data))
     }else{
       dispatch(failurePosts(data))
-      dispatch(push('/login'))
+      // dispatch(push('/login'))
     }
     console.log(data)
+  }
+}
+
+const shouldFetchPosts = (state) => {
+  const posts = state.searchAll
+  return posts
+}
+const text = t => {
+  if(t === 0){
+    return '启用'
+  } else {
+    return '禁用'
+  }
+}
+// 会员管理-禁用/启用
+export const updateUserType = subreddit => {
+    const t = text(subreddit.type)
+    return (dispatch, getState) => {
+      MessageBox.confirm(`将该用户${ t }, 是否继续?`, '提示', {
+        type: 'warning'
+      }).then(async () => {
+        dispatch(requestPosts())
+        const searchAll = shouldFetchPosts(getState())
+        const data = await api.updateUserTypeApi(subreddit)
+        if (data.success) {
+          dispatch(handelSearch(searchAll))
+          Message({
+            type: 'success',
+            message: data.msg
+          })
+        } else {
+          dispatch(failurePosts(data))
+        }
+      }).catch(() => {
+        Message({
+          type: 'info',
+          message: '已取消禁用'
+        })
+      })
+    }
+}
+
+// 导出
+export const exportUser = () => {
+  return async (dispatch, getState) => {
+    console.log('333')
+    const data = shouldFetchPosts(getState())
+    await api.exportUserApi(data)
+    // const a = document.createElement('a')
+    // a.setAttribute('download', '')
+    // a.setAttribute('href', 'http://47.94.142.215:8081/rjwl/api/user/exportUser')
+    // a.click()
   }
 }

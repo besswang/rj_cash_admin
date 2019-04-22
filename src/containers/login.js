@@ -12,7 +12,8 @@ class Login extends Component {
   static propTypes = {
     // match: PropTypes.object.isRequired,
     // location: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired
   }
   constructor(props){
     super(props)
@@ -48,7 +49,7 @@ class Login extends Component {
     }
   }
 	componentWillMount() {
-	  // console.log(this.props)
+	  console.log(this.props)
 	}
 	componentDidMount() {
 
@@ -61,7 +62,9 @@ class Login extends Component {
     if (res.success) {
       Message.success(res.msg)
       setTimeout(() => {
+        console.log(this.context)
         this.props.history.push('/home')
+        // this.context.router.history.push('/home')
       }, 2000)
     } else {
       Message.error(res.msg)

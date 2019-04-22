@@ -3,25 +3,20 @@
 //reducer 就是一个纯函数， 接收旧的 state 和 action， 返回新的 state。
 // 现在只需要谨记 reducer 一定要保持纯净。 只要传入参数相同， 返回计算得到的下一个 state 就一定相同。 没有特殊情况、 没有副作用， 没有 API 请求、 没有变量修改， 单纯执行计算。
 import { combineReducers } from 'redux'
-import { routerReducer } from "react-router-redux";
+import { routerReducer } from 'react-router-redux'
 import redAuditRefuse from './redAuditRefuse'
-import redAudit from './redAudit'
+// import audit from './audit'
+import audit from '@containers/borrow/audit/reducer'
 import redBankDetail from './redBankDetail'
 import user from './user'
 import memberList from './member'
 import * as type from '../actionTypes'
 
+
 const selectedSubreddit = (state = '0', action) => {
   switch (action.type) {
-    case type.SELECT_SUBREDDIT: {
-      let id = ''
-      if (action.typeId !== ''){
-        id = action.typeId
-      } else {
-        id = '0'
-      }
-      return id
-    }
+    case type.SELECT_SUBREDDIT:
+      return action.typeId
     default:
       return state
   }
@@ -53,8 +48,15 @@ const search = {
 }
 const searchAll = (state = search, action) => {
   switch (action.type) {
-    case type.SELECT_SUBREDDIT:
-      return {...state, typeId: action.typeId}
+    case type.SELECT_SUBREDDIT:{
+      let typeId = ''
+      if (action.typeId !== ''){
+        typeId = action.typeId
+      } else {
+        typeId = '0'
+      }
+      return {...state, typeId: typeId}
+    }
     case type.SAVE_TIME: {
       let startTime = ''
       let endTime = ''
@@ -77,7 +79,7 @@ const searchAll = (state = search, action) => {
 export default combineReducers({
   routerReducer,
   redAuditRefuse,
-  redAudit,
+  audit,
   redBankDetail,
   user,
   selectedSubreddit,

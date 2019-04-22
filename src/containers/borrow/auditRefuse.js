@@ -3,7 +3,7 @@ import { Button, Table, Pagination, Message, MessageBox, Loading } from 'element
 import TypeSearch from '@components/search/typeSearch'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { auditRefuseList } from '@redux/actions'
+// import { auditRefuseList } from '@redux/actions'
 import PropTypes from 'prop-types'
 class AuditRefuse extends Component{
 	constructor(props) {
@@ -102,17 +102,7 @@ class AuditRefuse extends Component{
 		}
 	}
 	componentWillMount() {
-		console.log(this.props)
-		const { dispatch } = this.props
-		const trans = {
-			typeid: 0,
-			typename:'',
-			state: -1,
-			thetime: 0,
-			page: 1,
-			limit: 10,
-		}
-		dispatch(auditRefuseList(trans))
+		// console.log(this.props)
 	}
   componentDidMount() {
 

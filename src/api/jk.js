@@ -9,5 +9,6 @@ export default {
   'selectTotalLogByTime': 'api/order/selectTotalLogByTime', // 查询
   // 会员管理
   'selectUserBySeach': 'api/user/selectUserBySeach', // 会员列表
-  'exportUser': 'api/user/exportUser'
+  'exportUser': 'api/user/exportUser', // 导出列表
+  'updateUserType': 'api/user/updateUserType' // 修改用户禁用状态
 }

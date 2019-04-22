@@ -8,7 +8,7 @@ const auditListState = {
   loading: false,
   list: []
 }
-const redAudit = (state = {...auditListState}, action) => {
+const audit = (state = {...auditListState}, action) => {
   switch (action.type) {
     case 'REQUEST_POSTS':
       return Object.assign({}, state, {
@@ -21,4 +21,4 @@ const redAudit = (state = {...auditListState}, action) => {
   }
 }
 
-export default redAudit
+export default audit

@@ -2,18 +2,23 @@ import React, { Component } from 'react'
 import { Dropdown } from 'element-react'
 import '@styles/header.less'
 import api from '../api/index'
-// import PropTypes from 'prop-types'
-// import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 class Header extends Component {
-  // static propTypes = {
-  //   history: PropTypes.object.isRequired
-  // }
+  static propTypes = {
+    history: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired
+  }
   handleCommand = async e => {
     if(e === '0'){
       console.log('tui')
+      console.log(this.props)
+      console.log(this.context)
+      return false
+      this.props.history.push('/login')
       const res = await api.logoutApi()
       if(res.success){
-        // this.props.history.push('/login')
+        this.props.history.push('/login')
       }
     }
   }
@@ -39,8 +44,9 @@ class Header extends Component {
     )
   }
 }
-// Header.propTypes = {
-//   propsData: PropTypes.object,
-//   propsDataHistory: PropTypes.object
-// }
-export default Header
+Header.propTypes = {
+  propsData: PropTypes.object,
+  propsDataHistory: PropTypes.object
+}
+const mapStateToProps = state => (state.user)
+export default connect(mapStateToProps)(Header)

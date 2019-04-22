@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import { Input, Form, Button, Table, MessageBox, Message, Pagination, Loading } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { selectSubreddit, saveTime, selectSearchText, handelSearch, sizeChange, currentChange } from '../../redux/actions/member'
+import 'whatwg-fetch'
+import { selectSubreddit, saveTime, selectSearchText, handelSearch, sizeChange, currentChange, updateUserType, exportUser } from '../../redux/actions/member'
 import { Link } from 'react-router-dom'
 import { MLIST_SELECT } from '@meta/select'
 import SelectPicker from '@components/SelectPicker'
+import DisableBtn from '@components/DisableBtn'
 import Time from '@components/Settime'
 class Mlist extends Component{
 	static propTypes = {
@@ -24,45 +26,39 @@ class Mlist extends Component{
 						fixed: 'left'
 				}, {
 					label: '真实姓名',
-					prop: 'name',
+					prop: 'realName',
 					width:100,
 					fixed: 'left'
 				},{
 					label: '手机号码',
-					prop: 'tel'
+					prop: 'phone'
 				},{
 					label: '身份证号',
-					prop: 'idcard'
+					prop: 'idNumber'
 				},
 				{
 					label: '渠道名称',
-					prop: 'ditch'
+					prop: 'channelName'
 				},
 				{
 					label: '授信额度',
-					prop: 'zip'
+					prop: 'loanQuota'
 				},
 				{
 					label: '认证参数',
-					prop: 'zip'
+					prop: 'certification'
 				}, {
 					label: '借款次数',
-					prop: 'zip'
-				}, {
-					label: '性别',
-					prop: 'zip'
+					prop: 'loanNum'
 				}, {
 					label: '注册时间',
-					prop: 'zip'
+					prop: 'gmt'
 				}, {
 					label: '登陆IP',
-					prop: 'zip'
-				}, {
-					label: 'IP城市',
-					prop: 'zip'
+					prop: 'loginIp'
 				}, {
 					label: '登陆次数',
-					prop: 'zip'
+					prop: 'loanNum'
 				},{
 				 	label: '黑名单',
 				 	prop: 'blackType',
@@ -83,46 +79,17 @@ class Mlist extends Component{
 					fixed: 'right',
 					width:120,
 					render: row => {
-						if(row.using === 1){
-							return (
-								<div className="flex flex-direction_row">
-									<Button className="margin_right10" type="primary" size="mini" onClick={ this.openUsingMessage.bind(this) }>{'启用'}</Button>
-									{/* <Button type="text" size="small" onClick={this.deleteRow.bind(this, index)}>会员详情</Button> */}
-									<Link to="/member/mlist/detail">
-										<Button type="text" size="small">{'会员详情'}</Button>
-									</Link>
-								</div>
-							)
-						}else{
-							return (
-								<div className="flex flex-direction_row">
-									<Button className="margin_right10" type="danger" size="mini" onClick={ this.openUsingMessage.bind(this) }>{'禁用'}</Button>
-									{/* <Button type="text" size="small" onClick={this.deleteRow.bind(this, index)}>会员详情</Button> */}
-									<Link to="/member/mlist/detail">
-										<Button type="text" size="small">{'会员详情'}</Button>
-									</Link>
-								</div>
-							)
-						}
+						return (
+							<div className="flex flex-direction_row">
+								<DisableBtn value={ row.type } onClick={ this.updateUserType.bind(this, row) } />
+								<Link to="/member/mlist/detail">
+									<Button type="text" size="small">{'会员详情'}</Button>
+								</Link>
+							</div>
+						)
 					}
       }],
-			data: [{
-				name: '王立娟',
-				tel: '15057187176',
-				idcard: '24456646773388783',
-				ditch: 'xl24',
-				zip: 200333,
-				blackType:1,//1:在黑名单，0:不在黑明单
-				using: 1 //1:启用状态；0:禁用状态
-			}, {
-				name: '百香果',
-				tel: '15057187176',
-				idcard: '24456646773388783',
-				ditch: 'xl24',
-				zip: 200333,
-				blackType: 0, //1:在黑名单，0:不在黑明单
-				using:0 //1:启用状态；0:禁用状态
-			}]
+			data: []
 		}
 	}
 	componentWillMount() {
@@ -164,29 +131,8 @@ class Mlist extends Component{
 			})
 		}
 	}
-	openUsingMessage() {
-		MessageBox.confirm('将该用户禁用, 是否继续?', '提示', {
-			type: 'warning'
-		}).then(() => {
-			Message({
-				type: 'success',
-				message: '禁用成功!'
-			})
-		}).catch(() => {
-			Message({
-				type: 'info',
-				message: '已取消禁用'
-			})
-		})
-	}
-	deleteRow(index) {
-		const {
-			data
-		} = this.state
-		data.splice(index, 1)
-		this.setState({
-			data: [...data]
-		})
+	updateUserType(r) {
+		this.props.dispatch(updateUserType({id: r.id, type: r.type}))
 	}
 	handleSelectChange = nextSubreddit => {
 		this.props.dispatch(selectSubreddit(nextSubreddit))
@@ -210,6 +156,22 @@ class Mlist extends Component{
 		this.props.dispatch(currentChange(e))
 		this.props.dispatch(handelSearch(this.props.searchAll))
 	}
+	exportUser = () => {
+		// this.props.dispatch(exportUser())
+		fetch('/rjwl/api/user/exportUser', {
+			method: 'POST',
+			headers:{
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			responseType: 'blob',
+			body: JSON.stringify(this.props.searchAll)
+		}).then(function (response) {
+			console.log(response)
+		}).catch(function (err) {
+			// 出错了;等价于 then 的第二个参数,但这样更好用更直观 :(
+		})
+	}
 	render() {
 		console.log(this.props)
 		const { selectedSubreddit,time, memberSearchText, memberList, searchAll } = this.props
@@ -228,6 +190,7 @@ class Mlist extends Component{
 							value={ memberSearchText }
 							onChange={ this.handleTextChange }
 							placeholder="请输入内容"
+							clearable="true"
 						/>
 					</Form.Item>
 					<Form.Item>
@@ -240,7 +203,9 @@ class Mlist extends Component{
 						<Button onClick={ this.handleSearch } nativeType="submit" type="primary">{'搜索'}</Button>
 					</Form.Item>
 					<Form.Item>
-						<Button nativeType="submit" type="primary">{'导出列表'}</Button>
+						<Button onClick={ this.exportUser } type="primary">{'导出列表'}</Button>
+						{/* <a className="el-button el-button--primary" href="api/user/exportUser" download="会员列表">{'a导出'}</a> */}
+						{/* <a className="el-button el-button--primary" href={ this.exportFn }>{'a导出'}</a> */}
 					</Form.Item>
 				</Form>
 				<Loading loading={ memberList.loading }>
@@ -249,7 +214,6 @@ class Mlist extends Component{
 					columns= { this.state.columns }
 					data= { memberList.data }
 					border
-					maxHeight= { 250 }
 					/>
 				</Loading>
 

@@ -5,7 +5,7 @@ import { AUDIT_SELECT } from '@meta/select'
 import Time from '../setime'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { auditRefuseList } from '@redux/actions'
+// import { auditRefuseList } from '@redux/actions'
 class TypeSearch extends Component {
   static propTypes = {
     searchType: PropTypes.number
@@ -67,8 +67,8 @@ class TypeSearch extends Component {
       }
     }
     console.log(this.props)
-    const { dispatch } = this.props
-    dispatch(auditRefuseList(this.state.form))
+    // const { dispatch } = this.props
+    // dispatch(auditRefuseList(this.state.form))
   }
   onChange(key, value) {
     this.setState({

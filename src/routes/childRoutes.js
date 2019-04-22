@@ -27,7 +27,7 @@ import Turnover from '@containers/statistics/turnover'
 // 报表统计-数据看版
 import Look from '@containers/statistics/look'
 // 借款管理-待审核
-import Audit from '@containers/borrow/audit'
+import Audit from '@containers/borrow/audit/index'
 // 借款管理-待审核-详情
 import Auddetail from '@containers/borrow/auddetail'
 // 借款管理-审核拒绝

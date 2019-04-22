@@ -8,8 +8,14 @@
 // import todoApp from './reducers'
 // let store = createStore(todoApp)
 import { createStore, applyMiddleware, compose } from 'redux'
+// import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
+// import { routerMiddleware } from 'react-router-redux'
 import reducers from './reducers'
 import thunk from 'redux-thunk'
+// const middleware = routerMiddleware(browserHistory)
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose
-const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)))
+const store = createStore(
+  reducers,
+  composeEnhancers(applyMiddleware(thunk))
+)
 export default store

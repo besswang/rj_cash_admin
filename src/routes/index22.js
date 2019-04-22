@@ -5,7 +5,8 @@ import { BrowserRouter as Router,Route, Switch, Redirect } from 'react-router-do
 import Login from '@containers/login'
 import Home from '@containers/home'
 import { CHILD_ROUTES } from './childRoutes'
-import { Provider } from 'react-redux'
+import history from './history'
+import { ConnectedRouter } from 'react-router-redux'
 import store from '../redux/store'
 //路由操作
 class App extends Component {
@@ -20,7 +21,7 @@ class App extends Component {
     // console.log(loginSuccess)
     // console.log(`${match.url}`)
     return(
-      <Provider store={ store }>
+      <ConnectedRouter history={ history }>
         <Router>
           <Switch>
             <Route exact path="/"
@@ -41,7 +42,7 @@ class App extends Component {
             </Home>
           </Switch>
         </Router>
-      </Provider>
+      </ConnectedRouter>
     )
   }
 }

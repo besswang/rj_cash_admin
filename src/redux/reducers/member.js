@@ -17,12 +17,13 @@ const memberList = (state = {
     case type.RECEIVE_POSTS:
       return {
         ...state,
-        data: action.posts,
+        data: action.posts.list,
+        total: action.posts.total,
         loading: false
       }
     case type.FAILURE_POSTS:{
       Notification.warning(action.posts.msg)
-      return {...state, loading: false, data: []}
+      return {...state, loading: false}
     }
     default:
       return state

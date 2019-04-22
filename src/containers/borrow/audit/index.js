@@ -4,12 +4,15 @@ import Time from '@components/setime'
 import { Link } from 'react-router-dom'
 import { AUDIT_SELECT } from '@meta/select'
 import { connect } from 'react-redux'
-import { auditList } from '@redux/actions'
 import PropTypes from 'prop-types'
 class Audit extends Component{
+	static propTypes = {
+		// dispatch: PropTypes.func.isRequired
+	}
 	constructor(props) {
 		super(props)
 		this.state = {
+			loading: false,
 			total:25,
 			pageSizes: [5,10,20,30],
 			pageSize:5,
@@ -108,25 +111,10 @@ class Audit extends Component{
 	}
 	componentWillMount() {
 		console.log(this.props)
-		const { dispatch } = this.props
-		const trans = {
-			typeid: 0,
-			typename:'',
-			neicuiTracker:'',
-			newClient: 0,
-			typedate: 0,
-			starttime:'',
-			endtime:'',
-			state: 0,
-			id: 'df34aa7874e9486ba7f444c041c37f03',
-			page: 1,
-			limit: 10
-		}
-		dispatch(auditList(trans))
 	}
-  // componentDidMount() {
+  componentDidMount() {
 
-  // }
+  }
 	openBlackListMessage(type) {
 		console.log(type)
 		if (type === 1) {
@@ -185,7 +173,7 @@ class Audit extends Component{
 	}
 	render() {
 		console.log(this.props)
-		const { loading } = this.props
+		const { memberList } = this.props
 		return (
 			<div>
 				<Form inline>
@@ -208,7 +196,7 @@ class Audit extends Component{
 						<Button nativeType="submit" type="primary">{'搜索'}</Button>
 					</Form.Item>
 				</Form>
-				<Loading loading={ loading }>
+				<Loading loading={ this.state.loading }>
 					<Table
 						style={ { width: '100%' } }
 						columns={ this.state.columns }
@@ -230,9 +218,16 @@ class Audit extends Component{
 		)
 	}
 }
-const mapStateToProps = state => (state.redAudit)
-Audit.propTypes = {
-	loading: PropTypes.bool.isRequired,
-	dispatch: PropTypes.func.isRequired
+// const mapStateToProps = state => (state.audit)
+// Audit.propTypes = {
+// 	loading: PropTypes.bool.isRequired
+// }
+const mapStateToProps = state => {
+	const {
+		memberList
+	} = state
+	return {
+		memberList
+	}
 }
 export default connect(mapStateToProps)(Audit)
