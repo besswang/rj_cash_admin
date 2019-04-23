@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Dropdown } from 'element-react'
 import '@styles/header.less'
-import api from '../api/index'
+// import api from '../api/index'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 class Header extends Component {
@@ -14,12 +14,12 @@ class Header extends Component {
       console.log('tui')
       console.log(this.props)
       console.log(this.context)
-      return false
-      this.props.history.push('/login')
-      const res = await api.logoutApi()
-      if(res.success){
-        this.props.history.push('/login')
-      }
+
+      // this.props.history.push('/login')
+      // const res = await api.logoutApi()
+      // if(res.success){
+      //   this.props.history.push('/login')
+      // }
     }
   }
   render() {

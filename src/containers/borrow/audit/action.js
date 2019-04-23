@@ -1,2 +1,57 @@
-import * as type from '@redux/actionTypes'
 import api from '@api/index'
+import { MessageBox, Message } from 'element-react'
+import { requestPosts, receivePosts, failurePosts } from '@redux/actions/index'
+// 会员管理-会员列表
+const shouldFetchPosts = (state) => {
+  const posts = state.searchAll
+  return posts
+}
+export const handelSearch = () => {
+  return async (dispatch, getState) => {
+    dispatch(requestPosts())
+    const searchAll = shouldFetchPosts(getState())
+    const trans = Object.assign({}, searchAll, {state: 'TO_BE_AUDITED'})
+    const data = await api.selcteOrderApi(trans)
+    if (data.success) {
+      dispatch(receivePosts(data.data))
+    } else {
+      dispatch(failurePosts(data))
+      // dispatch(push('/login'))
+    }
+    console.log(data)
+  }
+}
+
+// 操作-通过/拒绝
+const text = t => {
+  if (t === 'PENDING_LOAN') {
+    return '通过'
+  } else {
+    return '拒绝'
+  }
+}
+export const handelAudit = subreddit => {
+  const t = text(subreddit.state)
+  return dispatch => {
+    MessageBox.confirm(`审核${ t }该用户, 是否继续?`, '提示', {
+      type: 'warning'
+    }).then(async () => {
+      dispatch(requestPosts())
+      const data = await api.updataStateApi(subreddit)
+      if (data.success) {
+        dispatch(handelSearch())
+        Message({
+          type: 'success',
+          message: data.msg
+        })
+      } else {
+        dispatch(failurePosts(data))
+      }
+    }).catch(() => {
+      Message({
+        type: 'info',
+        message: `已取消${ t }`
+      })
+    })
+  }
+}

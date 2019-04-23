@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Input, Form, Button, Table, MessageBox, Message, Pagination, Loading } from 'element-react'
+import { Input, Form, Button, Table, Pagination, Loading } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import 'whatwg-fetch'
-import { selectSubreddit, saveTime, selectSearchText, handelSearch, sizeChange, currentChange, updateUserType, exportUser } from '../../redux/actions/member'
+import { selectSubreddit, saveTime, selectSearchText, sizeChange, currentChange } from '@redux/actions/index'
+import { handelSearch, updateUserType, exportUser, addUserBlack } from '@redux/actions/member'
 import { Link } from 'react-router-dom'
 import { MLIST_SELECT } from '@meta/select'
 import SelectPicker from '@components/SelectPicker'
@@ -15,7 +15,7 @@ class Mlist extends Component{
 		time: PropTypes.array,
 		dispatch: PropTypes.func.isRequired,
 		searchAll: PropTypes.object.isRequired,
-		memberList: PropTypes.object.isRequired,
+		list: PropTypes.object.isRequired,
 		memberSearchText: PropTypes.string
 	}
 	constructor(props) {
@@ -64,15 +64,13 @@ class Mlist extends Component{
 				 	prop: 'blackType',
 					fixed:'right',
 					 render: row => {
-						 if(row.blackType === 1){
-							 return (
-								 <Button type="text" size="mini" onClick={ this.openBlackListMessage.bind(this,row.blackType) }>{'删除'}</Button>
-							 )
-						 }else{
-								return (
-									<Button type="text" size="mini" onClick={ this.openBlackListMessage.bind(this) }>{'添加'}</Button>
-								)
-						 }
+						 return (
+							 <DisableBtn
+									value={ row.blackStatus }
+									onClick={ this.addUserBlack.bind(this, row) }
+									text={ ['添加','移除'] }
+								/>
+						 )
 					 }
 				},{
 					label: '操作',
@@ -81,7 +79,11 @@ class Mlist extends Component{
 					render: row => {
 						return (
 							<div className="flex flex-direction_row">
-								<DisableBtn value={ row.type } onClick={ this.updateUserType.bind(this, row) } />
+								<DisableBtn
+									value={ row.type }
+									onClick={ this.updateUserType.bind(this, row) }
+									text={ ['启用','禁用'] }
+								/>
 								<Link to="/member/mlist/detail">
 									<Button type="text" size="small">{'会员详情'}</Button>
 								</Link>
@@ -93,43 +95,16 @@ class Mlist extends Component{
 		}
 	}
 	componentWillMount() {
-		// console.log(this.props)
+		this.props.dispatch(saveTime([]))
+		this.props.dispatch(selectSearchText(''))
+		this.props.dispatch(selectSubreddit('0'))
 		this.props.dispatch(handelSearch(this.props.searchAll))
 	}
 	componentDidMount() {
 		// console.log(this.props)
 	}
-	openBlackListMessage(type) {
-		console.log(type)
-		if(type===1){
-			MessageBox.confirm('将用户从黑明单删除, 是否继续?', '提示', {
-				type: 'warning'
-			}).then(() => {
-				Message({
-					type: 'success',
-					message: '删除成功!'
-				})
-			}).catch(() => {
-				Message({
-					type: 'info',
-					message: '已取消删除'
-				})
-			})
-		}else{
-			MessageBox.confirm('将该用户拉入黑名单, 是否继续?', '提示', {
-				type: 'warning'
-			}).then(() => {
-				Message({
-					type: 'success',
-					message: '拉黑成功!'
-				})
-			}).catch(() => {
-				Message({
-					type: 'info',
-					message: '已取消拉黑'
-				})
-			})
-		}
+	addUserBlack(r) {
+		console.log(r)
 	}
 	updateUserType(r) {
 		this.props.dispatch(updateUserType({id: r.id, type: r.type}))
@@ -141,7 +116,6 @@ class Mlist extends Component{
 		this.props.dispatch(saveTime(val))
 	}
 	handleTextChange = val => {
-		console.log(val)
 		this.props.dispatch(selectSearchText(val))
 	}
 	handleSearch = e => {
@@ -157,24 +131,11 @@ class Mlist extends Component{
 		this.props.dispatch(handelSearch(this.props.searchAll))
 	}
 	exportUser = () => {
-		// this.props.dispatch(exportUser())
-		fetch('/rjwl/api/user/exportUser', {
-			method: 'POST',
-			headers:{
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			responseType: 'blob',
-			body: JSON.stringify(this.props.searchAll)
-		}).then(function (response) {
-			console.log(response)
-		}).catch(function (err) {
-			// 出错了;等价于 then 的第二个参数,但这样更好用更直观 :(
-		})
+		this.props.dispatch(exportUser())
 	}
 	render() {
 		console.log(this.props)
-		const { selectedSubreddit,time, memberSearchText, memberList, searchAll } = this.props
+		const { selectedSubreddit,time, memberSearchText, list, searchAll } = this.props
 		return (
 			<div>
 				<Form inline>
@@ -204,15 +165,14 @@ class Mlist extends Component{
 					</Form.Item>
 					<Form.Item>
 						<Button onClick={ this.exportUser } type="primary">{'导出列表'}</Button>
-						{/* <a className="el-button el-button--primary" href="api/user/exportUser" download="会员列表">{'a导出'}</a> */}
-						{/* <a className="el-button el-button--primary" href={ this.exportFn }>{'a导出'}</a> */}
+						{/* <a className="el-button el-button--primary" href={ process.env.PUBLIC_URL+'/api/user/exportUser?'+ this.formdate() } download="会员列表">{'a导出'}</a> */}
 					</Form.Item>
 				</Form>
-				<Loading loading={ memberList.loading }>
+				<Loading loading={ list.loading }>
 					<Table
 					style= { { width: '100%' } }
 					columns= { this.state.columns }
-					data= { memberList.data }
+					data= { list.data }
 					border
 					/>
 				</Loading>
@@ -220,8 +180,8 @@ class Mlist extends Component{
 				<div className="pagination-con flex flex-direction_row justify-content_flex-center">
 					<Pagination
 					layout="total, sizes, prev, pager, next, jumper"
-					total={ memberList.total }
-					pageSizes={ memberList.pageSizes }
+					total={ list.total }
+					pageSizes={ list.pageSizes }
 					pageSize={ searchAll.pageSize }
 					currentPage={ searchAll.pageNum }
 					onSizeChange={ this.sizeChange }
@@ -239,14 +199,14 @@ const mapStateToProps = state => {
 		searchAll,
 		time,
 		memberSearchText,
-		memberList
+		list
 	} = state
 	return {
 		selectedSubreddit,
 		searchAll,
 		time,
 		memberSearchText,
-		memberList
+		list
 	}
 }
 

@@ -9,6 +9,11 @@ export default {
   'selectTotalLogByTime': 'api/order/selectTotalLogByTime', // 查询
   // 会员管理
   'selectUserBySeach': 'api/user/selectUserBySeach', // 会员列表
-  'exportUser': 'api/user/exportUser', // 导出列表
-  'updateUserType': 'api/user/updateUserType' // 修改用户禁用状态
+  // 'exportUser': 'api/user/exportUser', // 导出列表
+  'updateUserType': 'api/user/updateUserType', // 修改用户禁用状态
+  'addUserBlack': 'api/user/addUserBlack', // 添加黑名单
+  'removeUserBlack': 'api/user/removeUserBlack', // 移除黑名单
+  // 借款管理-待审核
+  'selcteOrder': 'api/order/selcteOrder', // 待审核列表
+  'updataState': 'api/order/updataState' // 操作-通过/拒绝
 }

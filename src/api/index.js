@@ -10,6 +10,8 @@ export default {
   selectLoanRepaymentApi: params => Fetch(jk.selectLoanRepayment, {method: 'get', data: params}),
   selectTotalLogByTimeApi: params => Fetch(jk.selectTotalLogByTime, {method: 'get', data: params}),
   selectUserBySeachApi: params => Fetch(jk.selectUserBySeach, {method: 'post', body: params}),
-  exportUserApi: params => Fetch(jk.exportUser, {method: 'post', body: params}),
-  updateUserTypeApi: params => Fetch(jk.updateUserType, {method: 'get', data: params})
+  updateUserTypeApi: params => Fetch(jk.updateUserType, {method: 'get', data: params}),
+  addUserBlackApi: params => Fetch(jk.addUserBlack, {method:'post', body: params}),
+  selcteOrderApi: params => Fetch(jk.selcteOrder, {method: 'get', data: params}),
+  updataStateApi: params => Fetch(jk.updataState, {method: 'put', body: params})
 }

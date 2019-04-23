@@ -5,11 +5,9 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import redAuditRefuse from './redAuditRefuse'
-// import audit from './audit'
-import audit from '@containers/borrow/audit/reducer'
 import redBankDetail from './redBankDetail'
 import user from './user'
-import memberList from './member'
+import list from './list'
 import * as type from '../actionTypes'
 
 
@@ -39,12 +37,12 @@ const time = (state = [], action) => {
 }
 
 const search = {
-  typeId:'0',
   typeName: '',
   startTime: '',
   endTime: '',
   pageNum: 1,
-  pageSize:10
+  pageSize:10,
+  typeId: '0'
 }
 const searchAll = (state = search, action) => {
   switch (action.type) {
@@ -79,19 +77,11 @@ const searchAll = (state = search, action) => {
 export default combineReducers({
   routerReducer,
   redAuditRefuse,
-  audit,
   redBankDetail,
   user,
   selectedSubreddit,
   searchAll,
   time,
   memberSearchText,
-  memberList
+  list
 })
-// const todoApp = combineReducers({
-//   redAuditRefuse,
-//   redAudit,
-//   redBankDetail
-// })
-
-// export default todoApp

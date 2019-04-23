@@ -1,15 +1,14 @@
 import * as type from '../actionTypes'
 import { Notification } from 'element-react'
 //初始化列表数据
-const list = {
-  text: '2233',
+const initList = {
   loading: false,
   total: 0,
   pageSizes: [5, 10, 20, 30],
   data: []
 }
-const memberList = (state = {
-  ...list
+const list = (state = {
+  ...initList
 }, action) => {
   switch (action.type) {
     case type.REQUEST_POSTS:
@@ -29,4 +28,4 @@ const memberList = (state = {
       return state
   }
 }
-export default memberList
+export default list

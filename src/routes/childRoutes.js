@@ -31,7 +31,7 @@ import Audit from '@containers/borrow/audit/index'
 // 借款管理-待审核-详情
 import Auddetail from '@containers/borrow/auddetail'
 // 借款管理-审核拒绝
-import Auditrefuse from '@containers/borrow/auditRefuse'
+import Auditrefuse from '@containers/borrow/auditRefuse/index'
 // 催收管理-逾期列表
 import Colloverdue from '@containers/collection/overdue'
 export const CHILD_ROUTES = [{

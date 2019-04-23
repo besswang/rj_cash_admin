@@ -1,33 +1,47 @@
 //存放分发的 action函数
 // 使用 action 来描述“ 发生了什么”
 import * as type from '../actionTypes'
-import api from '@api/index'
+// 搜索类型（0:全部，1:渠道名称，2:会员姓名，3:手机号码，4:身份证号）
+export const selectSubreddit = typeId => ({
+  type: type.SELECT_SUBREDDIT,
+  typeId
+})
 
-// const list = data => ({
-//   type: type.AUDIT_LIST,
-//   payload: data
-// })
-// const refuseList = data => ({
-//   type: type.AUDIT_REFUSE_LIST,
-//   payload: data
-// })
-// // 请求的loading开始状态
-// const requestPosts = () => ({
-//     type: type.REQUEST_POSTS
-// })
-// 借款管理-待审核
-// export const auditList = (data) => {
-//   return async dispatch => {
-//     dispatch(requestPosts())
-//     const l = await api.auditList(data)
-//     dispatch(list(l))
-//   }
-// }
-// // 借款管理-审核拒绝
-// export const auditRefuseList = (data) => {
-//     return async dispatch => {
-//       dispatch(requestPosts())
-//       const li = await api.auditRefuseList(data)
-//       dispatch(refuseList(li))
-//     }
-// }
+// 搜索类型下的输入内容
+export const selectSearchText = text => ({
+  type: type.SELECT_SEARCH_TEXT,
+  text
+})
+
+// 搜索日期范围
+export const saveTime = time => ({
+  type: type.SAVE_TIME,
+  time
+})
+
+// 分页-每页条数
+export const sizeChange = pageSize => ({
+  type: type.SIZE_CHANGE,
+  pageSize
+})
+
+// 分页-当前页
+export const currentChange = pageNum => ({
+  type: type.CURRENT_CHANGE,
+  pageNum
+})
+
+// 请求loading的开始状态
+export const requestPosts = () => ({
+  type: type.REQUEST_POSTS
+})
+// 请求成功后的存储方法
+export const receivePosts = json => ({
+  type: type.RECEIVE_POSTS,
+  posts: json
+})
+// 请求失败后的方法
+export const failurePosts = json => ({
+  type: type.FAILURE_POSTS,
+  posts: json
+})

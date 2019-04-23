@@ -3,7 +3,6 @@ import { Button, Table, Pagination, Message, MessageBox, Loading } from 'element
 import TypeSearch from '@components/search/typeSearch'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-// import { auditRefuseList } from '@redux/actions'
 import PropTypes from 'prop-types'
 class AuditRefuse extends Component{
 	constructor(props) {
