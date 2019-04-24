@@ -1,19 +1,22 @@
 import React, { Component } from 'react'
-import { Button, Table, Pagination, Message, MessageBox, Loading } from 'element-react'
-import TypeSearch from '@components/search/typeSearch'
+import { Button, Table, Loading } from 'element-react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { sizeChange, currentChange, initSearch } from '@redux/actions'
+import { handelSearch } from './action'
+import SelectSearch from '@components/SelectSearch'
+import MyPagination from '@components/MyPagination'
+import { AUDIT_SELECT } from '@meta/select'
 class AuditRefuse extends Component{
+	static propTypes = {
+		dispatch: PropTypes.func.isRequired,
+		list: PropTypes.object.isRequired,
+		searchAll: PropTypes.object.isRequired
+	}
 	constructor(props) {
 		super(props)
 		this.state = {
-			searchType: 1,
-			total:25,
-			pageSizes: [5,10,20,30],
-			pageSize:5,
-			currentPage:1,
-			value: '',
 			columns: [{
 						type: 'index',
 						fixed: 'left'
@@ -80,122 +83,54 @@ class AuditRefuse extends Component{
 								</div>
 							)
 					}
-      }],
-			data: [{
-				name: '王立娟',
-				tel: '15057187176',
-				idcard: '24456646773388783',
-				ditch: 'xl24',
-				zip: 200333,
-				blackType:1,//1:在黑名单，0:不在黑明单
-				using: 1 //1:启用状态；0:禁用状态
-			}, {
-				name: '百香果',
-				tel: '15057187176',
-				idcard: '24456646773388783',
-				ditch: 'xl24',
-				zip: 200333,
-				blackType: 0, //1:在黑名单，0:不在黑明单
-				using:0 //1:启用状态；0:禁用状态
-			}]
+      }]
 		}
 	}
 	componentWillMount() {
-		// console.log(this.props)
+		this.props.dispatch(initSearch())
+		console.log(this.props)
 	}
-  componentDidMount() {
-
-  }
-	openBlackListMessage(type) {
-		// console.log(type)
-		if (type === 1) {
-			MessageBox.confirm('将用户从黑明单删除, 是否继续?', '提示', {
-				type: 'warning'
-			}).then(() => {
-				Message({
-					type: 'success',
-					message: '删除成功!'
-				})
-			}).catch(() => {
-				Message({
-					type: 'info',
-					message: '已取消删除'
-				})
-			})
-		}else{
-			MessageBox.confirm('将该用户拉入黑名单, 是否继续?', '提示', {
-				type: 'warning'
-			}).then(() => {
-				Message({
-					type: 'success',
-					message: '拉黑成功!'
-				})
-			}).catch(() => {
-				Message({
-					type: 'info',
-					message: '已取消拉黑'
-				})
-			})
-		}
+	componentDidMount() {
+		this.props.dispatch(handelSearch())
 	}
-	openUsingMessage() {
-		MessageBox.confirm('将该用户禁用, 是否继续?', '提示', {
-			type: 'warning'
-		}).then(() => {
-			Message({
-				type: 'success',
-				message: '禁用成功!'
-			})
-		}).catch(() => {
-			Message({
-				type: 'info',
-				message: '已取消禁用'
-			})
-		})
+	handleSearch = e => {
+		e.preventDefault()
+		this.props.dispatch(handelSearch())
 	}
-	deleteRow(index) {
-		const {
-			data
-		} = this.state
-		data.splice(index, 1)
-		this.setState({
-			data: [...data]
-		})
+	sizeChange = e => {
+		this.props.dispatch(sizeChange(e))
+		this.props.dispatch(handelSearch())
+	}
+	onCurrentChange = e => {
+		this.props.dispatch(currentChange(e))
+		this.props.dispatch(handelSearch())
 	}
 	render() {
-		console.log(this.props)
-		const { list, loading } = this.props
-		const { searchType } = this.state
+		const { list } = this.props
 		return (
 			<div>
-				<TypeSearch searchType={ searchType }/>
-				<Loading loading={ loading }>
+				<SelectSearch options={ AUDIT_SELECT }>
+					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+				</SelectSearch>
+				<Loading loading={ list.loading }>
 					<Table
 						style={ { width: '100%' } }
 						columns={ this.state.columns }
-						data={ list }
+						data={ list.data }
 						border
-						maxHeight={ 500 }
 					/>
 				</Loading>
-				<div className="pagination-con flex flex-direction_row justify-content_flex-center">
-					<Pagination
-					layout="total, sizes, prev, pager, next, jumper"
-					total={ this.state.total }
-					pageSizes={ this.state.pageSizes }
-					pageSize={ this.state.pageSize }
-					currentPage={ this.state.currentPage }
-					/>
-				</div>
+				<MyPagination
+					total={ list.total }
+					onSizeChange={ this.sizeChange }
+					onCurrentChange={ this.onCurrentChange }
+				/>
 			</div>
 		)
 	}
 }
-//取redux里默认list列表
-const mapStateToProps = state => (state.redAuditRefuse)
-AuditRefuse.propTypes = {
-	list: PropTypes.array.isRequired,
-	loading: PropTypes.bool.isRequired,
-	dispatch: PropTypes.func.isRequired
+const mapStateToProps = state => {
+	const { list } = state
+	return { list }
 }
 export default connect(mapStateToProps)(AuditRefuse)

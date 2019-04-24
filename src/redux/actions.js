@@ -1,7 +1,19 @@
 //存放分发的 action函数
 // 使用 action 来描述“ 发生了什么”
-import * as type from '../actionTypes'
-// 搜索类型（0:全部，1:渠道名称，2:会员姓名，3:手机号码，4:身份证号）
+import * as type from './actionTypes'
+import { PAGE_SIZE, CURRENT_PAGE } from '@meta/state'
+
+export const initSearch = () => ({
+  type: type.CLEAR_SEARCH_ALL,
+  data:{
+    typeName: '',
+    startTime: '',
+    endTime: '',
+    pageNum: CURRENT_PAGE,
+    pageSize: PAGE_SIZE,
+    typeId: '0'
+  }
+})
 export const selectSubreddit = typeId => ({
   type: type.SELECT_SUBREDDIT,
   typeId
@@ -20,9 +32,9 @@ export const saveTime = time => ({
 })
 
 // 分页-每页条数
-export const sizeChange = pageSize => ({
+export const sizeChange = size => ({
   type: type.SIZE_CHANGE,
-  pageSize
+  size
 })
 
 // 分页-当前页

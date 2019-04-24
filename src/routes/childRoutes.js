@@ -1,7 +1,7 @@
 import React from 'react'
 import Welcome from '@containers/welcome'
 // 会员管理-会员列表
-import Mlist from '@containers/member/mlist'
+import Mlist from '@containers/member/mlist/index'
 // 会员管理-会员列表
 import Detail from '@containers/member/detail'
 // 会员管理-注册未申请

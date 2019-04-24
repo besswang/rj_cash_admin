@@ -12,6 +12,8 @@ export default {
   selectUserBySeachApi: params => Fetch(jk.selectUserBySeach, {method: 'post', body: params}),
   updateUserTypeApi: params => Fetch(jk.updateUserType, {method: 'get', data: params}),
   addUserBlackApi: params => Fetch(jk.addUserBlack, {method:'post', body: params}),
+  removeUserBlackApi: params => Fetch(jk.removeUserBlack, {method: 'delete', body: params}),
   selcteOrderApi: params => Fetch(jk.selcteOrder, {method: 'get', data: params}),
-  updataStateApi: params => Fetch(jk.updataState, {method: 'put', body: params})
+  updataStateApi: params => Fetch(jk.updataState, {method: 'put', body: params}),
+  selectUserNotApplyApi: params => Fetch(jk.selectUserNotApply, {method: 'post', body: params})
 }

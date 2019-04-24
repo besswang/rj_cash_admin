@@ -1,6 +1,7 @@
 import api from '@api/index'
 import { MessageBox, Message } from 'element-react'
-import { requestPosts, receivePosts, failurePosts } from '@redux/actions/index'
+import { requestPosts, receivePosts, failurePosts } from '@redux/actions'
+import { TO_BE_AUDITED, PENDING_LOAN } from '@meta/state'
 // 会员管理-会员列表
 const shouldFetchPosts = (state) => {
   const posts = state.searchAll
@@ -10,7 +11,7 @@ export const handelSearch = () => {
   return async (dispatch, getState) => {
     dispatch(requestPosts())
     const searchAll = shouldFetchPosts(getState())
-    const trans = Object.assign({}, searchAll, {state: 'TO_BE_AUDITED'})
+    const trans = Object.assign({}, searchAll, {state: TO_BE_AUDITED})
     const data = await api.selcteOrderApi(trans)
     if (data.success) {
       dispatch(receivePosts(data.data))
@@ -24,7 +25,7 @@ export const handelSearch = () => {
 
 // 操作-通过/拒绝
 const text = t => {
-  if (t === 'PENDING_LOAN') {
+  if (t === PENDING_LOAN) {
     return '通过'
   } else {
     return '拒绝'

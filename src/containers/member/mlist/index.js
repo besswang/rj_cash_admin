@@ -1,20 +1,19 @@
 import React, { Component } from 'react'
-import { Input, Form, Button, Table, Pagination, Loading } from 'element-react'
+import { Button, Table, Loading } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { selectSubreddit, saveTime, selectSearchText, sizeChange, currentChange } from '@redux/actions/index'
-import { handelSearch, updateUserType, exportUser, addUserBlack } from '@redux/actions/member'
+import { sizeChange, currentChange, initSearch } from '@redux/actions'
+import { handelSearch, updateUserType, exportUser, addUserBlack, removeUserBlack } from './action'
 import { Link } from 'react-router-dom'
-import { MLIST_SELECT } from '@meta/select'
-import SelectPicker from '@components/SelectPicker'
 import DisableBtn from '@components/DisableBtn'
-import Time from '@components/Settime'
+import SelectSearch from '@components/SelectSearch'
+import MyPagination from '@components/MyPagination'
+import { MLIST_SELECT } from '@meta/select'
 class Mlist extends Component{
 	static propTypes = {
 		selectedSubreddit: PropTypes.string,
 		time: PropTypes.array,
 		dispatch: PropTypes.func.isRequired,
-		searchAll: PropTypes.object.isRequired,
 		list: PropTypes.object.isRequired,
 		memberSearchText: PropTypes.string
 	}
@@ -67,7 +66,7 @@ class Mlist extends Component{
 						 return (
 							 <DisableBtn
 									value={ row.blackStatus }
-									onClick={ this.addUserBlack.bind(this, row) }
+									onClick={ this.userBlack.bind(this, row) }
 									text={ ['添加','移除'] }
 								/>
 						 )
@@ -95,79 +94,52 @@ class Mlist extends Component{
 		}
 	}
 	componentWillMount() {
-		this.props.dispatch(saveTime([]))
-		this.props.dispatch(selectSearchText(''))
-		this.props.dispatch(selectSubreddit('0'))
-		this.props.dispatch(handelSearch(this.props.searchAll))
+		this.props.dispatch(initSearch())
 	}
 	componentDidMount() {
-		// console.log(this.props)
-	}
-	addUserBlack(r) {
-		console.log(r)
-	}
-	updateUserType(r) {
-		this.props.dispatch(updateUserType({id: r.id, type: r.type}))
-	}
-	handleSelectChange = nextSubreddit => {
-		this.props.dispatch(selectSubreddit(nextSubreddit))
-	}
-	handleTimeChange = val => {
-		this.props.dispatch(saveTime(val))
-	}
-	handleTextChange = val => {
-		this.props.dispatch(selectSearchText(val))
+		this.props.dispatch(handelSearch())
 	}
 	handleSearch = e => {
 		e.preventDefault()
-		this.props.dispatch(handelSearch(this.props.searchAll))
+		this.props.dispatch(handelSearch())
 	}
 	sizeChange = e => {
 		this.props.dispatch(sizeChange(e))
-		this.props.dispatch(handelSearch(this.props.searchAll))
+		this.props.dispatch(handelSearch())
 	}
 	onCurrentChange = e => {
 		this.props.dispatch(currentChange(e))
-		this.props.dispatch(handelSearch(this.props.searchAll))
+		this.props.dispatch(handelSearch())
 	}
 	exportUser = () => {
 		this.props.dispatch(exportUser())
 	}
+	updateUserType(r) {
+		this.props.dispatch(updateUserType({id: r.id, type: r.type}))
+	}
+	// 黑名单 idCard，phone,realName
+	userBlack(r){
+		if(r.blackStatus === 0){ // 添加
+			const trans = {
+				idCard: r.idNumber,
+				phone: r.phone,
+				realName: r.realName
+			}
+			this.props.dispatch(addUserBlack(trans))
+		} else { // 移除
+			this.props.dispatch(removeUserBlack({phone: r.phone}))
+		}
+	}
 	render() {
-		console.log(this.props)
-		const { selectedSubreddit,time, memberSearchText, list, searchAll } = this.props
+		const { list } = this.props
 		return (
 			<div>
-				<Form inline>
-					<Form.Item>
-						<SelectPicker
-							value={ selectedSubreddit }
-							onChange={ this.handleSelectChange }
-							options={ MLIST_SELECT }
-						/>
-					</Form.Item>
-					<Form.Item>
-						<Input
-							value={ memberSearchText }
-							onChange={ this.handleTextChange }
-							placeholder="请输入内容"
-							clearable="true"
-						/>
-					</Form.Item>
-					<Form.Item>
-						<Time
-							value={ time }
-							onChange={ this.handleTimeChange }
-						/>
-					</Form.Item>
-					<Form.Item>
-						<Button onClick={ this.handleSearch } nativeType="submit" type="primary">{'搜索'}</Button>
-					</Form.Item>
-					<Form.Item>
+				<SelectSearch options={ MLIST_SELECT }>
+					<div>
+						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 						<Button onClick={ this.exportUser } type="primary">{'导出列表'}</Button>
-						{/* <a className="el-button el-button--primary" href={ process.env.PUBLIC_URL+'/api/user/exportUser?'+ this.formdate() } download="会员列表">{'a导出'}</a> */}
-					</Form.Item>
-				</Form>
+					</div>
+				</SelectSearch>
 				<Loading loading={ list.loading }>
 					<Table
 					style= { { width: '100%' } }
@@ -176,38 +148,19 @@ class Mlist extends Component{
 					border
 					/>
 				</Loading>
-
-				<div className="pagination-con flex flex-direction_row justify-content_flex-center">
-					<Pagination
-					layout="total, sizes, prev, pager, next, jumper"
+				<MyPagination
 					total={ list.total }
-					pageSizes={ list.pageSizes }
-					pageSize={ searchAll.pageSize }
-					currentPage={ searchAll.pageNum }
 					onSizeChange={ this.sizeChange }
 					onCurrentChange={ this.onCurrentChange }
-					/>
-				</div>
+				/>
 			</div>
 		)
 	}
 }
 
 const mapStateToProps = state => {
-	const {
-		selectedSubreddit,
-		searchAll,
-		time,
-		memberSearchText,
-		list
-	} = state
-	return {
-		selectedSubreddit,
-		searchAll,
-		time,
-		memberSearchText,
-		list
-	}
+	const { list } = state
+	return { list }
 }
 
 export default connect(mapStateToProps)(Mlist)

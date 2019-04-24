@@ -1,52 +1,72 @@
 import React, { Component } from 'react'
-import { Form, Button, Table, Pagination } from 'element-react'
-import Time from '@components/setime'
+import { Form, Button, Table } from 'element-react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import Time from '@components/Settime'
+import { sizeChange, currentChange, initSearch, saveTime } from '@redux/actions'
+import { applySearch } from './actions'
+import MyPagination from '@components/MyPagination'
 import { APPLY_COLUMNS } from '@meta/columns'
 
 class Apply extends Component {
-	constructor(props){
-		super(props)
-		this.state = {
-			total:25,
-			pageSizes:[5,10,20,30],
-			pageSize:5,
-			currentPage:1,
-			data: [{
-				name: 'xl24',
-				realname: '王立娟',
-				tel: '15057187176',
-				time: '2019-11-12 12:34:56'
-			}]
-		}
+	static propTypes = {
+		dispatch: PropTypes.func.isRequired,
+		list: PropTypes.object.isRequired,
+		time: PropTypes.array
 	}
+	componentWillMount() {
+		this.props.dispatch(initSearch())
+	}
+	componentDidMount() {
+		this.props.dispatch(applySearch())
+	}
+	handleSearch = e => {
+		e.preventDefault()
+		this.props.dispatch(applySearch())
+	}
+	sizeChange = e => {
+		this.props.dispatch(sizeChange(e))
+		this.props.dispatch(applySearch())
+	}
+	onCurrentChange = e => {
+		this.props.dispatch(currentChange(e))
+		this.props.dispatch(applySearch())
+	}
+	handleTimeChange = val => {
+    this.props.dispatch(saveTime(val))
+  }
 	render(){
+		const { list, time } = this.props
 		return(
 			<div>
 				<Form inline>
 					<Form.Item label="注册时间">
-						<Time />
+          <Time
+            value={ time }
+            onChange={ this.handleTimeChange }
+          />
 					</Form.Item>
 					<Form.Item>
-						<Button nativeType="submit" type="primary">{'查询'}</Button>
+						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 					</Form.Item>
 				</Form>
 				<Table
 					style={ { width: '100%' } }
 					columns={ APPLY_COLUMNS }
-					data={ this.state.data }
+					data={ list.data }
 					border
 				/>
-				<div className="pagination-con flex flex-direction_row justify-content_flex-center">
-					<Pagination
-					layout="total, sizes, prev, pager, next, jumper"
-					total={ this.state.total }
-					pageSizes={ this.state.pageSizes }
-					pageSize={ this.state.pageSize }
-					currentPage={ this.state.currentPage }
-					/>
-				</div>
+				<MyPagination
+					total={ list.total }
+					onSizeChange={ this.sizeChange }
+					onCurrentChange={ this.onCurrentChange }
+				/>
 			</div>
 		)
 	}
 }
-export default Apply
+const mapStateToProps = state => {
+	const { list, time } = state
+	return { list, time }
+}
+export default connect(mapStateToProps)(Apply)

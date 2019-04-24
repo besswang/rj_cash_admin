@@ -1,20 +1,27 @@
 import api from '@api/index'
-import { AUDIT_FAILURE } from '@meta/state'
 import { requestPosts, receivePosts, failurePosts } from '@redux/actions'
-// 会员管理-会员列表
+
 const shouldFetchPosts = (state) => {
-  const posts = state.searchAll
-  return posts
+  const params = state.searchAll
+  // 传参去空
+  // const arr = []
+  // for (var name in params) {
+  //   console.log(params[name])
+  //   // if (params[name]) {
+  //   //   arr.push()
+  //   // }
+  // }
+  return params
 }
-export const handelSearch = () => {
+// 注册未申请
+export const applySearch = () => {
   return async (dispatch, getState) => {
     dispatch(requestPosts())
     const searchAll = shouldFetchPosts(getState())
-    const trans = Object.assign({}, searchAll, {state: AUDIT_FAILURE})
-    const data = await api.selcteOrderApi(trans)
-    if (data.success) {
+    const data = await api.selectUserNotApplyApi(searchAll)
+    if(data.success){
       dispatch(receivePosts(data.data))
-    } else {
+    }else{
       dispatch(failurePosts(data))
     }
     console.log(data)

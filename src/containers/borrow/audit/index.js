@@ -1,21 +1,18 @@
 import React, { Component } from 'react'
-import { Input, Form, Button, Table, Pagination, Loading } from 'element-react'
+import { Button, Table, Loading } from 'element-react'
 import { Link } from 'react-router-dom'
-import { AUDIT_SELECT } from '@meta/select'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import Time from '@components/Settime'
-import SelectPicker from '@components/SelectPicker'
-import { selectSubreddit, saveTime, selectSearchText, sizeChange, currentChange } from '@redux/actions/index'
+import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { handelSearch, handelAudit } from './action'
+import SelectSearch from '@components/SelectSearch'
+import MyPagination from '@components/MyPagination'
+import { AUDIT_SELECT } from '@meta/select'
+import { AUDIT_FAILURE, PENDING_LOAN } from '@meta/state'
 class Audit extends Component{
 	static propTypes = {
 		dispatch: PropTypes.func.isRequired,
-		list: PropTypes.object.isRequired,
-		searchAll: PropTypes.object.isRequired,
-		selectedSubreddit: PropTypes.string,
-		memberSearchText: PropTypes.string,
-		time: PropTypes.array
+		list: PropTypes.object.isRequired
 	}
 	constructor(props) {
 		super(props)
@@ -28,22 +25,19 @@ class Audit extends Component{
 					prop: 'orderNumber',
 					width: 100,
 					fixed: 'left'
-				},{
+				}, {
 					label: '渠道名称',
 					prop: 'channelName'
-				},{
+				}, {
 					label: '真实姓名',
 					prop: 'realName'
-				},
-				{
+				}, {
 					label: '风控分数',
 					prop: 'riskNum'
-				},
-				{
+				}, {
 					label: '手机号码',
 					prop: 'phone'
-				},
-				{
+				}, {
 					label: '身份证号',
 					prop: 'idcardNumber'
 				}, {
@@ -75,12 +69,12 @@ class Audit extends Component{
 							return (
 								<div className="flex flex-direction_row">
 									<Button className="margin_right10" type="success" size="mini"
-										onClick={ this.handelAudit.bind(this,row.id,'PENDING_LOAN') }
+										onClick={ this.handelAudit.bind(this,row.id, PENDING_LOAN) }
 									>
 										{'通过'}
 									</Button>
 									<Button className="margin_right10" type="danger" size="mini"
-										onClick={ this.handelAudit.bind(this,row.id,'AUDIT_FAILURE') }
+										onClick={ this.handelAudit.bind(this,row.id, AUDIT_FAILURE) }
 									>
 										{'拒绝'}
 									</Button>
@@ -94,16 +88,10 @@ class Audit extends Component{
 		}
 	}
 	componentWillMount() {
-		console.log(this.props)
-		this.props.dispatch(sizeChange(10))
-		this.props.dispatch(currentChange(1))
-		this.props.dispatch(saveTime([]))
-		this.props.dispatch(selectSearchText(''))
-		this.props.dispatch(selectSubreddit('0'))
-		this.props.dispatch(handelSearch())
+		this.props.dispatch(initSearch())
 	}
   componentDidMount() {
-
+		this.props.dispatch(handelSearch())
   }
 	handelAudit(id,state) {
 		const trans = {
@@ -113,15 +101,6 @@ class Audit extends Component{
 		}
 		console.log(trans)
 		this.props.dispatch(handelAudit(trans))
-	}
-	handleTextChange = val => {
-		this.props.dispatch(selectSearchText(val))
-	}
-	handleSelectChange = e => {
-		this.props.dispatch(selectSubreddit(e))
-	}
-	handleTimeChange = val => {
-		this.props.dispatch(saveTime(val))
 	}
 	handleSearch = e => {
 		e.preventDefault()
@@ -136,66 +115,31 @@ class Audit extends Component{
 		this.props.dispatch(handelSearch())
 	}
 	render() {
-		console.log(this.props)
-		const { list, searchAll, selectedSubreddit, memberSearchText, time } = this.props
+		const { list } = this.props
 		return (
 			<div>
-				<Form inline>
-					<Form.Item>
-						<SelectPicker
-							value={ selectedSubreddit }
-							onChange={ this.handleSelectChange }
-							options={ AUDIT_SELECT }
-						/>
-					</Form.Item>
-					<Form.Item>
-						<Input
-							value={ memberSearchText }
-							onChange={ this.handleTextChange }
-							placeholder="请输入内容"
-							clearable="true"
-						/>
-					</Form.Item>
-					<Form.Item>
-						<Time
-							value={ time }
-							onChange={ this.handleTimeChange }
-						/>
-					</Form.Item>
-					<Form.Item>
-						<Button onClick={ this.handleSearch } nativeType="submit" type="primary">{'搜索'}</Button>
-					</Form.Item>
-				</Form>
+				<SelectSearch options={ AUDIT_SELECT }>
+					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+				</SelectSearch>
 				<Loading loading={ list.loading }>
 					<Table
 						style={ { width: '100%' } }
 						columns={ this.state.columns }
 						data={ list.data }
 						border
-						maxHeight={ 250 }
 					/>
 				</Loading>
-				<div className="pagination-con flex flex-direction_row justify-content_flex-center">
-					<Pagination
-					layout="total, sizes, prev, pager, next, jumper"
+				<MyPagination
 					total={ list.total }
-					pageSizes={ searchAll.pageSizes }
-					pageSize={ searchAll.pageSize }
-					currentPage={ searchAll.pageNum }
 					onSizeChange={ this.sizeChange }
 					onCurrentChange={ this.onCurrentChange }
-					/>
-				</div>
+				/>
 			</div>
 		)
 	}
 }
 const mapStateToProps = state => {
-	const {
-		list, searchAll, selectedSubreddit, memberSearchText, time
-	} = state
-	return {
-		list, searchAll, selectedSubreddit, memberSearchText, time
-	}
+	const { list } = state
+	return { list }
 }
 export default connect(mapStateToProps)(Audit)

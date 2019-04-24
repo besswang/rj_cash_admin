@@ -9,12 +9,14 @@ import redBankDetail from './redBankDetail'
 import user from './user'
 import list from './list'
 import * as type from '../actionTypes'
-
+import { PAGE_SIZE, CURRENT_PAGE } from '@meta/state'
 
 const selectedSubreddit = (state = '0', action) => {
   switch (action.type) {
     case type.SELECT_SUBREDDIT:
       return action.typeId
+    case type.CLEAR_SEARCH_ALL:
+      return action.data.typeId
     default:
       return state
   }
@@ -23,6 +25,8 @@ const memberSearchText = (state = '', action) => {
   switch (action.type){
     case type.SELECT_SEARCH_TEXT:
       return action.text
+    case type.CLEAR_SEARCH_ALL:
+      return action.data.typeName
     default:
       return state
   }
@@ -31,6 +35,8 @@ const time = (state = [], action) => {
   switch (action.type) {
     case type.SAVE_TIME:
       return action.time
+    case type.CLEAR_SEARCH_ALL:
+      return []
     default:
       return state
   }
@@ -40,8 +46,8 @@ const search = {
   typeName: '',
   startTime: '',
   endTime: '',
-  pageNum: 1,
-  pageSize:10,
+  pageNum: CURRENT_PAGE,
+  pageSize: PAGE_SIZE,
   typeId: '0'
 }
 const searchAll = (state = search, action) => {
@@ -67,9 +73,11 @@ const searchAll = (state = search, action) => {
     case type.SELECT_SEARCH_TEXT:
       return { ...state, typeName: action.text }
     case type.SIZE_CHANGE:
-      return { ...state, pageSize: action.pageSize }
+      return { ...state, pageSize: action.size }
     case type.CURRENT_CHANGE:
       return { ...state, pageNum: action.pageNum }
+    case type.CLEAR_SEARCH_ALL:
+      return { ...state, ...action.data }
     default:
       return state
   }

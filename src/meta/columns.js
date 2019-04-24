@@ -4,19 +4,19 @@ export const APPLY_COLUMNS = [
   },
   {
     label: '渠道名称',
-    prop: 'name'
+    prop: 'channelName'
   },
   {
     label: '真实姓名',
-    prop: 'realname'
+    prop: 'realName'
   },
   {
     label: '手机号码',
-    prop: 'tel'
+    prop: 'phone'
   },
   {
     label: '注册时间',
-    prop: 'time'
+    prop: 'gmt'
   }
 ]
 export const NORMAL_COLUMNS = [

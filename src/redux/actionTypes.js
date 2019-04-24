@@ -13,3 +13,4 @@ export const SAVE_TIME = 'SAVE_TIME' // 时间
 export const SELECT_SEARCH_TEXT = 'SELECT_SEARCH_TEXT' // 搜索select 旁边的内容
 export const SIZE_CHANGE = 'SIZE_CHANGE' // 分页-每页条数
 export const CURRENT_CHANGE = 'CURRENT_CHANGE' // 分页-当前页
+export const CLEAR_SEARCH_ALL = 'CLEAR_SEARCH_ALL' // 重置searchAll
