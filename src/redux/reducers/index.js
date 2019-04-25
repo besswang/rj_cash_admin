@@ -88,7 +88,6 @@ const searchAll = (state = search, action) => {
         startTime = Math.round(action.time[0])
         endTime = Math.round(action.time[1])
       }
-      console.log(action.time[0]('Y-m-d H:i:s'))
       return { ...state, startTime, endTime }
     }
     case type.REGISTER_TIME: {
