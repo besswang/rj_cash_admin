@@ -152,19 +152,53 @@ export const OVERDUE = [
     type: 'index'
   }, {
     label: '日期',
-    prop: 'theDate'
+    prop: 'date',
+    width: 120
   }, {
     label: '应还单数',
-    prop: 'orderNumber'
+    prop: 'shouldRepaidNum'
   }, {
-    label: '应还金额',
-    prop: 'orderMoney'
+    label: '逾期总单数',
+    prop: 'allOverdueNum'
   }, {
-    label: '已还单数',
-    prop: 'newOrderNumber'
+    label: '新客逾期单数',
+    prop: 'newCustomerOverdueNum'
   }, {
-    label: '已还金额',
-    prop: 'newOrderMoney'
+    label: '老客逾期单数',
+    prop: 'oldCustomerOverdueNum'
+  }, {
+    label: '逾期1-3天单数',
+    prop: 'oneThreeNum'
+  }, {
+    label: '逾期1-3天回款率',
+    prop: 'oneThreeReturnRate'
+  }, {
+    label: '逾期4-7天单数',
+    prop: 'fourSevenNum'
+  }, {
+    label: '逾期4-7天已还单数',
+    prop: 'fourSevenReturnNum'
+  }, {
+    label: '逾期4-7天回款率',
+    prop: 'fourSevenReturnRate'
+  }, {
+    label: '逾期8-15天单数',
+    prop: 'eightFifteenNum'
+  }, {
+    label: '逾期8-15天已还单数',
+    prop: 'eightFifteenReturnNum'
+  }, {
+    label: '逾期8-15天回款率',
+    prop: 'eightFifteenReturnRate'
+  }, {
+    label: '逾期15+天单数',
+    prop: 'fifteenMoreNum'
+  }, {
+    label: '逾期15+天已还单数',
+    prop: 'fifteenMoreReturnNum'
+  }, {
+    label: '逾期15+天回款率',
+    prop: 'fifteenMoreReturnRate'
   }
 ]
 export const CONSUME = [

@@ -9,9 +9,9 @@ import Apply from '@containers/member/apply'
 // 会员管理-正常还款未借
 import Normal from '@containers/member/normal'
 // 报表统计-渠道统计
-import Ditch from '@containers/statistics/ditch'
+import Ditch from '@containers/statistics/ditch/index'
 // 报表统计-渠道统计-当天/总转化/渠道费用
-import Ditchinside from '@containers/statistics/ditchinside'
+import Ditchinside from '@containers/statistics/ditch/ditchinside'
 // 报表统计-逾期统计
 import Overdue from '@containers/statistics/overdue'
 // 报表统计-放款统计
@@ -67,7 +67,7 @@ export const CHILD_ROUTES = [{
   main: () => <Ditch />
 }, {
   id: 7,
-  path: '/statistics/ditch/ditchinside',
+  path: '/statistics/ditchinside',
   exact: true,
   main: () => <Ditchinside />
 }, {

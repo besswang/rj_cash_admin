@@ -1,70 +1,97 @@
 import React,{ Component } from 'react'
-import { Form,Button,Table,Pagination,Select,Input } from 'element-react'
-import Time from '@components/setime'
+import { Form, Button, Table, Loading } from 'element-react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { sizeChange, currentChange, initSearch } from '@redux/actions'
+import { normalSearch, registerTime, endPayTime } from './actions'
+import Time from '@components/Settime'
+import MyPagination from '@components/MyPagination'
 import { NORMAL_COLUMNS } from '@meta/columns'
-import { MLIST_SELECT } from '@meta/select'
+
 class Apply extends Component{
-	constructor(props){
-		super(props)
-		this.state = {
-			total:25,
-			pageSizes:[5,10,20,30],
-			pageSize:5,
-			currentPage:1,
-			data: [{
-				name: 'xl24',
-				realname: '王立娟',
-				tel: '15057187176',
-				idcard:'549584043840385749483',
-				time: '2019-11-12 12:34:56',
-				lasttime: '2019-11-12 12:34:56',
-				num:3
-			}]
-		}
+	static propTypes = {
+		list: PropTypes.object.isRequired,
+		regTime: PropTypes.array,
+		payTime: PropTypes.array,
+		sizeChange: PropTypes.func.isRequired,
+		currentChange: PropTypes.func.isRequired,
+		initSearch: PropTypes.func.isRequired,
+		registerTime: PropTypes.func.isRequired,
+		endPayTime: PropTypes.func.isRequired,
+		normalSearch: PropTypes.func.isRequired,
+	}
+	componentWillMount() {
+		this.props.initSearch()
+	}
+	componentDidMount() {
+		this.props.normalSearch()
+	}
+	handleSearch = e => {
+		e.preventDefault()
+		this.props.normalSearch()
+	}
+	sizeChange = e => {
+		this.props.sizeChange(e)
+		this.props.normalSearch()
+	}
+	onCurrentChange = e => {
+		this.props.currentChange(e)
+		this.props.normalSearch()
+	}
+	t1 = e => {
+		return
+	}
+	t2 = e => {
+		return
 	}
 	render(){
+		const { list, regTime, payTime } = this.props
 		return(
 			<div>
 				<Form inline>
-					<Form.Item>
-						<Select value={ this.state.value } clearable placeholder="搜索类型">
-							{
-								MLIST_SELECT.map(el => {
-									return <Select.Option key={ el.value } label={ el.label } value={ el.value } />
-								})
-							}
-						</Select>
-					</Form.Item>
-					<Form.Item>
-						<Input placeholder="请输入内容" />
-					</Form.Item>
 					<Form.Item label="注册时间">
-						<Time />
+						<Time
+							t={ e => this.t1(e) }
+							value={ regTime }
+							onChange={ val => this.props.registerTime(val) }
+						/>
 					</Form.Item>
 					<Form.Item label="最后还款日">
-						<Time />
+						<Time
+							t={ e => this.t2(e) }
+							value={ payTime }
+							onChange={ val => this.props.endPayTime(val) }
+						/>
 					</Form.Item>
 					<Form.Item>
-						<Button nativeType="submit" type="primary">{'查询'}</Button>
+						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 					</Form.Item>
 				</Form>
-				<Table
-					style={ { width: '100%' } }
-					columns={ NORMAL_COLUMNS }
-					data={ this.state.data }
-					border
-				/>
-				<div className="pagination-con flex flex-direction_row justify-content_flex-center">
-					<Pagination
-					layout="total, sizes, prev, pager, next, jumper"
-					total={ this.state.total }
-					pageSizes={ this.state.pageSizes }
-					pageSize={ this.state.pageSize }
-					currentPage={ this.state.currentPage }
+				<Loading loading={ list.loading }>
+					<Table
+						style={ { width: '100%' } }
+						columns={ NORMAL_COLUMNS }
+						data={ list.data }
+						border
 					/>
-				</div>
+				</Loading>
+				<MyPagination
+					total={ list.total }
+					onSizeChange={ this.sizeChange }
+					onCurrentChange={ this.onCurrentChange }
+				/>
 			</div>
 		)
 	}
 }
-export default Apply
+const mapStateToProps = state => {
+	const { list, regTime, payTime } = state
+	return { list, regTime, payTime }
+}
+const mapDispatchToProps = dispatch => {
+	return {
+		...bindActionCreators({sizeChange, currentChange, initSearch, normalSearch, registerTime, endPayTime}, dispatch)
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Apply)

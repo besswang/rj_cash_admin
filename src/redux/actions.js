@@ -6,6 +6,9 @@ import { PAGE_SIZE, CURRENT_PAGE } from '@meta/state'
 export const initSearch = () => ({
   type: type.CLEAR_SEARCH_ALL,
   data:{
+    beginTime: '',
+    beginTime1: '',
+    endTime1: '',
     typeName: '',
     startTime: '',
     endTime: '',
@@ -30,7 +33,6 @@ export const saveTime = time => ({
   type: type.SAVE_TIME,
   time
 })
-
 // 分页-每页条数
 export const sizeChange = size => ({
   type: type.SIZE_CHANGE,
@@ -57,3 +59,14 @@ export const failurePosts = json => ({
   type: type.FAILURE_POSTS,
   posts: json
 })
+
+export const shouldFetchPosts = (state) => {
+  const params = state.searchAll
+  const pam = {}
+  for (const i in params) {
+    if (params[i]) {
+      pam[i] = params[i]
+    }
+  }
+  return pam
+}

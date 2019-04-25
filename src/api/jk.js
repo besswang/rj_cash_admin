@@ -13,7 +13,12 @@ export default {
   'addUserBlack': 'api/user/addUserBlack', // 添加黑名单
   'removeUserBlack': 'api/user/removeUserBlack', // 移除黑名单
   'selectUserNotApply': 'api/user/selectUserNotApply', // 注册未申请
+  'selectUserNoLoan': 'api/user/selectUserNoLoan', // 正常还款未借
   // 借款管理-待审核
   'selcteOrder': 'api/order/selcteOrder', // 待审核列表
-  'updataState': 'api/order/updataState' // 操作-通过/拒绝
+  'updataState': 'api/order/updataState', // 操作-通过/拒绝
+  // 报表统计
+  'pageChannelCount': 'api/reportForm/pageChannelCount', // 渠道统计
+  'pageOverdueCount': 'api/reportForm/pageOverdueCount', // 逾期统计
+  'selectDataCheckCount': 'api/reportForm/selectDataCheckCount' // 数据看版
 }

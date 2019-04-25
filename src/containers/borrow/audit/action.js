@@ -19,7 +19,7 @@ export const handelSearch = () => {
       dispatch(failurePosts(data))
       // dispatch(push('/login'))
     }
-    console.log(data)
+    console.log(data.data)
   }
 }
 

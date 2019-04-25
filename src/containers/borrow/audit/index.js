@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, Table, Loading } from 'element-react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { handelSearch, handelAudit } from './action'
@@ -9,13 +10,25 @@ import SelectSearch from '@components/SelectSearch'
 import MyPagination from '@components/MyPagination'
 import { AUDIT_SELECT } from '@meta/select'
 import { AUDIT_FAILURE, PENDING_LOAN } from '@meta/state'
+// import store from '@redux/store'
 class Audit extends Component{
 	static propTypes = {
-		dispatch: PropTypes.func.isRequired,
-		list: PropTypes.object.isRequired
+		list: PropTypes.object.isRequired,
+		sizeChange: PropTypes.func.isRequired,
+		currentChange: PropTypes.func.isRequired,
+		initSearch: PropTypes.func.isRequired,
+		handelSearch: PropTypes.func.isRequired,
+		handelAudit: PropTypes.func.isRequired
+
 	}
 	constructor(props) {
 		super(props)
+		// 监听state状态改变
+		// store.subscribe(() => {
+		// 	console.log('更新')
+		// 	const state = store.getState()
+		// 	console.log(state)
+		// })
 		this.state = {
 			columns: [{
 						type: 'index',
@@ -88,10 +101,10 @@ class Audit extends Component{
 		}
 	}
 	componentWillMount() {
-		this.props.dispatch(initSearch())
+		this.props.initSearch()
 	}
   componentDidMount() {
-		this.props.dispatch(handelSearch())
+		this.props.handelSearch()
   }
 	handelAudit(id,state) {
 		const trans = {
@@ -100,26 +113,26 @@ class Audit extends Component{
 			admin:'admin'
 		}
 		console.log(trans)
-		this.props.dispatch(handelAudit(trans))
+		this.props.handelAudit(trans)
 	}
-	handleSearch = e => {
+	handelSearch = e => {
 		e.preventDefault()
-		this.props.dispatch(handelSearch())
+		this.props.handelSearch()
 	}
 	sizeChange = e => {
-		this.props.dispatch(sizeChange(e))
-		this.props.dispatch(handelSearch())
+		this.props.sizeChange(e)
+		this.props.handelSearch()
 	}
 	onCurrentChange = e => {
-		this.props.dispatch(currentChange(e))
-		this.props.dispatch(handelSearch())
+		this.props.currentChange(e)
+		this.props.handelSearch()
 	}
 	render() {
 		const { list } = this.props
 		return (
 			<div>
 				<SelectSearch options={ AUDIT_SELECT }>
-					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+					<Button onClick={ this.handelSearch } type="primary">{'搜索'}</Button>
 				</SelectSearch>
 				<Loading loading={ list.loading }>
 					<Table
@@ -142,4 +155,9 @@ const mapStateToProps = state => {
 	const { list } = state
 	return { list }
 }
-export default connect(mapStateToProps)(Audit)
+const mapDispatchToProps = dispatch => {
+	return {
+		...bindActionCreators({ sizeChange, currentChange, initSearch, handelSearch, handelAudit }, dispatch)
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Audit)

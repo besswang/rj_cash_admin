@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, Table, Loading } from 'element-react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { handelSearch } from './action'
@@ -10,9 +11,11 @@ import MyPagination from '@components/MyPagination'
 import { AUDIT_SELECT } from '@meta/select'
 class AuditRefuse extends Component{
 	static propTypes = {
-		dispatch: PropTypes.func.isRequired,
 		list: PropTypes.object.isRequired,
-		searchAll: PropTypes.object.isRequired
+		sizeChange: PropTypes.func.isRequired,
+		currentChange: PropTypes.func.isRequired,
+		initSearch: PropTypes.func.isRequired,
+		handelSearch: PropTypes.func.isRequired,
 	}
 	constructor(props) {
 		super(props)
@@ -87,23 +90,22 @@ class AuditRefuse extends Component{
 		}
 	}
 	componentWillMount() {
-		this.props.dispatch(initSearch())
-		console.log(this.props)
+		this.props.initSearch()
 	}
 	componentDidMount() {
-		this.props.dispatch(handelSearch())
+		this.props.handelSearch()
 	}
 	handleSearch = e => {
 		e.preventDefault()
-		this.props.dispatch(handelSearch())
+		this.props.handelSearch()
 	}
 	sizeChange = e => {
-		this.props.dispatch(sizeChange(e))
-		this.props.dispatch(handelSearch())
+		this.props.sizeChange(e)
+		this.props.handelSearch()
 	}
 	onCurrentChange = e => {
-		this.props.dispatch(currentChange(e))
-		this.props.dispatch(handelSearch())
+		this.props.currentChange(e)
+		this.props.handelSearch()
 	}
 	render() {
 		const { list } = this.props
@@ -133,4 +135,9 @@ const mapStateToProps = state => {
 	const { list } = state
 	return { list }
 }
-export default connect(mapStateToProps)(AuditRefuse)
+const mapDispatchToProps = dispatch => {
+	return {
+		...bindActionCreators({ sizeChange, currentChange, initSearch, handelSearch }, dispatch)
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AuditRefuse)

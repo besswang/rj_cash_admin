@@ -41,6 +41,26 @@ const time = (state = [], action) => {
       return state
   }
 }
+const regTime = (state = [], action) => {
+  switch(action.type){
+    case type.REGISTER_TIME:
+      return action.time
+    case type.CLEAR_SEARCH_ALL:
+      return []
+    default:
+      return state
+  }
+}
+const payTime = (state = [], action) => {
+  switch (action.type) {
+    case type.END_REPAY_TIME:
+      return action.time
+    case type.CLEAR_SEARCH_ALL:
+      return []
+    default:
+      return state
+  }
+}
 
 const search = {
   typeName: '',
@@ -68,7 +88,26 @@ const searchAll = (state = search, action) => {
         startTime = Math.round(action.time[0])
         endTime = Math.round(action.time[1])
       }
+      console.log(action.time[0]('Y-m-d H:i:s'))
       return { ...state, startTime, endTime }
+    }
+    case type.REGISTER_TIME: {
+      let beginTime = ''
+      let endTime = ''
+      if (action.time !== null) {
+        beginTime = Math.round(action.time[0])
+        endTime = Math.round(action.time[1])
+      }
+      return { ...state, beginTime, endTime }
+    }
+    case type.END_REPAY_TIME: {
+      let beginTime1 = ''
+      let endTime1 = ''
+      if (action.time !== null) {
+        beginTime1 = Math.round(action.time[0])
+        endTime1 = Math.round(action.time[1])
+      }
+      return { ...state, beginTime1, endTime1 }
     }
     case type.SELECT_SEARCH_TEXT:
       return { ...state, typeName: action.text }
@@ -90,6 +129,8 @@ export default combineReducers({
   selectedSubreddit,
   searchAll,
   time,
+  regTime,
+  payTime,
   memberSearchText,
   list
 })

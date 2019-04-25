@@ -57,6 +57,7 @@
     "react-router": "^4.3.1",
     "react-router-redux": "^5.0.0-alpha.9",
     "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
@@ -148,7 +149,7 @@
       "no-case-declarations": 1,
       "no-return-assign": 1,
       "no-param-reassign": 1,
-      "no-shadow": 1,
+      "no-shadow": [1, { "hoist": "never", "allow": ["resolve","reject"] }],
       "camelcase": 1,
       "no-unused-vars": 1
     }

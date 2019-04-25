@@ -1,6 +1,17 @@
 import api from '@api/index'
+import * as type from '@redux/actionTypes'
 import { requestPosts, receivePosts, failurePosts } from '@redux/actions'
 
+// 注册时间日期搜索
+export const registerTime = time => ({
+  type: type.REGISTER_TIME,
+  time
+})
+// 最后还款日日期搜索
+export const endPayTime = time => ({
+  type: type.END_REPAY_TIME,
+  time
+})
 const shouldFetchPosts = (state) => {
   const params = state.searchAll
   // 传参去空
@@ -22,6 +33,21 @@ export const applySearch = () => {
     if(data.success){
       dispatch(receivePosts(data.data))
     }else{
+      dispatch(failurePosts(data))
+    }
+    console.log(data)
+  }
+}
+
+// 正常还款未借
+export const normalSearch = () => {
+  return async (dispatch, getState) => {
+    dispatch(requestPosts())
+    const searchAll = shouldFetchPosts(getState())
+    const data = await api.selectUserNoLoanApi(searchAll)
+    if (data.success) {
+      dispatch(receivePosts(data.data))
+    } else {
       dispatch(failurePosts(data))
     }
     console.log(data)

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, Table, Loading } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { handelSearch, updateUserType, exportUser, addUserBlack, removeUserBlack } from './action'
 import { Link } from 'react-router-dom'
@@ -13,9 +14,16 @@ class Mlist extends Component{
 	static propTypes = {
 		selectedSubreddit: PropTypes.string,
 		time: PropTypes.array,
-		dispatch: PropTypes.func.isRequired,
 		list: PropTypes.object.isRequired,
-		memberSearchText: PropTypes.string
+		memberSearchText: PropTypes.string,
+		sizeChange: PropTypes.func.isRequired,
+		currentChange: PropTypes.func.isRequired,
+		initSearch: PropTypes.func.isRequired,
+		handelSearch: PropTypes.func.isRequired,
+		updateUserType: PropTypes.func.isRequired,
+		exportUser: PropTypes.func.isRequired,
+		addUserBlack: PropTypes.func.isRequired,
+		removeUserBlack: PropTypes.func.isRequired
 	}
 	constructor(props) {
 		super(props)
@@ -94,28 +102,25 @@ class Mlist extends Component{
 		}
 	}
 	componentWillMount() {
-		this.props.dispatch(initSearch())
+		this.props.initSearch()
 	}
 	componentDidMount() {
-		this.props.dispatch(handelSearch())
+		this.props.handelSearch()
 	}
 	handleSearch = e => {
 		e.preventDefault()
-		this.props.dispatch(handelSearch())
+		this.props.handelSearch()
 	}
 	sizeChange = e => {
-		this.props.dispatch(sizeChange(e))
-		this.props.dispatch(handelSearch())
+		this.props.sizeChange(e)
+		this.props.handelSearch()
 	}
 	onCurrentChange = e => {
-		this.props.dispatch(currentChange(e))
-		this.props.dispatch(handelSearch())
-	}
-	exportUser = () => {
-		this.props.dispatch(exportUser())
+		this.props.currentChange(e)
+		this.props.handelSearch()
 	}
 	updateUserType(r) {
-		this.props.dispatch(updateUserType({id: r.id, type: r.type}))
+		this.props.updateUserType({id: r.id, type: r.type})
 	}
 	// 黑名单 idCard，phone,realName
 	userBlack(r){
@@ -125,9 +130,9 @@ class Mlist extends Component{
 				phone: r.phone,
 				realName: r.realName
 			}
-			this.props.dispatch(addUserBlack(trans))
+			this.props.addUserBlack(trans)
 		} else { // 移除
-			this.props.dispatch(removeUserBlack({phone: r.phone}))
+			this.props.removeUserBlack({phone: r.phone})
 		}
 	}
 	render() {
@@ -137,7 +142,7 @@ class Mlist extends Component{
 				<SelectSearch options={ MLIST_SELECT }>
 					<div>
 						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
-						<Button onClick={ this.exportUser } type="primary">{'导出列表'}</Button>
+						<Button onClick={ this.props.exportUser } type="primary">{'导出列表'}</Button>
 					</div>
 				</SelectSearch>
 				<Loading loading={ list.loading }>
@@ -162,5 +167,9 @@ const mapStateToProps = state => {
 	const { list } = state
 	return { list }
 }
-
-export default connect(mapStateToProps)(Mlist)
+const mapDispatchToProps = dispatch => {
+	return {
+		...bindActionCreators({ sizeChange, currentChange, initSearch, handelSearch, updateUserType, exportUser, addUserBlack, removeUserBlack}, dispatch)
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Mlist)

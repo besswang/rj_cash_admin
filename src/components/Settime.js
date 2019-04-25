@@ -2,14 +2,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { DateRangePicker } from 'element-react'
-let timeref = null
-const Settime = ({value, onChange}) => (
+// let timeref = null
+const Settime = ({value, onChange, t}) => (
 	<DateRangePicker
 		value={ value }
 		isShowTime
 		placeholder="选择日期范围"
 		align="right"
-		ref={ e => { timeref = e } }
+		ref={ e => { t = e } }
 		onChange={ e => onChange(e) }
 		shortcuts={
 			[
@@ -20,7 +20,7 @@ const Settime = ({value, onChange}) => (
 						const start = new Date()
 						start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
 						onChange([start, end])
-						timeref.togglePickerVisible()
+						t.togglePickerVisible()
 					}
 				}, {
 					text: '最近一个月',
@@ -29,7 +29,7 @@ const Settime = ({value, onChange}) => (
 						const start = new Date()
 						start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
 						onChange([start, end])
-						timeref.togglePickerVisible()
+						t.togglePickerVisible()
 					}
 				}, {
 						text: '最近三个月',
@@ -38,7 +38,7 @@ const Settime = ({value, onChange}) => (
 							const start = new Date()
 							start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
 							onChange([start, end])
-							timeref.togglePickerVisible()
+							t.togglePickerVisible()
 						}
 				}
 			]
@@ -48,6 +48,7 @@ const Settime = ({value, onChange}) => (
 Settime.propTypes = {
 	timeref: PropTypes.func,
 	value: PropTypes.array,
-	onChange: PropTypes.func
+	onChange: PropTypes.func,
+	t: PropTypes.func,
 }
 export default Settime
