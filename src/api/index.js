@@ -13,11 +13,15 @@ export default {
   updateUserTypeApi: params => Fetch(jk.updateUserType, {method: 'get', data: params}),
   addUserBlackApi: params => Fetch(jk.addUserBlack, {method:'post', body: params}),
   removeUserBlackApi: params => Fetch(jk.removeUserBlack, {method: 'delete', body: params}),
-  selcteOrderApi: params => Fetch(jk.selcteOrder, {method: 'get', data: params}),
+  selectOrderByParamApi: params => Fetch(jk.selectOrderByParam, {method: 'get', data: params}),
   updataStateApi: params => Fetch(jk.updataState, {method: 'put', body: params}),
   selectUserNotApplyApi: params => Fetch(jk.selectUserNotApply, {method: 'post', body: params}),
   selectUserNoLoanApi: params => Fetch(jk.selectUserNoLoan, {method: 'post', body: params}),
   pageChannelCountApi: params => Fetch(jk.pageChannelCount, {method: 'post', body: params}),
   pageOverdueCountApi: params => Fetch(jk.pageOverdueCount, {method: 'post', body: params}),
-  selectDataCheckCountApi: params => Fetch(jk.selectDataCheckCount, {method: 'get', data: params})
+  selectDataCheckCountApi: params => Fetch(jk.selectDataCheckCount, {method: 'get', data: params}),
+  selectIdCardByUserIdApi: params => Fetch(jk.selectIdCardByUserId, {method: 'get', data: params}),
+  selectPhoneReportByUserIdApi: params => Fetch(jk.selectPhoneReportByUserId, {method: 'get', data: params}),
+  selectEmergencyByUserIdApi: params => Fetch(jk.selectEmergencyByUserId, {method: 'get', data: params} ),
+  selectBankByUserIdApi: params => Fetch(jk.selectBankByUserId, {method: 'get', data: params} ),
 }

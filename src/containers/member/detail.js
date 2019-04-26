@@ -8,6 +8,12 @@ class Detail extends Component{
 
 		}
 	}
+	componentWillMount() {
+
+	}
+	componentDidMount() {
+
+	}
 	render(){
 		return(
 			<div>

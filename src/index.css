@@ -135,6 +135,9 @@ p{
 .margin_auto{
   margin:0 auto;
 }
+.margin_top15{
+  margin-top:15px;
+}
 .margin_left15{
   margin-left:15px;
 }

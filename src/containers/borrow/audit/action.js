@@ -12,7 +12,7 @@ export const handelSearch = () => {
     dispatch(requestPosts())
     const searchAll = shouldFetchPosts(getState())
     const trans = Object.assign({}, searchAll, {state: TO_BE_AUDITED})
-    const data = await api.selcteOrderApi(trans)
+    const data = await api.selectOrderByParamApi(trans)
     if (data.success) {
       dispatch(receivePosts(data.data))
     } else {

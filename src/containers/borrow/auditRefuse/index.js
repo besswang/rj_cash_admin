@@ -74,9 +74,7 @@ class AuditRefuse extends Component{
 					render: row => {
 							return (
 								<div className="flex flex-direction_row">
-									<Button className="margin_right10" type="success" size="mini"
-										onClick={ this.openUsingMessage.bind(this) }
-									>
+									<Button className="margin_right10" type="success" size="mini">
 										{'开放申请'}
 									</Button>
 									{/* <Button type="text" size="small" onClick={this.deleteRow.bind(this, index)}>会员详情</Button> */}

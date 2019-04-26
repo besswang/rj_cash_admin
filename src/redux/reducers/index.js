@@ -4,8 +4,6 @@
 // 现在只需要谨记 reducer 一定要保持纯净。 只要传入参数相同， 返回计算得到的下一个 state 就一定相同。 没有特殊情况、 没有副作用， 没有 API 请求、 没有变量修改， 单纯执行计算。
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
-import redAuditRefuse from './redAuditRefuse'
-import redBankDetail from './redBankDetail'
 import user from './user'
 import list from './list'
 import * as type from '../actionTypes'
@@ -120,10 +118,16 @@ const searchAll = (state = search, action) => {
       return state
   }
 }
+const listInfo = (state = {}, action) => {
+  switch (action.type) {
+    case type.SAVE_LIST_INFO:
+      return action.data
+    default:
+      return state
+  }
+}
 export default combineReducers({
   routerReducer,
-  redAuditRefuse,
-  redBankDetail,
   user,
   selectedSubreddit,
   searchAll,
@@ -131,5 +135,6 @@ export default combineReducers({
   regTime,
   payTime,
   memberSearchText,
-  list
+  list,
+  listInfo
 })

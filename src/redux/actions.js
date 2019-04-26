@@ -70,3 +70,9 @@ export const shouldFetchPosts = (state) => {
   }
   return pam
 }
+
+// 用户详情
+export const saveList = data => ({
+  type: type.SAVE_LIST_INFO,
+  data
+})

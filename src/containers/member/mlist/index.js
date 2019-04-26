@@ -3,7 +3,7 @@ import { Button, Table, Loading } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { sizeChange, currentChange, initSearch } from '@redux/actions'
+import { sizeChange, currentChange, initSearch, saveList } from '@redux/actions'
 import { handelSearch, updateUserType, exportUser, addUserBlack, removeUserBlack } from './action'
 import { Link } from 'react-router-dom'
 import DisableBtn from '@components/DisableBtn'
@@ -23,7 +23,8 @@ class Mlist extends Component{
 		updateUserType: PropTypes.func.isRequired,
 		exportUser: PropTypes.func.isRequired,
 		addUserBlack: PropTypes.func.isRequired,
-		removeUserBlack: PropTypes.func.isRequired
+		removeUserBlack: PropTypes.func.isRequired,
+		saveList: PropTypes.func.isRequired
 	}
 	constructor(props) {
 		super(props)
@@ -91,8 +92,8 @@ class Mlist extends Component{
 									onClick={ this.updateUserType.bind(this, row) }
 									text={ ['启用','禁用'] }
 								/>
-								<Link to="/member/mlist/detail">
-									<Button type="text" size="small">{'会员详情'}</Button>
+								<Link to="/detail">
+									<Button type="text" size="small" onClick={ this.props.saveList.bind(this, row) }>{'会员详情'}</Button>
 								</Link>
 							</div>
 						)
@@ -169,7 +170,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ sizeChange, currentChange, initSearch, handelSearch, updateUserType, exportUser, addUserBlack, removeUserBlack}, dispatch)
+		...bindActionCreators({ sizeChange, currentChange, initSearch, handelSearch, updateUserType, exportUser, addUserBlack, removeUserBlack, saveList}, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Mlist)
