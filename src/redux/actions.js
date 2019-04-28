@@ -2,6 +2,7 @@
 // 使用 action 来描述“ 发生了什么”
 import * as type from './actionTypes'
 import { PAGE_SIZE, CURRENT_PAGE } from '@meta/state'
+import timeDate from '@global/timeDate'
 
 export const initSearch = () => ({
   type: type.CLEAR_SEARCH_ALL,
@@ -17,6 +18,7 @@ export const initSearch = () => ({
     typeId: '0'
   }
 })
+// select下搜索类型
 export const selectSubreddit = typeId => ({
   type: type.SELECT_SUBREDDIT,
   typeId
@@ -26,6 +28,18 @@ export const selectSubreddit = typeId => ({
 export const selectSearchText = text => ({
   type: type.SELECT_SEARCH_TEXT,
   text
+})
+
+// select新老客户
+export const changeClient = id => ({
+  type: type.SELECT_CLIENT,
+  id
+})
+
+// select 日期搜索方式
+export const changeTimeType = id => ({
+  type: type.SELECT_TIME_TYPE,
+  id
 })
 
 // 搜索日期范围
@@ -60,12 +74,31 @@ export const failurePosts = json => ({
   posts: json
 })
 
+// 搜索去空带时间戳的过滤
 export const shouldFetchPosts = (state) => {
   const params = state.searchAll
   const pam = {}
   for (const i in params) {
     if (params[i]) {
       pam[i] = params[i]
+    }
+  }
+  return pam
+}
+
+// 搜索去空带时间格式yyyy-MM-dd hh:mm:ss的过滤
+export const shouldFetchPostsDate = (state) => {
+  const params = state.searchAll
+  const pam = {}
+  for (const i in params) {
+    if (params[i]) {
+      pam[i] = params[i]
+      if (i === 'startTime') {
+        pam[i] = timeDate.time(params[i], 'yyyy-MM-dd hh:mm:ss')
+      }
+      if (i === 'endTime') {
+        pam[i] = timeDate.time(params[i], 'yyyy-MM-dd hh:mm:ss')
+      }
     }
   }
   return pam

@@ -12,34 +12,26 @@ export default class AllTable extends Component {
           type:'index'
         },{
           label:'日期',
-          prop: 'theDate'
+          prop: 'date'
         },{
           label:'总放款单数',
-          prop: 'orderNumber',
-          render:(row) => {
-            return (row.orderNumber ? row.orderNumber:'0')
-          }
-        },{
+          prop: 'allLoanNum'
+          // render:(row) => {
+          //   return (row.orderNumber ? row.orderNumber:'0')
+          // }
+        }, {
           label:'总放款金额',
-          prop: 'orderMoney',
-          render: (row) => {
-            return (row.orderMoney ? row.orderMoney : '0')
-          }
-        },{
+          prop: 'allLoanAmount'
+          // render: (row) => {
+          //   return (row.orderMoney ? row.orderMoney : '0')
+          // }
+        }, {
           label:'新客单数',
-          prop: 'newOrderNumber',
-          render: (row) => {
-            return (row.newOrderNumber ? row.newOrderNumber : '0')
-          }
-        },
-        // {
-        //   label: '新放金额',
-        //   prop: 'newOrderMoney',
-        //   render: (row) => {
-        //     return (row.newOrderMoney ? row.newOrderMoney : '0')
-        //   }
-        // },
-        {
+          prop: 'newOrderNumber'
+          // render: (row) => {
+          //   return (row.newOrderNumber ? row.newOrderNumber : '0')
+          // }
+        }, {
           label: '老客单数',
           render: (row) => {
             // 老客单数 = 总放款单数 - 新客单数
@@ -91,6 +83,8 @@ export default class AllTable extends Component {
     )
   }
 }
+// 页面中用的时候
+// <Loantable data={ list.data } />
 AllTable.propTypes = {
   data: PropTypes.array
 }

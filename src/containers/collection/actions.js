@@ -1,12 +1,13 @@
 import api from '@api/index'
 import { requestPosts, receivePosts, failurePosts, shouldFetchPostsDate } from '@redux/actions'
 
-export const handleSearch = () => {
+// 催收管理--逾期列表
+export const selectOverdueByParam = () => {
   return async (dispatch, getState) => {
     dispatch(requestPosts())
-    const searchAll = shouldFetchPostsDate(getState())
+    const searchAll = selectOverdueByParamApi(getState())
     console.log(searchAll)
-    const data = await api.pageChannelCountApi(searchAll)
+    const data = await api.pageOverdueCountApi(searchAll)
     if (data.success) {
       dispatch(receivePosts(data.data))
     } else {

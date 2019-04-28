@@ -9,6 +9,7 @@ import list from './list'
 import * as type from '../actionTypes'
 import { PAGE_SIZE, CURRENT_PAGE } from '@meta/state'
 
+// 搜索方式
 const selectedSubreddit = (state = '0', action) => {
   switch (action.type) {
     case type.SELECT_SUBREDDIT:
@@ -19,6 +20,27 @@ const selectedSubreddit = (state = '0', action) => {
       return state
   }
 }
+
+// 新老客户
+const selectClient = (state = '0', action) => {
+  switch (action.type) {
+    case type.SELECT_CLIENT:
+      return action.id
+    default:
+      return state
+  }
+}
+
+// 日期搜索方式
+const selectTime = (state = '0', action) => {
+  switch (action.type) {
+    case type.SELECT_TIME_TYPE:
+      return action.id
+    default:
+      return state
+  }
+}
+
 const memberSearchText = (state = '', action) => {
   switch (action.type){
     case type.SELECT_SEARCH_TEXT:
@@ -86,7 +108,7 @@ const searchAll = (state = search, action) => {
         startTime = Math.round(action.time[0])
         endTime = Math.round(action.time[1])
       }
-      return { ...state, startTime, endTime }
+      return { ...state, startTime, endTime, pageNum:1 }
     }
     case type.REGISTER_TIME: {
       let beginTime = ''
@@ -95,7 +117,7 @@ const searchAll = (state = search, action) => {
         beginTime = Math.round(action.time[0])
         endTime = Math.round(action.time[1])
       }
-      return { ...state, beginTime, endTime }
+      return { ...state, beginTime, endTime, pageNum:1 }
     }
     case type.END_REPAY_TIME: {
       let beginTime1 = ''
@@ -104,7 +126,7 @@ const searchAll = (state = search, action) => {
         beginTime1 = Math.round(action.time[0])
         endTime1 = Math.round(action.time[1])
       }
-      return { ...state, beginTime1, endTime1 }
+      return { ...state, beginTime1, endTime1, pageNum:1 }
     }
     case type.SELECT_SEARCH_TEXT:
       return { ...state, typeName: action.text }
@@ -136,5 +158,7 @@ export default combineReducers({
   payTime,
   memberSearchText,
   list,
-  listInfo
+  listInfo,
+  selectClient,
+  selectTime
 })

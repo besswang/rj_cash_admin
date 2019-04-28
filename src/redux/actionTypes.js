@@ -17,3 +17,5 @@ export const CLEAR_SEARCH_ALL = 'CLEAR_SEARCH_ALL' // 重置searchAll
 export const REGISTER_TIME = 'REGISTER_TIME' // 正常还款未借-注册时间
 export const END_REPAY_TIME = 'END_REPAY_TIME' // 正常还款未借-最后还款日
 export const SAVE_LIST_INFO = 'SAVE_LIST_INFO' // 用户列表-当前用户row的信息
+export const SELECT_CLIENT = 'SELECT_CLIENT' // 新老客户
+export const SELECT_TIME_TYPE = 'SELECT_TIME_TYPE' // 日期搜索方式

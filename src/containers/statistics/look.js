@@ -1,9 +1,16 @@
 // 报表统计-数据看版
 import React, { Component } from 'react'
 import { Card } from 'element-react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { selectDataCheckCount } from './actions'
 import solt from '@global/solt'
 import '@styles/look.less'
 class Look extends Component {
+  static propTypes = {
+    selectDataCheckCount: PropTypes.func.isRequired
+  }
   constructor(props){
     super(props)
     this.state={
@@ -48,6 +55,9 @@ class Look extends Component {
       ]
     }
   }
+  componentWillMount() {
+    this.props.selectDataCheckCount()
+  }
   render(){
     console.log(solt.getColor())
     return (
@@ -67,5 +77,13 @@ class Look extends Component {
 
   }
 }
-
-export default Look
+const mapStateToProps = state => {
+	// const { list, time } = state
+	// return { list, time }
+}
+const mapDispatchToProps = dispatch => {
+	return {
+		...bindActionCreators({ selectDataCheckCount }, dispatch)
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Look)

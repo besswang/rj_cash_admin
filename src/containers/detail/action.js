@@ -56,3 +56,17 @@ export const bankInfo = id => {
     console.log(data)
   }
 }
+
+// 通讯录
+export const selectReportMail = posts => {
+  return async dispatch => {
+    dispatch(requestPosts())
+    const data = await api.selectReportMailApi(posts)
+    if (data.success) {
+      dispatch(receivePosts(data.data))
+    } else {
+      dispatch(failurePosts(data))
+    }
+    console.log(data)
+  }
+}

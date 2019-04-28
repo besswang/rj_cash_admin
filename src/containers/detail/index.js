@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { idCardInfo, phoneAuthentication, emergency, bankInfo } from './action'
+import { idCardInfo, phoneAuthentication, emergency, bankInfo, selectReportMail } from './action'
 import Detailtable from '@components/detailTable'
 import { BANK, ADDRESS, CALL_LOG } from '@meta/columns'
 import '@styles/detail.less'
@@ -14,7 +14,8 @@ class Detail extends Component{
     idCardInfo: PropTypes.func.isRequired,
     phoneAuthentication: PropTypes.func.isRequired,
     emergency:PropTypes.func.isRequired,
-    bankInfo: PropTypes.func.isRequired
+    bankInfo: PropTypes.func.isRequired,
+    selectReportMail:PropTypes.func.isRequired
 	}
 	constructor(props){
 		super(props)
@@ -26,7 +27,8 @@ class Detail extends Component{
     // this.props.idCardInfo({userId: 12})
     // this.props.phoneAuthentication({userId: 12})
     // this.props.emergency({userId: 12})
-    this.props.bankInfo({userId: 12})
+    // this.props.bankInfo({userId: 12})
+    this.props.selectReportMail({userId:1,page:1,limit:10})
 	}
 	componentDidMount() {
 
@@ -177,7 +179,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ idCardInfo, phoneAuthentication, emergency, bankInfo }, dispatch)
+		...bindActionCreators({ idCardInfo, phoneAuthentication, emergency, bankInfo, selectReportMail }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Detail)

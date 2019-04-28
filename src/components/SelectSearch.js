@@ -46,15 +46,15 @@ class SelectSearch extends Component {
             clearable="true"
           />
         </Form.Item>
-          <Form.Item>
-            <Time
-              value={ time }
-              onChange={ this.handleTimeChange }
-            />
-          </Form.Item>
-          <Form.Item>
-            { this.props.children }
-          </Form.Item>
+        <Form.Item>
+          <Time
+            value={ time }
+            onChange={ this.handleTimeChange }
+          />
+        </Form.Item>
+        <Form.Item>
+          { this.props.children }
+        </Form.Item>
       </Form>
     )
   }

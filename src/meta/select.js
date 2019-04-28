@@ -26,10 +26,10 @@ export const AUDIT_SELECT = [
   }
 ]
 export const CUSTOMER_SELECT = [{
-  value: '0',
+  value: '1',
   label: '新客户'
 }, {
-  value: '1',
+  value: '2',
   label: '老客户'
 }]
 export const TIME_SELECT = [{

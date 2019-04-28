@@ -2,11 +2,11 @@
 import React,{ Component } from 'react'
 import { Input, Form, Button, Select, Notification} from 'element-react'
 import { AUDIT_SELECT, CUSTOMER_SELECT, TIME_SELECT } from '@meta/select'
-import Time from '../setime'
+import Time from './setime'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 // import { auditRefuseList } from '@redux/actions'
-class TypeSearch extends Component {
+class MostSearch extends Component {
   static propTypes = {
     searchType: PropTypes.number
   }
@@ -133,7 +133,7 @@ class TypeSearch extends Component {
     )
   }
 }
-TypeSearch.propTypes = {
+MostSearch.propTypes = {
   dispatch: PropTypes.func.isRequired
 }
-export default connect()(TypeSearch)
+export default connect()(MostSearch)

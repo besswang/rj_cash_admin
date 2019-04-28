@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { Button,Table, Pagination } from 'element-react'
 import { Link } from 'react-router-dom'
-import Collsearch from '@components/search/collectionSearch'
+import MostSearch from '@components/MostSearch'
 class Mlist extends Component{
 	constructor(props) {
 		super(props)
@@ -125,7 +125,9 @@ class Mlist extends Component{
 	render() {
 		return (
 			<div>
-				<Collsearch searchType={ 2 } />
+				<MostSearch>
+					<Button type="primary">{'搜索'}</Button>
+				</MostSearch>
 				<Table
 				style= { { width: '100%' } }
 				columns= { this.state.columns }

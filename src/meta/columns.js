@@ -206,34 +206,34 @@ export const CONSUME = [
     type: 'index'
   }, {
     label: '日期',
-    prop: 'sj'
+    prop: 'date'
   }, {
     label: '总费用',
-    prop: 'allMoney'
+    prop: 'costCount'
   }, {
     label: '短信条数',
-    prop: 'messageNum'
+    prop: 'message'
   }, {
     label: '短信金额',
-    prop: 'messageMoney'
+    prop: 'messageAmount'
   }, {
     label: '身份人数',
-    prop: 'idcardNum'
+    prop: 'idCard'
   }, {
     label: '身份金额',
-    prop: 'idcardMoney'
+    prop: 'idCardAmount'
   }, {
     label: '手机人数',
-    prop: 'phoneNum'
+    prop: 'phone'
   }, {
     label: '手机金额',
-    prop: 'phoneMoney'
+    prop: 'phoneAmount'
   }, {
     label: '风控人数',
-    prop: 'managementNum'
+    prop: 'risk'
   }, {
     label: '风控金额',
-    prop: 'managementMoney'
+    prop: 'riskAmount'
   }
 ]
 export const TURNOVER = [
@@ -241,34 +241,31 @@ export const TURNOVER = [
     type: 'index'
   }, {
     label: '进账日期',
-    prop: 'sj'
+    prop: 'date'
   }, {
     label: '总进账',
-    prop: 'allIncome'
+    prop: 'allInAmount'
   }, {
     label: '微信',
-    prop: ''
+    prop: 'onlineWxInAmount'
   }, {
     label: '支付宝',
-    prop: 'alipayIncome'
+    prop: 'onlineZfbInAmount'
   }, {
     label: '银联收款',
-    prop: 'bankIncome'
+    prop: 'onlineYlInAmount'
   }, {
     label: '线下微信',
-    prop: 'xxwxIncome'
+    prop: 'wxInAmount'
   }, {
     label: '线下支付宝',
-    prop: 'xxAlipayIncome'
+    prop: 'zfbInAmount'
   }, {
     label: '线下银联',
-    prop: 'xxybank'
-  }, {
-    label: '出账日期',
-    prop: 'theDate'
+    prop: 'ylInAmount'
   }, {
     label: '银联出账',
-    prop: 'bankExpend'
+    prop: 'ylOutAmount'
   }
 ]
 export const BANK = [{
