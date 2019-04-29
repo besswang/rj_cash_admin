@@ -22,7 +22,7 @@ const list = (state = {
       }
     case type.FAILURE_POSTS:{
       Notification.warning(action.posts.msg)
-      return {...state, loading: false}
+      return {...state, loading: false, data: []}
     }
     default:
       return state

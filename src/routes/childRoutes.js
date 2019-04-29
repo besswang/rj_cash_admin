@@ -34,6 +34,12 @@ import Auddetail from '@containers/borrow/auddetail'
 import Auditrefuse from '@containers/borrow/auditRefuse/index'
 // 催收管理-逾期列表
 import Colloverdue from '@containers/collection/overdue'
+import Collection from '@containers/collection/collection'
+import Self from '@containers/collection/self'
+// 财务管理-待放款
+import WaitFang from '@containers/finance/waitFang'
+import WaitHuan from '@containers/finance/waitHuan'
+import AlreadyWan from '@containers/finance/alreadyWan'
 export const CHILD_ROUTES = [{
   id: 1,
   path: '/home',
@@ -125,4 +131,30 @@ export const CHILD_ROUTES = [{
   path: '/collection/overdue',
   exact: true,
   main: () => <Colloverdue />
+}, {
+  id: 19,
+  path: '/collection/collection',
+  exact: true,
+  main: () => <Collection />
+}, {
+  id: 20,
+  path: '/collection/self',
+  exact: true,
+  main: () => <Self />
+}, {
+  id: 21,
+  path: '/finance/waitFang',
+  exact: true,
+  main: () => <WaitFang />
+}, {
+  id: 22,
+  path: '/finance/waitHuan',
+  exact: true,
+  main: () => <WaitHuan />
+}, {
+  id: 23,
+  path: '/finance/alreadyWan',
+  exact: true,
+  main: () => <AlreadyWan />
 }]
+

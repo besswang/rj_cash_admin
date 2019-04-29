@@ -10,32 +10,51 @@ import * as type from '../actionTypes'
 import { PAGE_SIZE, CURRENT_PAGE } from '@meta/state'
 
 // 搜索方式
-const selectedSubreddit = (state = '0', action) => {
+const selectedSubreddit = (state = 0, action) => {
   switch (action.type) {
-    case type.SELECT_SUBREDDIT:
-      return action.typeId
+    case type.SELECT_SUBREDDIT:{
+      if ( action.typeId !=='' ){
+        return action.typeId
+      } else {
+        return 0
+      }
+    }
     case type.CLEAR_SEARCH_ALL:
-      return action.data.typeId
+      return 0
     default:
       return state
   }
 }
 
 // 新老客户
-const selectClient = (state = '0', action) => {
+const selectClient = (state = 0, action) => {
   switch (action.type) {
-    case type.SELECT_CLIENT:
-      return action.id
+    case type.SELECT_CLIENT:{
+      if ( action.id !== ''){
+        return action.id
+      } else {
+        return 0
+      }
+    }
+    case type.CLEAR_SEARCH_ALL:
+      return 0
     default:
       return state
   }
 }
 
 // 日期搜索方式
-const selectTime = (state = '0', action) => {
+const selectTime = (state = 0, action) => {
   switch (action.type) {
-    case type.SELECT_TIME_TYPE:
-      return action.id
+    case type.SELECT_TIME_TYPE:{
+      if (action.id !== '') {
+        return action.id
+      } else {
+        return 0
+      }
+    }
+    case type.CLEAR_SEARCH_ALL:
+      return 0
     default:
       return state
   }
@@ -88,7 +107,9 @@ const search = {
   endTime: '',
   pageNum: CURRENT_PAGE,
   pageSize: PAGE_SIZE,
-  typeId: '0'
+  typeId: 0,
+  newClient: 0,
+  timeType: 0
 }
 const searchAll = (state = search, action) => {
   switch (action.type) {
@@ -97,9 +118,27 @@ const searchAll = (state = search, action) => {
       if (action.typeId !== ''){
         typeId = action.typeId
       } else {
-        typeId = '0'
+        typeId = 0
       }
       return {...state, typeId: typeId}
+    }
+    case type.SELECT_CLIENT: {
+      let newClient = ''
+      if (action.id !== ''){
+        newClient = action.id
+      } else {
+        newClient = 0
+      }
+      return { ...state, newClient: newClient }
+    }
+    case type.SELECT_TIME_TYPE: {
+      let timeType = ''
+      if (action.id !== ''){
+        timeType = action.id
+      } else {
+        timeType = 0
+      }
+      return { ...state, timeType: timeType }
     }
     case type.SAVE_TIME: {
       let startTime = ''

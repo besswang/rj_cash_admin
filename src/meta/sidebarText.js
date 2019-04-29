@@ -79,9 +79,11 @@ export const SIDE_BAR_TEXT = [
       title: '逾期列表'
     }, {
       itemIndex: '4-2',
+      path: '/collection/collection',
       title: '催收列表'
     }, {
       itemIndex: '4-3',
+      path: '/collection/self',
       title: '个人对账'
     }
   ]
@@ -91,12 +93,15 @@ export const SIDE_BAR_TEXT = [
     menuItem: [
       {
       itemIndex: '5-1',
+      path: '/finance/waitFang',
       title: '待放款'
     }, {
       itemIndex: '5-2',
+      path: '/finance/waitHuan',
       title: '待还款'
     }, {
       itemIndex: '5-3',
+      path: '/finance/alreadyWan',
       title: '已完成'
     }, {
       itemIndex: '5-4',

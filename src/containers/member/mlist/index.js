@@ -12,10 +12,7 @@ import MyPagination from '@components/MyPagination'
 import { MLIST_SELECT } from '@meta/select'
 class Mlist extends Component{
 	static propTypes = {
-		selectedSubreddit: PropTypes.string,
-		time: PropTypes.array,
 		list: PropTypes.object.isRequired,
-		memberSearchText: PropTypes.string,
 		sizeChange: PropTypes.func.isRequired,
 		currentChange: PropTypes.func.isRequired,
 		initSearch: PropTypes.func.isRequired,
@@ -69,7 +66,6 @@ class Mlist extends Component{
 					prop: 'loanNum'
 				},{
 				 	label: '黑名单',
-				 	prop: 'blackType',
 					fixed:'right',
 					 render: row => {
 						 return (

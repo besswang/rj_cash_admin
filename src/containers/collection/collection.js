@@ -1,4 +1,4 @@
-// 催收管理-逾期列表
+// 催收管理-催收列表
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Loading, Table } from 'element-react'
@@ -6,48 +6,37 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch, saveTime } from '@redux/actions'
-import { selectOverdueByParam, addUserBlack, removeUserBlack } from './actions'
+import { selectCollectionByParam, addUserBlack, removeUserBlack } from './actions'
 import MostSearch from '@components/MostSearch'
 import MyPagination from '@components/MyPagination'
 import DisableBtn from '@components/DisableBtn'
-import filter from '@global/filter'
-class Overdue extends Component{
+class Collection extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
     saveTime: PropTypes.func.isRequired,
-		selectOverdueByParam: PropTypes.func.isRequired,
+		selectCollectionByParam: PropTypes.func.isRequired,
 		addUserBlack: PropTypes.func.isRequired,
 		removeUserBlack: PropTypes.func.isRequired
   }
 	constructor(props) {
 		super(props)
 		this.state = {
-			columns: [
-				{
-					type: 'selection'
-				}, {
+			columns: [{
 					type: 'index',
 					fixed: 'left'
-				},{
-					label: '订单号',
-					prop: 'orderNumber',
-					fixed: 'left'
-				},{
+				}, {
 					label: '渠道名称',
 					prop: 'channelName'
-				},
-				{
+				}, {
 					label: '真实姓名',
 					prop: 'realName'
-				},
-				{
+				}, {
 					label: '手机号码',
 					prop: 'phone'
-				},
-				{
+				}, {
 					label: '身份证号',
 					prop: 'idcardNumber'
 				}, {
@@ -87,8 +76,11 @@ class Overdue extends Component{
 					label: '新老客户',
 					prop: 'loanTerm', // 等于0 为新客  大于0 为老客
 					render: row => {
-						const data = filter.loanTerm(row.loanTerm)
-						return data
+						if(parseInt(row.Loading) === 0){
+							return '新客'
+						}else{
+							return '老客'
+						}
 					 }
 				}, {
 					label: '申请时间',
@@ -109,17 +101,20 @@ class Overdue extends Component{
 					label: '跟单人',
 					prop: 'tracker'
 				}, {
+					label: '申请单号',
+					prop: 'orderNumber'
+				}, {
 				 	label: '黑名单',
 					fixed:'right',
-					render: row => {
-						return (
-							<DisableBtn
-								value={ row.blackStatus }
-								onClick={ this.userBlack.bind(this, row) }
-								text={ ['添加','移除'] }
-							/>
-						)
-					}
+					 render: row => {
+						 return (
+							 <DisableBtn
+									value={ row.blackStatus }
+									onClick={ this.userBlack.bind(this, row) }
+									text={ ['添加','移除'] }
+								/>
+						 )
+					 }
 				}, {
 					label: '操作',
 					fixed: 'right',
@@ -140,19 +135,19 @@ class Overdue extends Component{
     this.props.initSearch()
   }
   componentDidMount() {
-    this.props.selectOverdueByParam()
+    this.props.selectCollectionByParam()
   }
   search = e => {
     e.preventDefault()
-    this.props.selectOverdueByParam()
+    this.props.selectCollectionByParam()
   }
   sizeChange = e => {
     this.props.sizeChange(e)
-    this.props.selectOverdueByParam()
+    this.props.selectCollectionByParam()
   }
   onCurrentChange = e => {
     this.props.currentChange(e)
-    this.props.selectOverdueByParam()
+    this.props.selectCollectionByParam()
 	}
 		// 黑名单 idCard，phone,realName
 	userBlack(r){
@@ -182,7 +177,6 @@ class Overdue extends Component{
 						border
 					/>
 				</Loading>
-				<Button type="primary">{'批量分配'}</Button>
         <MyPagination
           total={ list.total }
           onSizeChange={ this.sizeChange }
@@ -199,7 +193,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, saveTime, selectOverdueByParam, addUserBlack, removeUserBlack }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, saveTime, selectCollectionByParam, addUserBlack, removeUserBlack }, dispatch)
 	}
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Overdue)
+export default connect(mapStateToProps, mapDispatchToProps)(Collection)

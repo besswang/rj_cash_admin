@@ -29,6 +29,11 @@ export default {
   pageCostCountApi: params => Fetch(jk.pageCostCount, {method: 'post', body: params}),
   pageInoutCountApi: params => Fetch(jk.pageInoutCount, {method: 'post', body: params}),
   selectDataCheckCountApi: () => Fetch(jk.selectDataCheckCount, {method: 'get'}),
-  selectCollectionByParamApi: params => Fetch(jk.selectCollectionByParam, {method: 'post', body: params}),
   selectOverdueByParamApi: params => Fetch(jk.selectOverdueByParam, {method: 'post', body: params}),
+  selectCollectionByParamApi: params => Fetch(jk.selectCollectionByParam, {method: 'post', body: params}),
+  selectthePersionApi: params => Fetch(jk.selectthePersion, {method: 'post', body: params}),
+  selectPendingLoanApi: params => Fetch(jk.selectPendingLoan, {method: 'post', body: params}),
+  updateStateLoanApi: params => Fetch(jk.updateStateLoan, {method: 'put', body: params}),
+  selectPendingRepayApi: params => Fetch(jk.selectPendingRepay, {method: 'post', body: params}),
+  selectOrderCompletedApi: params => Fetch(jk.selectOrderCompleted, {method: 'post', body: params})
 }

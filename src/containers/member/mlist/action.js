@@ -1,15 +1,11 @@
 import api from '@api/index'
 import { MessageBox, Message } from 'element-react'
-import { requestPosts, receivePosts, failurePosts } from '@redux/actions'
+import { requestPosts, receivePosts, failurePosts, shouldFetch } from '@redux/actions'
 // 会员管理-会员列表
-const shouldFetchPosts = (state) => {
-  const posts = state.searchAll
-  return posts
-}
 export const handelSearch = () => {
   return async (dispatch, getState) => {
     dispatch(requestPosts())
-    const searchAll = shouldFetchPosts(getState())
+    const searchAll = shouldFetch(getState())
     const data = await api.selectUserBySeachApi(searchAll)
     if(data.success){
       dispatch(receivePosts(data.data))
@@ -30,15 +26,14 @@ const text = t => {
 // 会员管理-禁用/启用
 export const updateUserType = subreddit => {
     const t = text(subreddit.type)
-    return (dispatch, getState) => {
+    return (dispatch) => {
       MessageBox.confirm(`将该用户${ t }, 是否继续?`, '提示', {
         type: 'warning'
       }).then(async () => {
         dispatch(requestPosts())
-        const searchAll = shouldFetchPosts(getState())
         const data = await api.updateUserTypeApi(subreddit)
         if (data.success) {
-          dispatch(handelSearch(searchAll))
+          dispatch(handelSearch())
           Message({
             type: 'success',
             message: data.msg
@@ -57,15 +52,14 @@ export const updateUserType = subreddit => {
 
 // 会员管理-添加黑名单
 export const addUserBlack = subreddit => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     MessageBox.confirm('将该用户添加至黑名单, 是否继续?', '提示', {
       type: 'warning'
     }).then(async () => {
       dispatch(requestPosts())
-      const searchAll = shouldFetchPosts(getState())
       const data = await api.addUserBlackApi(subreddit)
       if (data.success) {
-        dispatch(handelSearch(searchAll))
+        dispatch(handelSearch())
         Message({
           type: 'success',
           message: data.msg
@@ -83,15 +77,14 @@ export const addUserBlack = subreddit => {
 }
 // 会员管理-移除黑名单
 export const removeUserBlack = subreddit => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     MessageBox.confirm('将该用户添从黑名单移除, 是否继续?', '提示', {
       type: 'warning'
     }).then(async () => {
       dispatch(requestPosts())
-      const searchAll = shouldFetchPosts(getState())
       const data = await api.removeUserBlackApi(subreddit)
       if (data.success) {
-        dispatch(handelSearch(searchAll))
+        dispatch(handelSearch())
         Message({
           type: 'success',
           message: data.msg

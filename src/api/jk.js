@@ -32,5 +32,11 @@ export default {
   'updataState': 'api/order/updataState', // 操作-通过/拒绝
   // 催收管理-逾期列表
   'selectCollectionByParam': 'api/order/selectCollectionByParam', // 催收列表
-  'selectOverdueByParam': 'api/order/selectOverdueByParam' // 逾期列表
+  'selectOverdueByParam': 'api/order/selectOverdueByParam', // 逾期列表
+  'selectthePersion': 'api/order/selectthePersion', // 个人对账
+  // 财务管理
+  'selectPendingLoan': 'api/order/selectPendingLoan', // 待放款
+  'updateStateLoan': 'api/order/updateStateLoan', // 拒绝放款
+  'selectPendingRepay': 'api/order/selectPendingRepay', // 待还款
+  'selectOrderCompleted': 'api/order/selectOrderCompleted' // 已完成
 }

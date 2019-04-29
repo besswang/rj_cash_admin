@@ -15,7 +15,9 @@ export const initSearch = () => ({
     endTime: '',
     pageNum: CURRENT_PAGE,
     pageSize: PAGE_SIZE,
-    typeId: '0'
+    typeId: 0,
+    newClient: 0,
+    timeType: 0
   }
 })
 // select下搜索类型
@@ -74,6 +76,11 @@ export const failurePosts = json => ({
   posts: json
 })
 
+// 不过滤搜索
+export const shouldFetch = (state) => {
+  const params = state.searchAll
+  return params
+}
 // 搜索去空带时间戳的过滤
 export const shouldFetchPosts = (state) => {
   const params = state.searchAll

@@ -2,30 +2,31 @@ import React, { Component } from 'react'
 import { Form, Input } from 'element-react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { bindActionCreators } from 'redux'
+import { selectSubreddit, selectSearchText, saveTime, initSearch } from '@redux/actions'
 import SelectPicker from '@components/SelectPicker'
 import Time from '@components/Settime'
-import { selectSubreddit, selectSearchText, saveTime, initSearch } from '@redux/actions'
 class SelectSearch extends Component {
   static propTypes = {
-		dispatch: PropTypes.func.isRequired,
-		selectedSubreddit: PropTypes.string,
+		selectedSubreddit: PropTypes.number,
 		memberSearchText: PropTypes.string,
     time: PropTypes.array,
     children: PropTypes.object.isRequired,
-    options: PropTypes.array.isRequired
+    options: PropTypes.array.isRequired,
+    selectSubreddit: PropTypes.func.isRequired,
+    selectSearchText: PropTypes.func.isRequired,
+    saveTime: PropTypes.func.isRequired,
+    initSearch: PropTypes.func.isRequired
   }
   componentWillMount() {
     // 查询表单的初始化
-    this.props.dispatch(initSearch())
+    this.props.initSearch()
 	}
-  handleSelectChange = e => {
-    this.props.dispatch(selectSubreddit(e))
-  }
   handleTextChange = val => {
-		this.props.dispatch(selectSearchText(val))
+		this.props.selectSearchText(val)
   }
   handleTimeChange = val => {
-    this.props.dispatch(saveTime(val))
+    this.props.saveTime(val)
   }
   render() {
     const { selectedSubreddit, memberSearchText, time, options } = this.props
@@ -34,7 +35,7 @@ class SelectSearch extends Component {
         <Form.Item>
           <SelectPicker
             value={ selectedSubreddit }
-            onChange={ this.handleSelectChange }
+            onChange={ e => this.props.selectSubreddit(e) }
             options={ options }
           />
         </Form.Item>
@@ -59,6 +60,7 @@ class SelectSearch extends Component {
     )
   }
 }
+
 const mapStateToProps = state => {
 	const {
 		selectedSubreddit, memberSearchText, time
@@ -67,4 +69,9 @@ const mapStateToProps = state => {
 		selectedSubreddit, memberSearchText, time
 	}
 }
-export default connect(mapStateToProps)(SelectSearch)
+const mapDispatchToProps = dispatch => {
+	return {
+		...bindActionCreators({ selectSubreddit, selectSearchText, saveTime, initSearch }, dispatch)
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(SelectSearch)
