@@ -1,21 +1,21 @@
-// 催收管理-个人对账
+// 财务管理-已完成
 import React, { Component } from 'react'
 import { Button, Loading, Table } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectthePersion } from './actions'
+import { selectblackphone, deleteBlackphone } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
-import filter from '@global/filter'
-class Self extends Component {
+class BlackUser extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
-		selectthePersion: PropTypes.func.isRequired
+		selectblackphone: PropTypes.func.isRequired,
+		deleteBlackphone: PropTypes.func.isRequired
   }
 	constructor(props) {
 		super(props)
@@ -24,9 +24,6 @@ class Self extends Component {
 					type: 'index',
 					fixed: 'left'
 				}, {
-					label: '申请单号',
-					prop: 'orderNumber'
-				}, {
 					label: '真实姓名',
 					prop: 'realName'
 				}, {
@@ -34,65 +31,42 @@ class Self extends Component {
 					prop: 'phone'
 				}, {
 					label: '身份证号',
-					prop: 'idcardNumber'
+					prop: 'idCard'
 				}, {
-					label: '借款金额',
-					prop: 'applyMoney'
-				}, {
-					label: '应还金额',
-					prop: 'repaymentMoney' // 到期应还金额
-				}, {
-					label: '支付方式',
-					prop: 'loanMode', // 默认 0 支付宝 1微信 2 银行卡 3 线下
+					label: '操作',
 					render: row => {
-						 const data = filter.loanMode(row.loanMode)
-						 return data
+						return (
+							<Button type="danger" size="mini"
+								onClick={ this.delete.bind(this, row.id) }
+							>
+								{'删除'}
+							</Button>
+						)
 					}
-				}, {
-					label: '到账金额',// 已放金额
-					prop: 'loanMoney'
-				}, {
-					label: '催收催回金额',
-					prop: ''
-				}, {
-					label: '逾期天数',
-					prop: 'overdueNumber'
-				}, {
-					label: '分单时间',
-					prop: 'fendanDate'
-				}, {
-					label: '催回时间',
-					prop: 'realRepaymentDate'
-				}, {
-					label: '催回催收人',
-					prop: 'tracker'
-				}, {
-					label: '订单类型',
-					prop: 'loanType', // 默认  0 正常 1 延期   2逾期
-					render: row => {
-						const data = filter.loanType(row.loanType)
-						return data
-					}
-				}]
+      }]
 		}
 	}
 	componentWillMount() {
     this.props.initSearch()
   }
   componentDidMount() {
-    this.props.selectthePersion()
-  }
+    this.props.selectblackphone()
+	}
+	delete(id) {
+		console.log(id)
+		this.props.deleteBlackphone({id:id})
+	}
   handleSearch = e => {
     e.preventDefault()
-    this.props.selectthePersion()
+    this.props.selectblackphone()
   }
   sizeChange = e => {
     this.props.sizeChange(e)
-    this.props.selectthePersion()
+    this.props.selectblackphone()
   }
   onCurrentChange = e => {
     this.props.currentChange(e)
-    this.props.selectthePersion()
+    this.props.selectblackphone()
 	}
 	render() {
 		const { list } = this.props
@@ -125,7 +99,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectthePersion }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectblackphone, deleteBlackphone }, dispatch)
 	}
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Self)
+export default connect(mapStateToProps, mapDispatchToProps)(BlackUser)

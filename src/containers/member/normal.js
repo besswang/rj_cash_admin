@@ -3,12 +3,11 @@ import { Form, Button, Table, Loading } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { normalSearch, registerTime, endPayTime } from './actions'
+import { sizeChange, currentChange, initSearch, registerTime } from '@redux/actions'
+import { normalSearch, endPayTime } from './actions'
 import Time from '@components/Settime'
 import MyPagination from '@components/MyPagination'
 import { NORMAL_COLUMNS } from '@meta/columns'
-
 class Apply extends Component{
 	static propTypes = {
 		list: PropTypes.object.isRequired,

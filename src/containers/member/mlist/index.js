@@ -7,9 +7,8 @@ import { sizeChange, currentChange, initSearch, saveList } from '@redux/actions'
 import { handelSearch, updateUserType, exportUser, addUserBlack, removeUserBlack } from './action'
 import { Link } from 'react-router-dom'
 import DisableBtn from '@components/DisableBtn'
-import SelectSearch from '@components/SelectSearch'
 import MyPagination from '@components/MyPagination'
-import { MLIST_SELECT } from '@meta/select'
+import Search from '@components/Search'
 class Mlist extends Component{
 	static propTypes = {
 		list: PropTypes.object.isRequired,
@@ -136,12 +135,12 @@ class Mlist extends Component{
 		const { list } = this.props
 		return (
 			<div>
-				<SelectSearch options={ MLIST_SELECT }>
+				<Search showSelect1 showTime>
 					<div>
 						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 						<Button onClick={ this.props.exportUser } type="primary">{'导出列表'}</Button>
 					</div>
-				</SelectSearch>
+				</Search>
 				<Loading loading={ list.loading }>
 					<Table
 					style= { { width: '100%' } }

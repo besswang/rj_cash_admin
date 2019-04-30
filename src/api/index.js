@@ -22,8 +22,8 @@ export default {
   selectIdCardByUserIdApi: params => Fetch(jk.selectIdCardByUserId, {method: 'get', data: params}),
   selectPhoneReportByUserIdApi: params => Fetch(jk.selectPhoneReportByUserId, {method: 'get', data: params}),
   selectEmergencyByUserIdApi: params => Fetch(jk.selectEmergencyByUserId, {method: 'get', data: params} ),
-  selectBankByUserIdApi: params => Fetch(jk.selectBankByUserId, {method: 'get', data: params} ),
-  selectReportMailApi: params => Fetch(jk.selectReportMail, {method: 'get', data: params} ),
+  selectBankByUserIdApi: params => Fetch(jk.selectBankByUserId, {method: 'get', data: params}),
+  selectReportMailApi: params => Fetch(jk.selectReportMail, {method: 'get', data: params}),
   pageLoanCountApi: params => Fetch(jk.pageLoanCount, {method: 'post', body: params}),
   pageRepaymentCountApi: params => Fetch(jk.pageRepaymentCount, {method: 'post', body: params}),
   pageCostCountApi: params => Fetch(jk.pageCostCount, {method: 'post', body: params}),
@@ -35,5 +35,9 @@ export default {
   selectPendingLoanApi: params => Fetch(jk.selectPendingLoan, {method: 'post', body: params}),
   updateStateLoanApi: params => Fetch(jk.updateStateLoan, {method: 'put', body: params}),
   selectPendingRepayApi: params => Fetch(jk.selectPendingRepay, {method: 'post', body: params}),
-  selectOrderCompletedApi: params => Fetch(jk.selectOrderCompleted, {method: 'post', body: params})
+  selectOrderCompletedApi: params => Fetch(jk.selectOrderCompleted, {method: 'post', body: params}),
+  selectBillApi: params => Fetch(jk.selectBill, {method: 'post', body: params}),
+  selectTheDayLoanApi: params => Fetch(jk.selectTheDayLoan, {method: 'post', body: params}),
+  selectblackphoneApi: params => Fetch(jk.selectblackphone, {method: 'get', data: params}),
+  deleteBlackphoneApi: params => Fetch(jk.deleteBlackphone, {method: 'delete', data: params})
 }

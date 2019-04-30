@@ -44,9 +44,14 @@ export const changeTimeType = id => ({
   id
 })
 
-// 搜索日期范围
+// 日期范围 startTime-endTime
 export const saveTime = time => ({
   type: type.SAVE_TIME,
+  time
+})
+// 日期范围 beginTime-endTime
+export const registerTime = time => ({
+  type: type.REGISTER_TIME,
   time
 })
 // 分页-每页条数

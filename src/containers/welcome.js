@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button } from 'element-react'
-import Echart from '../components/echarts'
-import Time from '../components/setime'
-import api from '../api/index'
-import '../styles/welcome.less'
+import Echart from '@components/echarts'
+import Time from '@components/setime'
+import api from '@api/index'
+import '@styles/welcome.less'
 class Welcome extends React.Component{
 	constructor(props) {
 		super(props)
@@ -17,13 +17,9 @@ class Welcome extends React.Component{
 		}
 	}
 	componentWillMount() {
-		// console.log(this.props)
 		this.initData()
 	}
 	componentDidMount() {
-
-	}
-	componentWillReceiveProps(nextProps) {
 
 	}
 	search = () => {
@@ -42,9 +38,6 @@ class Welcome extends React.Component{
 			})
 		}
 	}
-	// handleTime = (e) => {
-	// 	// console.log(e)
-	// }
 	render(){
 		return(
 			<div>

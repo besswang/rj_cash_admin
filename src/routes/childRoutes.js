@@ -40,6 +40,10 @@ import Self from '@containers/collection/self'
 import WaitFang from '@containers/finance/waitFang'
 import WaitHuan from '@containers/finance/waitHuan'
 import AlreadyWan from '@containers/finance/alreadyWan'
+import AlreadyHuan from '@containers/finance/alreadyHuan'
+import Day from '@containers/finance/day'
+// 黑名单管理
+import BlackUser from '@containers/black/blackUser'
 export const CHILD_ROUTES = [{
   id: 1,
   path: '/home',
@@ -156,5 +160,19 @@ export const CHILD_ROUTES = [{
   path: '/finance/alreadyWan',
   exact: true,
   main: () => <AlreadyWan />
+}, {
+  id: 24,
+  path: '/finance/alreadyHuan',
+  exact: true,
+  main: () => <AlreadyHuan />
+}, {
+  id: 25,
+  path: '/finance/day',
+  exact: true,
+  main: () => <Day />
+}, {
+  id: 26,
+  path: '/black/blackUser',
+  exact: true,
+  main: () => <BlackUser />
 }]
-

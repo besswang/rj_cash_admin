@@ -1,22 +1,22 @@
-// 催收管理-个人对账
+// 催收管理-当日到期
 import React, { Component } from 'react'
 import { Button, Loading, Table } from 'element-react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectPendingLoan } from './actions'
+import { selectTheDayLoan } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
-class WaitFang extends Component {
+class WaitHuan extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
-		selectPendingLoan: PropTypes.func.isRequired
+		selectTheDayLoan: PropTypes.func.isRequired
   }
 	constructor(props) {
 		super(props)
@@ -94,14 +94,14 @@ class WaitFang extends Component {
 							return (
 								<div className="flex flex-direction_row">
 									<Button className="margin_right10" type="success" size="mini">
-										{'通过'}
+										{'还款操作'}
 									</Button>
-									<Button className="margin_right10" type="danger" size="mini">
+									{/* <Button className="margin_right10" type="danger" size="mini">
 										{'拒绝'}
 									</Button>
 									<Link to="/borrow/auddetail">
 										<Button type="text" size="small">{'用户详情'}</Button>
-									</Link>
+									</Link> */}
 								</div>
 							)
 					}
@@ -112,25 +112,25 @@ class WaitFang extends Component {
     this.props.initSearch()
   }
   componentDidMount() {
-    this.props.selectPendingLoan()
+    this.props.selectTheDayLoan()
   }
   handleSearch = e => {
     e.preventDefault()
-    this.props.selectPendingLoan()
+    this.props.selectTheDayLoan()
   }
   sizeChange = e => {
     this.props.sizeChange(e)
-    this.props.selectPendingLoan()
+    this.props.selectTheDayLoan()
   }
   onCurrentChange = e => {
     this.props.currentChange(e)
-    this.props.selectPendingLoan()
+    this.props.selectTheDayLoan()
 	}
 	render() {
 		const { list } = this.props
 		return (
 			<div>
-				<Search showSelect2>
+				<Search showSelect2 showSelectClient showAllotType showSelectTime2 showBeginTime>
 					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 				</Search>
 				<Loading loading={ list.loading }>
@@ -157,7 +157,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectPendingLoan }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectTheDayLoan }, dispatch)
 	}
 }
-export default connect(mapStateToProps, mapDispatchToProps)(WaitFang)
+export default connect(mapStateToProps, mapDispatchToProps)(WaitHuan)

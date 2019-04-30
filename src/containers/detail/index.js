@@ -45,10 +45,10 @@ class Detail extends Component{
 					{/* <Breadcrumb.Item>会员管理</Breadcrumb.Item> */}
 					<Breadcrumb.Item>
 						<Link to="/member/mlist">
-							{'会员列表2233'}
+							{'会员列表'}
 						</Link>
 					</Breadcrumb.Item>
-					<Breadcrumb.Item>{'会员详情'}</Breadcrumb.Item>
+					<Breadcrumb.Item>{'详情'}</Breadcrumb.Item>
 				</Breadcrumb>
         <Tabs activeName="1" onTabClick={ this.tabChange }>
           <Tabs.Pane label="申请信息" name="1">

@@ -1,5 +1,35 @@
+import * as state from '@meta/state'
 export default {
+  // 还款类型
+  moneyType(x) {
+    switch (x) {
+      case state.DELAY:
+        return '延期'
+      case state.PART_RPM_AMOUNT:
+        return '部分还款'
+      case state.NORMAL:
+        return '正常'
+      default:
+        return '空值'
+    }
+  },
   // 支付方式：0 支付宝 1微信 2 银行卡 3 线下
+  payType(x) {
+    switch (x) {
+      case state.WX:
+        return '微信'
+      case state.ALI:
+        return '支付宝'
+      case state.BANK:
+        return '银行卡'
+      case state.UTL_ALI:
+        return '线下支付宝'
+      case state.UTL_WX:
+        return '线下微信'
+      default:
+        return '空值'
+    }
+  },
   loanMode (x) {
     switch (x) {
       case 0:

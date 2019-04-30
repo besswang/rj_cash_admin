@@ -1,12 +1,12 @@
-// 催收管理-个人对账
+// 财务管理-已完成
 import React, { Component } from 'react'
 import { Button, Loading, Table } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { sizeChange, currentChange, initSearch, saveTime } from '@redux/actions'
+import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { selectOrderCompleted } from './actions'
-import MostSearch from '@components/MostSearch'
+import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
 class AlreadyWan extends Component {
@@ -15,7 +15,6 @@ class AlreadyWan extends Component {
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
-    saveTime: PropTypes.func.isRequired,
 		selectOrderCompleted: PropTypes.func.isRequired
   }
 	constructor(props) {
@@ -56,11 +55,26 @@ class AlreadyWan extends Component {
 					label: '服务费',
 					prop: 'serviceMoney'
 				}, {
-					label: '待放金额',
+					label: '已放金额', // 到账金额
 					prop: 'loanMoney'
+				}, {
+					label: '实还金额',
+					prop: 'realRepaymentMoney'
+				}, {
+					label: '实际还款日',
+					prop: 'realRepaymentDate'
+				}, {
+					label: '延期费用',
+					prop: 'continueMoney'
+				}, {
+					label: '延期天数',
+					prop: 'continueNumber'
 				}, {
 					label: '借款次数',
 					prop: 'loanTerm'
+				}, {
+					label: '放款客服',
+					prop: 'loanCustomer'
 				}, {
 					label: '申请时间',
 					prop: 'nextApplyTime'
@@ -71,10 +85,26 @@ class AlreadyWan extends Component {
 					label: '审核时间',
 					prop: 'examineDate'
 				}, {
-					label: '打款状态',
-					prop: 'payStatus',
+					label: '放款时间',
+					prop: 'loanDate'
+				}, {
+					label: '约定还款日',
+					prop: 'repaymentDate'
+				}, {
+					label: '打款单号',
+					prop: 'loanNumber'
+				}, {
+					label: '打款方式',
+					prop: 'loanMode',
 					render: row => {
-						const data = filter.payStatus(row.payStatus)
+						const data = filter.loanMode(row.loanMode)
+						return data
+					}
+				}, {
+					label: '还款方式',
+					prop: 'repaymentType',
+					render: row => {
+						const data = filter.loanMode(row.repaymentType)
 						return data
 					}
 				}, {
@@ -84,7 +114,7 @@ class AlreadyWan extends Component {
 					label: '银行名称',
 					prop: 'bankName'
 				}, {
-					label: '银行卡号',
+					label: '银行账号',
 					prop: 'bankNumber'
 				}]
 		}
@@ -95,7 +125,7 @@ class AlreadyWan extends Component {
   componentDidMount() {
     this.props.selectOrderCompleted()
   }
-  search = e => {
+  handleSearch = e => {
     e.preventDefault()
     this.props.selectOrderCompleted()
   }
@@ -111,9 +141,9 @@ class AlreadyWan extends Component {
 		const { list } = this.props
 		return (
 			<div>
-				<MostSearch showSelect2>
-					<Button onClick={ this.search } type="primary">{'搜索'}</Button>
-				</MostSearch>
+				<Search showSelect2>
+					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+				</Search>
 				<Loading loading={ list.loading }>
 					<Table
 						style={ { width: '100%' } }
@@ -138,7 +168,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, saveTime, selectOrderCompleted }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectOrderCompleted }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AlreadyWan)

@@ -1,21 +1,21 @@
-// 催收管理-个人对账
+// 财务管理-已还款
 import React, { Component } from 'react'
 import { Button, Loading, Table } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectthePersion } from './actions'
+import { selectBill } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
-class Self extends Component {
+class AlreadyHuan extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
-		selectthePersion: PropTypes.func.isRequired
+		selectBill: PropTypes.func.isRequired
   }
 	constructor(props) {
 		super(props)
@@ -24,55 +24,52 @@ class Self extends Component {
 					type: 'index',
 					fixed: 'left'
 				}, {
-					label: '申请单号',
-					prop: 'orderNumber'
-				}, {
-					label: '真实姓名',
-					prop: 'realName'
-				}, {
-					label: '手机号码',
-					prop: 'phone'
-				}, {
-					label: '身份证号',
-					prop: 'idcardNumber'
-				}, {
-					label: '借款金额',
-					prop: 'applyMoney'
-				}, {
-					label: '应还金额',
-					prop: 'repaymentMoney' // 到期应还金额
+					label: '还款类型',
+					prop: 'moneyType',
+					render: row => {
+						const text = filter.moneyType(row.moneyType)
+						return text
+					}
 				}, {
 					label: '支付方式',
-					prop: 'loanMode', // 默认 0 支付宝 1微信 2 银行卡 3 线下
+					prop: 'payType',
 					render: row => {
-						 const data = filter.loanMode(row.loanMode)
-						 return data
+						const text = filter.payType(row.payType)
+						return text
 					}
 				}, {
-					label: '到账金额',// 已放金额
-					prop: 'loanMoney'
+					label: '支付单号',
+					prop: 'payNumber',
 				}, {
-					label: '催收催回金额',
-					prop: ''
+					label: '申请单号',
+					prop: 'orderNumber',
 				}, {
-					label: '逾期天数',
-					prop: 'overdueNumber'
+					label: '约定还款日',
+					prop: 'appointmentDate',
 				}, {
-					label: '分单时间',
-					prop: 'fendanDate'
+					label: '实际还款日',
+					prop: 'realDate',
 				}, {
-					label: '催回时间',
-					prop: 'realRepaymentDate'
+					label: '申请金额',
+					prop: 'applyMoney',
 				}, {
-					label: '催回催收人',
-					prop: 'tracker'
+					label: '已放金额', // 到账金额
+					prop: 'loanMoney',
 				}, {
-					label: '订单类型',
-					prop: 'loanType', // 默认  0 正常 1 延期   2逾期
-					render: row => {
-						const data = filter.loanType(row.loanType)
-						return data
-					}
+					label: '用户姓名',
+					prop: 'realName',
+				}, {
+					label: '用户手机',
+					prop: 'phone',
+				}, {
+					label: '应还金额',
+					prop: 'repaymentMoney',
+				}, {
+					label: '实还金额',
+					prop: 'realRepaymentMoney',
+				}, {
+					label: '放款客服',
+					prop: 'loanCustomer',
 				}]
 		}
 	}
@@ -80,25 +77,25 @@ class Self extends Component {
     this.props.initSearch()
   }
   componentDidMount() {
-    this.props.selectthePersion()
+    this.props.selectBill()
   }
-  handleSearch = e => {
+  search = e => {
     e.preventDefault()
-    this.props.selectthePersion()
+    this.props.selectBill()
   }
   sizeChange = e => {
     this.props.sizeChange(e)
-    this.props.selectthePersion()
+    this.props.selectBill()
   }
   onCurrentChange = e => {
     this.props.currentChange(e)
-    this.props.selectthePersion()
+    this.props.selectBill()
 	}
 	render() {
 		const { list } = this.props
 		return (
 			<div>
-				<Search showSelect2>
+				<Search showLoanMode showSelect3 showBeginTime>
 					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 				</Search>
 				<Loading loading={ list.loading }>
@@ -125,7 +122,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectthePersion }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectBill }, dispatch)
 	}
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Self)
+export default connect(mapStateToProps, mapDispatchToProps)(AlreadyHuan)

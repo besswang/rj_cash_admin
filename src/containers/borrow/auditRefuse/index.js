@@ -6,9 +6,8 @@ import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { handelSearch } from './action'
-import SelectSearch from '@components/SelectSearch'
 import MyPagination from '@components/MyPagination'
-import { AUDIT_SELECT } from '@meta/select'
+import Search from '@components/Search'
 class AuditRefuse extends Component{
 	static propTypes = {
 		list: PropTypes.object.isRequired,
@@ -109,9 +108,9 @@ class AuditRefuse extends Component{
 		const { list } = this.props
 		return (
 			<div>
-				<SelectSearch options={ AUDIT_SELECT }>
+				<Search showSelect2 showTime>
 					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
-				</SelectSearch>
+				</Search>
 				<Loading loading={ list.loading }>
 					<Table
 						style={ { width: '100%' } }

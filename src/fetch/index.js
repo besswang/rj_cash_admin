@@ -29,14 +29,14 @@ const Fetch = (url, option = {}) => {
   // option.headers['token'] = `${window.sessionStorage.getItem('token')}`
   option.method = (option.method || 'get').toLocaleLowerCase()
   // 格式化get请求的数据(fetch的get请求需要需要将参数拼接到url后面)
-  if (option.method === 'get') {
+  if (option.method === 'get' || option.method === 'delete') {
     if (option.data) {
       url = url + formatUrl(option.data)
     }
   }
 
   // 对非get类请求头和请求体做处理
-  if (option.method === 'post' || option.method === 'put' || option.method === 'delete') {
+  if (option.method === 'post' || option.method === 'put') {
     option.headers['Content-Type'] = option.headers['Content-Type'] || 'application/json'
     // option.body = qs.stringify(option.body)
     option.body = JSON.stringify(option.body)

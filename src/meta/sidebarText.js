@@ -105,9 +105,11 @@ export const SIDE_BAR_TEXT = [
       title: '已完成'
     }, {
       itemIndex: '5-4',
+      path: '/finance/alreadyHuan',
       title: '已还款'
     }, {
       itemIndex: '5-5',
+      path: '/finance/day',
       title: '当日到期'
     }
   ]
@@ -117,6 +119,7 @@ export const SIDE_BAR_TEXT = [
     menuItem: [
     {
       itemIndex: '6-1',
+      path: '/black/blackUser',
       title: '黑名单用户'
     }
   ]

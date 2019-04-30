@@ -5,9 +5,9 @@ import { Button, Loading, Table } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { sizeChange, currentChange, initSearch, saveTime } from '@redux/actions'
+import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { selectCollectionByParam, addUserBlack, removeUserBlack } from './actions'
-import MostSearch from '@components/MostSearch'
+import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import DisableBtn from '@components/DisableBtn'
 class Collection extends Component {
@@ -16,7 +16,6 @@ class Collection extends Component {
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
-    saveTime: PropTypes.func.isRequired,
 		selectCollectionByParam: PropTypes.func.isRequired,
 		addUserBlack: PropTypes.func.isRequired,
 		removeUserBlack: PropTypes.func.isRequired
@@ -137,7 +136,7 @@ class Collection extends Component {
   componentDidMount() {
     this.props.selectCollectionByParam()
   }
-  search = e => {
+  handleSearch = e => {
     e.preventDefault()
     this.props.selectCollectionByParam()
   }
@@ -166,9 +165,9 @@ class Collection extends Component {
 		const { list } = this.props
 		return (
 			<div>
-				<MostSearch showSelect2 showSelectClient showSelectTime showTime>
-					<Button onClick={ this.search } type="primary">{'搜索'}</Button>
-				</MostSearch>
+				<Search showSelect2 showSelectClient showSelectTime showTime>
+					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+				</Search>
 				<Loading loading={ list.loading }>
 					<Table
 						style={ { width: '100%' } }
@@ -193,7 +192,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, saveTime, selectCollectionByParam, addUserBlack, removeUserBlack }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectCollectionByParam, addUserBlack, removeUserBlack }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Collection)

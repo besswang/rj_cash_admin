@@ -38,5 +38,10 @@ export default {
   'selectPendingLoan': 'api/order/selectPendingLoan', // 待放款
   'updateStateLoan': 'api/order/updateStateLoan', // 拒绝放款
   'selectPendingRepay': 'api/order/selectPendingRepay', // 待还款
-  'selectOrderCompleted': 'api/order/selectOrderCompleted' // 已完成
+  'selectOrderCompleted': 'api/order/selectOrderCompleted', // 已完成
+  'selectBill': 'api/bill/selectBill', // 已还款
+  'selectTheDayLoan': 'api/order/selectTheDayLoan', // 当日到期
+  // 黑名单管理
+  'selectblackphone': 'api/blackPhone/selectblackphone', // 黑名单用户
+  'deleteBlackphone': 'api/blackPhone/deleteBlackphone' // 删除黑名单
 }

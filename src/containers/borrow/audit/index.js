@@ -6,10 +6,9 @@ import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { handelSearch, handelAudit } from './action'
-import SelectSearch from '@components/SelectSearch'
 import MyPagination from '@components/MyPagination'
-import { AUDIT_SELECT } from '@meta/select'
 import { AUDIT_FAILURE, PENDING_LOAN } from '@meta/state'
+import Search from '@components/Search'
 // import store from '@redux/store'
 class Audit extends Component{
 	static propTypes = {
@@ -115,7 +114,7 @@ class Audit extends Component{
 		console.log(trans)
 		this.props.handelAudit(trans)
 	}
-	handelSearch = e => {
+	handleSearch = e => {
 		e.preventDefault()
 		this.props.handelSearch()
 	}
@@ -131,9 +130,9 @@ class Audit extends Component{
 		const { list } = this.props
 		return (
 			<div>
-				<SelectSearch options={ AUDIT_SELECT }>
-					<Button onClick={ this.handelSearch } type="primary">{'搜索'}</Button>
-				</SelectSearch>
+				<Search showSelect2 showTime>
+					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+				</Search>
 				<Loading loading={ list.loading }>
 					<Table
 						style={ { width: '100%' } }

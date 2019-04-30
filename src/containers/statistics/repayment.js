@@ -1,21 +1,19 @@
 // 报表统计-还款统计
 import React, { Component } from 'react'
-import { Button, Form, Loading, Table } from 'element-react'
+import { Button, Loading, Table } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { sizeChange, currentChange, initSearch, saveTime } from '@redux/actions'
+import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { pageRepaymentCount } from './actions'
-import Time from '@components/Settime'
 import MyPagination from '@components/MyPagination'
+import Search from '@components/Search'
 class RepayMent extends Component {
   static propTypes = {
     list: PropTypes.object.isRequired,
-    time: PropTypes.array,
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
-    saveTime: PropTypes.func.isRequired,
     pageRepaymentCount: PropTypes.func.isRequired,
   }
   constructor(props){
@@ -69,7 +67,7 @@ class RepayMent extends Component {
   componentDidMount() {
     this.props.pageRepaymentCount()
   }
-  search = e => {
+  handleSearch = e => {
     e.preventDefault()
     this.props.pageRepaymentCount()
   }
@@ -82,20 +80,12 @@ class RepayMent extends Component {
     this.props.pageRepaymentCount()
   }
   render(){
-    const { list, time } = this.props
+    const { list } = this.props
     return (
       <div>
-        <Form inline>
-          <Form.Item>
-            <Time
-              value={ time }
-              onChange={ val => this.props.saveTime(val) }
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button onClick={ this.search } type="primary">{'搜索'}</Button>
-          </Form.Item>
-        </Form>
+        <Search showTime>
+          <Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+        </Search>
         <Loading loading={ list.loading }>
           <Table
             style={ { width: '100%' } }
@@ -114,12 +104,12 @@ class RepayMent extends Component {
   }
 }
 const mapStateToProps = state => {
-	const { list, time } = state
-	return { list, time }
+	const { list } = state
+	return { list }
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, saveTime, pageRepaymentCount}, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, pageRepaymentCount}, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(RepayMent)

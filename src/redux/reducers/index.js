@@ -10,7 +10,7 @@ import * as type from '../actionTypes'
 import { PAGE_SIZE, CURRENT_PAGE } from '@meta/state'
 
 // 搜索方式
-const selectedSubreddit = (state = 0, action) => {
+const typeId = (state = 0, action) => {
   switch (action.type) {
     case type.SELECT_SUBREDDIT:{
       if ( action.typeId !=='' ){
@@ -107,20 +107,20 @@ const search = {
   endTime: '',
   pageNum: CURRENT_PAGE,
   pageSize: PAGE_SIZE,
-  typeId: 0,
+  typeId: typeId,
   newClient: 0,
   timeType: 0
 }
 const searchAll = (state = search, action) => {
   switch (action.type) {
     case type.SELECT_SUBREDDIT:{
-      let typeId = ''
+      let id = ''
       if (action.typeId !== ''){
-        typeId = action.typeId
+        id = action.typeId
       } else {
-        typeId = 0
+        id = 0
       }
-      return {...state, typeId: typeId}
+      return {...state, typeId: id}
     }
     case type.SELECT_CLIENT: {
       let newClient = ''
@@ -190,7 +190,7 @@ const listInfo = (state = {}, action) => {
 export default combineReducers({
   routerReducer,
   user,
-  selectedSubreddit,
+  typeId,
   searchAll,
   time,
   regTime,
