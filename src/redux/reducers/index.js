@@ -4,6 +4,7 @@
 // 现在只需要谨记 reducer 一定要保持纯净。 只要传入参数相同， 返回计算得到的下一个 state 就一定相同。 没有特殊情况、 没有副作用， 没有 API 请求、 没有变量修改， 单纯执行计算。
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
+import router from './router'
 import user from './user'
 import list from './list'
 import * as type from '../actionTypes'
@@ -199,5 +200,6 @@ export default combineReducers({
   list,
   listInfo,
   selectClient,
-  selectTime
+  selectTime,
+  router
 })

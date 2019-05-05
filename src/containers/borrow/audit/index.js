@@ -18,7 +18,6 @@ class Audit extends Component{
 		initSearch: PropTypes.func.isRequired,
 		handelSearch: PropTypes.func.isRequired,
 		handelAudit: PropTypes.func.isRequired
-
 	}
 	constructor(props) {
 		super(props)

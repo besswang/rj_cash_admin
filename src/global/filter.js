@@ -71,13 +71,13 @@ export default {
   // 打款状态
   payStatus(x) {
     switch (x) {
-      case 'NO_MONEY_PAID':
+      case state.NO_MONEY_PAID:
         return '未打款'
-      case 'FIGHT_MONEY':
+      case state.FIGHT_MONEY:
         return '打款中'
-      case 'FALSE':
+      case state.FALSE:
         return '失败'
-      case 'SUCCESS':
+      case state.SUCCESS:
         return '成功'
       default:
         return '空值'

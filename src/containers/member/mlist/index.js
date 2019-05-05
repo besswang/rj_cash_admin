@@ -101,6 +101,8 @@ class Mlist extends Component{
 		this.props.initSearch()
 	}
 	componentDidMount() {
+		console.log('mlist')
+		console.log(this.props)
 		this.props.handelSearch()
 	}
 	handleSearch = e => {
