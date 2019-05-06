@@ -45,22 +45,6 @@ class Sidebar extends Component{
     const { router } = this.props
     return (
       <Menu theme="dark" style={ { width:230 } } defaultActive={ router.defaultActive }>
-        {/* {SIDE_BAR_TEXT.map(item => {
-          return (
-            <Menu.SubMenu index={ item.subIndex } title={ <span>{ item.title }</span> } key={ item.title }>
-
-              { item.menuItem.map((list) => {
-                return (
-                  <Link to={ `${ list.path }` } key={ list.title } style={ { block:'block' } }>
-                    <Menu.Item index={ list.itemIndex }>
-                      { list.title }
-                    </Menu.Item>
-                  </Link>
-                )
-              })}
-            </Menu.SubMenu>
-          )
-        })} */}
         { this.recursion(router.routerArr) }
       </Menu>
     )

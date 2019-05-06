@@ -10,14 +10,15 @@ export const initSearch = () => ({
     beginTime: '',
     beginTime1: '',
     endTime1: '',
-    typeName: '',
     startTime: '',
     endTime: '',
     pageNum: CURRENT_PAGE,
     pageSize: PAGE_SIZE,
-    typeId: 0,
     newClient: 0,
-    timeType: 0
+    timeType: 0,
+    typeId: 0,
+    typeName: '',
+    realName: ''
   }
 })
 // select下搜索类型
@@ -31,7 +32,11 @@ export const selectSearchText = text => ({
   type: type.SELECT_SEARCH_TEXT,
   text
 })
-
+// 搜索真实姓名
+export const saveRealName = text => ({
+  type: type.SAVE_REAL_NAME,
+  text
+})
 // select新老客户
 export const changeClient = id => ({
   type: type.SELECT_CLIENT,
@@ -80,6 +85,19 @@ export const failurePosts = json => ({
   type: type.FAILURE_POSTS,
   posts: json
 })
+// 按钮请求loading的开始状态
+export const btnRequestPosts = () => ({
+  type: type.BTN_REQUEST_POSTS
+})
+// 按钮的请求成功
+export const btnReceivePosts = () => ({
+  type: type.BTN_RECEIVE_POSTS
+})
+
+// 按钮的请求失败
+export const btnFailurePosts = () => ({
+  type: type.BTN_FAILURE_POSTS
+})
 
 // 不过滤搜索
 export const shouldFetch = (state) => {
@@ -120,4 +138,10 @@ export const shouldFetchPostsDate = (state) => {
 export const saveList = data => ({
   type: type.SAVE_LIST_INFO,
   data
+})
+
+// menu选中状态
+export const menuActive = defaultActive => ({
+  type: type.MENU_ACTIVE,
+  defaultActive
 })

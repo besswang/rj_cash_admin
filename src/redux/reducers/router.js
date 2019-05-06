@@ -1,4 +1,6 @@
+import * as type from '../actionTypes'
 import { CHILD_ROUTES } from '../../routes/childRoutes'
+
 const recursion = (arr, result = []) => {
   arr.map((item) => {
     if (item.children && item.children.length && !item.hideChildren) {
@@ -23,10 +25,15 @@ const distributeRouter = () => {
 }
 const router = (state = {
     routerArr: CHILD_ROUTES,
-    defaultActive:'',
+    defaultActive: '',
     routerName: [],
     defaultRouter: distributeRouter()
   }, action) => {
-    return state
+    switch (action.type) {
+      case type.MENU_ACTIVE:
+        return {...state, defaultActive: action.defaultActive}
+      default:
+        return state
+    }
   }
   export default router

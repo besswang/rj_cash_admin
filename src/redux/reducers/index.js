@@ -5,7 +5,7 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import router from './router'
-import user from './user'
+import user from '@containers/user/reducer'
 import list from './list'
 import * as type from '../actionTypes'
 import { PAGE_SIZE, CURRENT_PAGE } from '@meta/state'
@@ -61,12 +61,12 @@ const selectTime = (state = 0, action) => {
   }
 }
 
-const memberSearchText = (state = '', action) => {
+const typeName = (state = '', action) => {
   switch (action.type){
     case type.SELECT_SEARCH_TEXT:
       return action.text
     case type.CLEAR_SEARCH_ALL:
-      return action.data.typeName
+      return ''
     default:
       return state
   }
@@ -101,19 +101,44 @@ const payTime = (state = [], action) => {
       return state
   }
 }
-
+// 非列表的loading状态
+const btnLoading = (state = false, action) => {
+  switch (action.type) {
+    case type.BTN_REQUEST_POSTS:
+      return true
+    case type.BTN_RECEIVE_POSTS:
+      return false
+    case type.BTN_FAILURE_POSTS:
+      return false
+    default:
+      return state
+  }
+}
+const realName = (state = '', action) => {
+  switch (action.type) {
+    case type.SAVE_REAL_NAME:
+      return action.text
+    case type.CLEAR_SEARCH_ALL:
+      return ''
+    default:
+      return state
+  }
+}
 const search = {
-  typeName: '',
   startTime: '',
   endTime: '',
   pageNum: CURRENT_PAGE,
   pageSize: PAGE_SIZE,
-  typeId: typeId,
   newClient: 0,
-  timeType: 0
+  timeType: 0,
+  typeId: 0,
+  typeName: '',
+  realName: ''
 }
 const searchAll = (state = search, action) => {
   switch (action.type) {
+    case type.SAVE_REAL_NAME:
+      return { ...state, realName: action.text }
     case type.SELECT_SUBREDDIT:{
       let id = ''
       if (action.typeId !== ''){
@@ -192,14 +217,16 @@ export default combineReducers({
   routerReducer,
   user,
   typeId,
+  typeName,
   searchAll,
   time,
   regTime,
   payTime,
-  memberSearchText,
   list,
   listInfo,
   selectClient,
   selectTime,
-  router
+  router,
+  btnLoading,
+  realName
 })

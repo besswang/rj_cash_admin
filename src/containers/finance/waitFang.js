@@ -6,17 +6,19 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectPendingLoan } from './actions'
+import { selectPendingLoan, updateStateLoan } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
+import { FALSE } from '@meta/state'
 class WaitFang extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
-		selectPendingLoan: PropTypes.func.isRequired
+		selectPendingLoan: PropTypes.func.isRequired,
+		updateStateLoan: PropTypes.func.isRequired,
   }
 	constructor(props) {
 		super(props)
@@ -93,10 +95,10 @@ class WaitFang extends Component {
 					render: row => {
 							return (
 								<div className="flex flex-direction_row">
-									<Button className="margin_right10" type="success" size="mini">
+									{/* <Button className="margin_right10" type="success" size="mini">
 										{'通过'}
-									</Button>
-									<Button className="margin_right10" type="danger" size="mini">
+									</Button> */}
+									<Button className="margin_right10" type="danger" size="mini" onClick={ this.props.updateStateLoan.bind(this,{orderId:row.id,phone:row.phone,realName:row.realName,state:FALSE}) }>
 										{'拒绝'}
 									</Button>
 									<Link to="/borrow/auddetail">
@@ -157,7 +159,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectPendingLoan }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectPendingLoan, updateStateLoan }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(WaitFang)

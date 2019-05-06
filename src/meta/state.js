@@ -12,7 +12,7 @@ export const CURRENT_PAGE = 1 //当前页
 // 打款状态
 export const NO_MONEY_PAID = 'NO_MONEY_PAID' // 未打款
 export const FIGHT_MONEY = 'FIGHT_MONEY' // 打款中
-export const FALSE = 'FALSE' // ("失败"),
+export const FALSE = 'FALSE' // ("失败"),拒绝放款
 export const SUCCESS = 'SUCCESS' // ("成功")
 
 // 支付通道

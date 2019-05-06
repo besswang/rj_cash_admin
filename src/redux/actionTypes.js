@@ -2,6 +2,12 @@
 export const REQUEST_POSTS = 'REQUEST_POSTS' // 请求loading的开始状态
 export const RECEIVE_POSTS = 'RECEIVE_POSTS' // 请求成功后的存储
 export const FAILURE_POSTS = 'FAILURE_POSTS' // 请求失败
+// 按钮事件的请求状态
+export const BTN_REQUEST_POSTS = 'BTN_REQUEST_POSTS' // 请求loading的开始状态
+export const BTN_RECEIVE_POSTS = 'BTN_RECEIVE_POSTS' // 请求成功后的存储
+export const BTN_FAILURE_POSTS = 'BTN_FAILURE_POSTS' // 请求失败
+export const SAVE_USER = 'SAVE_USER' // 登陆成功后存储用户信息
+export const CLEAR_USER = 'CLEAR_USER' // 退出后清除用户信息
 //借款管理
 export const AUDIT_REFUSE_LIST = 'AUDIT_REFUSE_LIST'
 export const AUDIT_LIST = 'AUDIT_LIST'
@@ -19,3 +25,5 @@ export const END_REPAY_TIME = 'END_REPAY_TIME' // 正常还款未借-最后还�
 export const SAVE_LIST_INFO = 'SAVE_LIST_INFO' // 用户列表-当前用户row的信息
 export const SELECT_CLIENT = 'SELECT_CLIENT' // 新老客户
 export const SELECT_TIME_TYPE = 'SELECT_TIME_TYPE' // 日期搜索方式
+export const MENU_ACTIVE = 'MENU_ACTIVE' // 左侧按钮选中状态 defaultActive
+export const SAVE_REAL_NAME = 'SAVE_REAL_NAME' // 真实姓名

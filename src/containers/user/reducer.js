@@ -5,33 +5,21 @@
 
 //初始化验证码
 // state初始值
-const initState = {
+import * as type from '@redux/actionTypes'
+const initUser = {
   redirectTo: '', // 完成之后跳到哪里
-  username: '', // 账号
-  pwd: '', // 密码
-  pwdConfirm: '', // 确认密码
+  adminName: '', // 账号
+  password: '', // 密码
   type: '', // 用户类型
   msg: '', // 错误消息
   isLogin: false // 是否登录
 }
-const user = (state = initState, action) => {
+const user = (state = initUser, action) => {
   switch (action.type) {
-    case 'REGISTER_SUCCESS':
-      // return Object.assign({}, state, {
-      //   loading: true
-      // })
-      return {
-        ...state,
-        ...action.data,
-        msg: '',
-        redirectTo: '/welcome'
-      }
-    case 'AUDIT_LIST':
-      // return Object.assign({}, state, {list: action.payload},{loading:false})
-      return {
-        ...state,
-        msg: action.msg
-      }
+    case type.SAVE_USER:
+      return { ...state, isLogin: true, data: action.data, adminName: action.form.adminName, password: action.form.password }
+    case type.CLEAR_USER:
+      return { ...state, isLogin: false }
     default:
       return state
   }

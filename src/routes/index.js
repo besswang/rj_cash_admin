@@ -4,7 +4,7 @@ import { BrowserRouter as Router,Route, Switch, Redirect } from 'react-router-do
 // import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import Login from '@containers/login'
+import Login from '@containers/user/login'
 import Home from '@containers/home'
 // import { CHILD_ROUTES } from './childRoutes'
 //路由操作
@@ -18,11 +18,15 @@ class App extends Component {
       loginSuccess:false
     }
   }
+  componentDidMount() {
+    // console.log('路由index')
+    // console.log(this.props)
+  }
   render() {
     const { loginSuccess } = this.state
     const { router } = this.props
     // console.log(loginSuccess)
-    console.log(this.props)
+    // console.log(this.props)
     return(
         <Router>
           <Switch>
@@ -36,17 +40,17 @@ class App extends Component {
                 }
               }
             />
-            <Route exact path="/login" component={ Login } />
-            {/* <Home>
-              { router.routerArr.map(item => {
-                return <Route key={ item.id } path={ item.path } component={ item.main } />
-              }) }
-            </Home> */}
-            <Home>
-              { router.defaultRouter.map(item => {
-                return <Route key={ item.name } path={ item.path } component={ item.component } />
-              }) }
-            </Home>
+              <Route exact path="/login" component={ Login } />
+              {/* <Home>
+                { router.routerArr.map(item => {
+                  return <Route key={ item.id } path={ item.path } component={ item.main } />
+                }) }
+              </Home> */}
+              <Home>
+                { router.defaultRouter.map(item => {
+                  return <Route key={ item.name } path={ item.path } component={ item.component } />
+                }) }
+              </Home>
           </Switch>
         </Router>
     )

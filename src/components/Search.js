@@ -3,12 +3,13 @@ import { Form, Input } from 'element-react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
-import { selectSubreddit, selectSearchText, saveTime, registerTime, initSearch, changeClient, changeTimeType } from '@redux/actions'
+import { selectSubreddit, selectSearchText,saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType } from '@redux/actions'
 import SelectPicker from '@components/SelectPicker'
 import Time from '@components/Settime'
 import { MLIST_SELECT, AUDIT_SELECT, AUDIT_SELECT_LESS, CUSTOMER_SELECT, TIME_SELECT, TIME_SELECT_LESS, LOAN_TYPE, LOAN_MODE,ALLOT_TYPE } from '@meta/select'
 class Search extends Component {
   static propTypes = {
+    showRealName: PropTypes.bool,
     showSelectClient: PropTypes.bool,
     showSelectTime: PropTypes.bool,
     showSelectTime2: PropTypes.bool,
@@ -23,12 +24,14 @@ class Search extends Component {
     typeId: PropTypes.number,
     selectClient: PropTypes.number,
     selectTime: PropTypes.number,
-		memberSearchText: PropTypes.string,
+    typeName: PropTypes.string,
+    realName: PropTypes.string,
     time: PropTypes.array,
     regTime: PropTypes.array,
     children: PropTypes.object.isRequired,
     selectSubreddit: PropTypes.func.isRequired,
     selectSearchText: PropTypes.func.isRequired,
+    saveRealName: PropTypes.func.isRequired,
     saveTime: PropTypes.func.isRequired,
     registerTime: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
@@ -40,7 +43,7 @@ class Search extends Component {
     this.props.initSearch()
 	}
   render() {
-    const { typeId, memberSearchText, time, regTime, selectClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType } = this.props
+    const { typeId, typeName, realName, time, regTime, selectClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType, showRealName } = this.props
     return (
       <Form inline>
         {
@@ -88,9 +91,20 @@ class Search extends Component {
           (showSelect1 || showSelect2 || showSelect3) &&
           <Form.Item>
             <Input
-              value={ memberSearchText }
+              value={ typeName }
               onChange={ val => this.props.selectSearchText(val) }
               placeholder="请输入内容"
+              clearable="true"
+            />
+          </Form.Item>
+        }
+        {
+          showRealName &&
+          <Form.Item>
+            <Input
+              value={ realName }
+              onChange={ val => this.props.saveRealName(val) }
+              placeholder="请输入真实姓名"
               clearable="true"
             />
           </Form.Item>
@@ -175,15 +189,15 @@ class Search extends Component {
 }
 const mapStateToProps = state => {
 	const {
-		typeId, memberSearchText, time, regTime, selectClient, selectTime
+		typeId, typeName, time, regTime, selectClient, selectTime, realName
 	} = state
 	return {
-		typeId, memberSearchText, time, regTime, selectClient, selectTime
+		typeId, typeName, time, regTime, selectClient, selectTime, realName
 	}
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ selectSubreddit, selectSearchText, saveTime, registerTime, initSearch, changeClient, changeTimeType }, dispatch)
+		...bindActionCreators({ selectSubreddit, selectSearchText, saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Search)

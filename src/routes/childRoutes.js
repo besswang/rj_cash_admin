@@ -43,6 +43,8 @@ import AlreadyHuan from '@containers/finance/alreadyHuan'
 import Day from '@containers/finance/day'
 // 黑名单管理
 import BlackUser from '@containers/black/blackUser'
+import Contacts from '@containers/attestation/contacts'
+import Phone from '@containers/attestation/phone'
 export const CHILD_ROUTES = [
   {
     name: '首页',
@@ -144,7 +146,7 @@ export const CHILD_ROUTES = [
         exact: true,
         component: Auditrefuse
       }, {
-        name: '详情',
+        name: '借款详情',
         path: '/borrow/auddetail',
         exact: true,
         hideInMenu: true,
@@ -218,6 +220,22 @@ export const CHILD_ROUTES = [
       }
     ]
   }, {
+    id: 7,
+    name: '认证管理',
+    path: '/attestation',
+    children: [{
+      name: '联系人认证',
+      path: '/attestation/contacts',
+      exact: true,
+      component: Contacts
+    }, {
+      name: '手机认证',
+      path: '/attestation/phone',
+      exact: true,
+      component: Phone
+    }]
+  }, {
+    name: '会员详情',
     path: '/detail',
     exact: true,
     hideInMenu: true,

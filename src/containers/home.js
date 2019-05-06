@@ -5,6 +5,9 @@ import '@styles/home.less'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 class Home extends Component {
+	static propTypes = {
+    history: PropTypes.object.isRequired
+  }
 	componentDidMount() {
 		console.log('home')
 		console.log(this.props)
@@ -14,7 +17,7 @@ class Home extends Component {
 		return (
 			<div className="flex flex-direction_column">
 				<div className="header">
-					<Header />
+					<Header history={ this.props.history }/>
 				</div>
 				<ul className="flex flex-diredtion_row container">
 					<li className="sidebar">

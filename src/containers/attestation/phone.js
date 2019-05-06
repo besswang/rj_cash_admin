@@ -1,21 +1,21 @@
-// 财务管理-已还款
+// 财务管理-已完成
 import React, { Component } from 'react'
 import { Button, Loading, Table } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectBill } from './actions'
+import { selectPhoneDate, deletePhoneReport } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
-import filter from '@global/filter'
-class AlreadyHuan extends Component {
+class BlackUser extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
-		selectBill: PropTypes.func.isRequired
+		selectPhoneDate: PropTypes.func.isRequired,
+		deletePhoneReport: PropTypes.func.isRequired
   }
 	constructor(props) {
 		super(props)
@@ -24,78 +24,50 @@ class AlreadyHuan extends Component {
 					type: 'index',
 					fixed: 'left'
 				}, {
-					label: '还款类型',
-					prop: 'moneyType',
-					render: row => {
-						const text = filter.moneyType(row.moneyType)
-						return text
-					}
+				  label: '手机号码',
+				  prop: 'phone'
 				}, {
-					label: '支付方式',
-					prop: 'payType',
-					render: row => {
-						const text = filter.payType(row.payType)
-						return text
-					}
-				}, {
-					label: '支付单号',
-					prop: 'payNumber'
-				}, {
-					label: '申请单号',
-					prop: 'orderNumber'
-				}, {
-					label: '约定还款日',
-					prop: 'appointmentDate'
-				}, {
-					label: '实际还款日',
-					prop: 'realDate'
-				}, {
-					label: '申请金额',
-					prop: 'applyMoney'
-				}, {
-					label: '已放金额', // 到账金额
-					prop: 'loanMoney'
-				}, {
-					label: '用户姓名',
+					label: '真实姓名',
 					prop: 'realName'
 				}, {
-					label: '用户手机',
-					prop: 'phone'
+				  label: '认证时间',
+				  prop: 'gmt'
 				}, {
-					label: '应还金额',
-					prop: 'shouldMoney'
+					label: '状态',
+					prop: 'state'
 				}, {
-					label: '实还金额',
-					prop: 'loanMoney'
-				}, {
-					label: '放款客服',
-					prop: 'loanCustomer'
-				}]
+					label: '操作',
+					render: row => {
+						return (
+              <Button type="danger" size="mini" onClick={ this.props.deletePhoneReport.bind(this, { userId: row.userId }) }>{'删除'}</Button>
+						)
+					}
+      }]
 		}
 	}
 	componentWillMount() {
     this.props.initSearch()
   }
   componentDidMount() {
-    this.props.selectBill()
-  }
-  search = e => {
+    this.props.selectPhoneDate()
+	}
+  handleSearch = e => {
     e.preventDefault()
-    this.props.selectBill()
+    this.props.selectPhoneDate()
   }
   sizeChange = e => {
     this.props.sizeChange(e)
-    this.props.selectBill()
+    this.props.selectPhoneDate()
   }
   onCurrentChange = e => {
     this.props.currentChange(e)
-    this.props.selectBill()
+    this.props.selectPhoneDate()
 	}
 	render() {
 		const { list } = this.props
 		return (
 			<div>
-				<Search showLoanMode showSelect3 showBeginTime>
+				<Search showRealName>
 					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 				</Search>
 				<Loading loading={ list.loading }>
@@ -122,7 +94,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectBill }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectPhoneDate, deletePhoneReport }, dispatch)
 	}
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AlreadyHuan)
+export default connect(mapStateToProps, mapDispatchToProps)(BlackUser)

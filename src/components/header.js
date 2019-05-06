@@ -1,33 +1,37 @@
 import React, { Component } from 'react'
 import { Dropdown } from 'element-react'
-import '@styles/header.less'
-// import api from '../api/index'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { logout } from '@containers/user/action'
+import '@styles/header.less'
 class Header extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
+    logout: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired
   }
+  componentWillMount() {
+		// console.log('header')
+		// console.log(this.props)
+	}
+	componentDidMount() {
+
+	}
   handleCommand = async e => {
     if(e === '0'){
-      console.log('tui')
-      console.log(this.props)
-      console.log(this.context)
-
+      this.props.logout(this.props.history)
       // this.props.history.push('/login')
-      // const res = await api.logoutApi()
-      // if(res.success){
-      //   this.props.history.push('/login')
-      // }
     }
   }
   render() {
+    const { adminName } = this.props.user
     return (
       <ul className= "header-ul flex flex-direction_row justify-content_flex-justify align-items_center" >
         <li className="flex flex-direction_row">
           <h4>{'管理系统'}</h4>
-          <span>{'欢迎王立娟'}</span>
+          <span>{'欢迎'}{ adminName }</span>
         </li>
         <li>
           <Dropdown onCommand={ this.handleCommand } menu={ (
@@ -48,5 +52,17 @@ Header.propTypes = {
   propsData: PropTypes.object,
   propsDataHistory: PropTypes.object
 }
-const mapStateToProps = state => (state.user)
-export default connect(mapStateToProps)(Header)
+const mapStateToProps = state => {
+  const {
+    user
+  } = state
+  return {
+    user
+  }
+}
+const mapDispatchToProps = dispatch => {
+	return {
+		...bindActionCreators({ logout }, dispatch)
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

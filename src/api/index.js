@@ -12,7 +12,7 @@ export default {
   selectUserBySeachApi: params => Fetch(jk.selectUserBySeach, {method: 'post', body: params}),
   updateUserTypeApi: params => Fetch(jk.updateUserType, {method: 'get', data: params}),
   addUserBlackApi: params => Fetch(jk.addUserBlack, {method:'post', body: params}),
-  removeUserBlackApi: params => Fetch(jk.removeUserBlack, {method: 'delete', body: params}),
+  removeUserBlackApi: params => Fetch(jk.removeUserBlack, {method: 'delete', data: params}),
   selectOrderByParamApi: params => Fetch(jk.selectOrderByParam, {method: 'get', data: params}),
   updataStateApi: params => Fetch(jk.updataState, {method: 'get', data: params}),
   selectUserNotApplyApi: params => Fetch(jk.selectUserNotApply, {method: 'post', body: params}),
@@ -39,5 +39,9 @@ export default {
   selectBillApi: params => Fetch(jk.selectBill, {method: 'post', body: params}),
   selectTheDayLoanApi: params => Fetch(jk.selectTheDayLoan, {method: 'post', body: params}),
   selectblackphoneApi: params => Fetch(jk.selectblackphone, {method: 'get', data: params}),
-  deleteBlackphoneApi: params => Fetch(jk.deleteBlackphone, {method: 'delete', data: params})
+  deleteBlackphoneApi: params => Fetch(jk.deleteBlackphone, {method: 'delete', data: params}),
+  selectEmergencyApi: params => Fetch(jk.selectEmergency, {method: 'post', body: params}),
+  deleteEmergencyApi: params => Fetch(jk.deleteEmergency, {method: 'get', data: params}),
+  selectPhoneDateApi: params => Fetch(jk.selectPhoneDate, {method: 'post', body: params}),
+  deletePhoneReportApi: params => Fetch(jk.deleteEmergency, {method: 'get', data: params}),
 }

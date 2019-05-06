@@ -3,21 +3,24 @@ import { Button, Table, Loading } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { sizeChange, currentChange, initSearch } from '@redux/actions'
+import { sizeChange, currentChange, initSearch, menuActive } from '@redux/actions'
 import { applySearch } from './actions'
 import MyPagination from '@components/MyPagination'
 import { APPLY_COLUMNS } from '@meta/columns'
 import Search from '@components/Search'
 class Apply extends Component {
 	static propTypes = {
+		location: PropTypes.object.isRequired,
 		list: PropTypes.object.isRequired,
 		sizeChange: PropTypes.func.isRequired,
 		currentChange: PropTypes.func.isRequired,
 		initSearch: PropTypes.func.isRequired,
-		applySearch: PropTypes.func.isRequired
+		applySearch: PropTypes.func.isRequired,
+		menuActive: PropTypes.func.isRequired
 	}
 	componentWillMount() {
 		this.props.initSearch()
+		this.props.menuActive(this.props.location.pathname)
 	}
 	componentDidMount() {
 		this.props.applySearch()
@@ -64,7 +67,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, applySearch}, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, menuActive, applySearch}, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Apply)

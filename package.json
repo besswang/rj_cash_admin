@@ -148,7 +148,7 @@
       "no-empty": 1,
       "no-case-declarations": 1,
       "no-return-assign": 1,
-      "no-param-reassign": 1,
+      "no-param-reassign": 0,
       "no-shadow": [1, { "hoist": "never", "allow": ["resolve","reject"] }],
       "camelcase": 1,
       "no-unused-vars": 1

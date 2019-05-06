@@ -1,7 +1,7 @@
 // 催收管理-个人对账
 import React, { Component } from 'react'
 import { Button, Loading, Table } from 'element-react'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -93,15 +93,12 @@ class WaitHuan extends Component {
 					render: row => {
 							return (
 								<div className="flex flex-direction_row">
-									<Button className="margin_right10" type="success" size="mini">
-										{'还款操作'}
-									</Button>
-									{/* <Button className="margin_right10" type="danger" size="mini">
-										{'拒绝'}
+									<Button className="margin_right10" type="primary" size="mini">
+										{'还款'}
 									</Button>
 									<Link to="/borrow/auddetail">
 										<Button type="text" size="small">{'用户详情'}</Button>
-									</Link> */}
+									</Link>
 								</div>
 							)
 					}

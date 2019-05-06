@@ -1,19 +1,22 @@
 import React, { Component } from 'react'
 import { Button, Form, Input,Layout, Checkbox, Message } from 'element-react'
-import api from '../api/index'
+import api from '@api/index'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import icon1 from '../images/login-from-icon1.png'
-import icon2 from '../images/login-from-icon2.png'
-import user from '../images/user.png'
-import code from '../images/code.png'
+import { bindActionCreators } from 'redux'
+import { managelogin } from './action'
+import icon1 from '../../images/login-from-icon1.png'
+import icon2 from '../../images/login-from-icon2.png'
+import user from '../../images/user.png'
+import code from '../../images/code.png'
 import '@styles/login.less'
 class Login extends Component {
   static propTypes = {
     // match: PropTypes.object.isRequired,
     // location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
+    menuActive: PropTypes.func.isRequired
   }
   constructor(props){
     super(props)
@@ -49,7 +52,7 @@ class Login extends Component {
     }
   }
 	componentWillMount() {
-	  console.log(this.props)
+    console.log(this.props)
 	}
 	componentDidMount() {
 
@@ -265,4 +268,9 @@ Login.propTypes = {
   propsDataHistory: PropTypes.object
 }
 const mapStateToProps = state => (state.user)
-export default connect(mapStateToProps)(Login)
+const mapDispatchToProps = dispatch => {
+	return {
+		...bindActionCreators({ managelogin }, dispatch)
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

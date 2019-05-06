@@ -43,5 +43,10 @@ export default {
   'selectTheDayLoan': 'api/order/selectTheDayLoan', // 当日到期
   // 黑名单管理
   'selectblackphone': 'api/blackPhone/selectblackphone', // 黑名单用户
-  'deleteBlackphone': 'api/blackPhone/deleteBlackphone' // 删除黑名单
+  'deleteBlackphone': 'api/blackPhone/deleteBlackphone', // 删除黑名单
+  // 认证管理
+  'selectEmergency': 'api/emergency/selectEmergency', // 联系人认证
+  'deleteEmergency': 'api/emergency/deleteEmergency', // 联系人认证删除
+  'selectPhoneDate': 'api/phone/selectPhoneDate', // 手机认证
+  'deletePhoneReport': 'api/phone/deletePhoneReport' // 手机认证删除
 }

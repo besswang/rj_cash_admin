@@ -4,16 +4,11 @@
 // 提供 dispatch(action) 方法更新 state；
 // 通过 subscribe(listener) 注册监听器;
 // 通过 subscribe(listener) 返回的函数注销监听器
-// import {createStore} from 'redux';
-// import todoApp from './reducers'
-// let store = createStore(todoApp)
 import { createStore, applyMiddleware, compose } from 'redux'
 // import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
-// import { routerMiddleware } from 'react-router-redux'
 import reducers from './reducers'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
-// const middleware = routerMiddleware(browserHistory)
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose
 const loggerMiddleware = createLogger()
 const store = createStore(
