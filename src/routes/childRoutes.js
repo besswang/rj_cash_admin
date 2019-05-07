@@ -45,6 +45,12 @@ import Day from '@containers/finance/day'
 import BlackUser from '@containers/black/blackUser'
 import Contacts from '@containers/attestation/contacts'
 import Phone from '@containers/attestation/phone'
+import Bank from '@containers/attestation/bank'
+import Idcard from '@containers/attestation/idcard'
+import Setting from '@containers/attestation/setting'
+// 系统管理
+import Role from '@containers/system/role'
+import Borrowlimit from '@containers/system/borrowlimit'
 export const CHILD_ROUTES = [
   {
     name: '首页',
@@ -233,7 +239,38 @@ export const CHILD_ROUTES = [
       path: '/attestation/phone',
       exact: true,
       component: Phone
+    }, {
+      name: '银行卡认证',
+      path: '/attestation/bank',
+      exact: true,
+      component: Bank
+    }, {
+      name: '身份证认证',
+      path: '/attestation/idcard',
+      exact: true,
+      component: Idcard
+    }, {
+      name: '认证参数',
+      path: '/attestation/setting',
+      exact: true,
+      component: Setting
     }]
+  }, {
+    id: 8,
+    name: '系统管理',
+    path: '/system',
+    children: [{
+        name: '角色管理',
+        path: '/system/role',
+        exact: true,
+        component: Role
+      }, {
+        name: '借款额度管理',
+        path: '/system/borrowlimit',
+        exact: true,
+        component: Borrowlimit
+      }
+    ]
   }, {
     name: '会员详情',
     path: '/detail',

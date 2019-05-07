@@ -8,6 +8,7 @@ import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { selectPhoneDate, deletePhoneReport } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
+import filter from '@global/filter'
 class BlackUser extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -34,7 +35,11 @@ class BlackUser extends Component {
 				  prop: 'gmt'
 				}, {
 					label: '状态',
-					prop: 'state'
+					prop: 'mobileType',
+					render: row => {
+						const text = filter.personalType(row.mobileType)
+						return text
+					}
 				}, {
 					label: '操作',
 					render: row => {

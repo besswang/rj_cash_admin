@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectEmergency, deleteEmergency } from './actions'
+import { selectBank, deleteBankByUserId } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
@@ -15,8 +15,8 @@ class BlackUser extends Component {
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
-		selectEmergency: PropTypes.func.isRequired,
-		deleteEmergency: PropTypes.func.isRequired
+		selectBank: PropTypes.func.isRequired,
+		deleteBankByUserId: PropTypes.func.isRequired
   }
 	constructor(props) {
 		super(props)
@@ -31,38 +31,29 @@ class BlackUser extends Component {
 					label: '真实姓名',
 					prop: 'realName'
 				}, {
-					label: '亲属关系',
-					prop: 'relatives'
+				  label: '银行卡号',
+				  prop: 'bankNumber'
 				}, {
-				  label: '亲属姓名',
-				  prop: 'relativesName'
+					label: '开户银行',
+					prop: 'bank'
 				}, {
-				  label: '亲属电话',
-				  prop: 'relativesPhone'
+					label: '预留号码',
+					prop: 'reservePhone'
 				}, {
-				  label: '社会关系',
-				  prop: 'sociology'
-				}, {
-				  label: '社会姓名',
-				  prop: 'sociologyName'
-				}, {
-				  label: '社会联系人电话',
-				  prop: 'sociologyPhone'
-				}, {
-				  label: '认证时间',
-				  prop: 'gmt'
+					label: '认证时间',
+					prop: 'gmt'
 				}, {
 					label: '状态',
-					prop: 'personalType',
+					prop: 'bankAuthType',
 					render: row => {
-						const text = filter.personalType(row.personalType)
+						const text = filter.personalType(row.bankAuthType)
 						return text
 					}
 				}, {
 					label: '操作',
 					render: row => {
 						return (
-              <Button type="danger" size="mini" onClick={ this.props.deleteEmergency.bind(this, { userId: row.userId }) }>{'删除'}</Button>
+              <Button type="danger" size="mini" onClick={ this.props.deleteBankByUserId.bind(this, { userId: row.userId }) }>{'删除'}</Button>
 						)
 					}
       }]
@@ -72,19 +63,19 @@ class BlackUser extends Component {
     this.props.initSearch()
   }
   componentDidMount() {
-    this.props.selectEmergency()
+    this.props.selectBank()
 	}
   handleSearch = e => {
     e.preventDefault()
-    this.props.selectEmergency()
+    this.props.selectBank()
   }
   sizeChange = e => {
     this.props.sizeChange(e)
-    this.props.selectEmergency()
+    this.props.selectBank()
   }
   onCurrentChange = e => {
     this.props.currentChange(e)
-    this.props.selectEmergency()
+    this.props.selectBank()
 	}
 	render() {
 		const { list } = this.props
@@ -117,7 +108,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectEmergency, deleteEmergency }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectBank, deleteBankByUserId }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(BlackUser)

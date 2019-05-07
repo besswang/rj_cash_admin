@@ -1,5 +1,5 @@
 import api from '@api/index'
-import { requestPosts, receivePosts, failurePosts, shouldFetchPosts } from '@redux/actions'
+import { requestPosts, receivePosts, failurePosts, shouldFetchPosts, btnRequestPosts, btnReceivePosts, btnFailurePosts } from '@redux/actions'
 import { MessageBox, Message } from 'element-react'
 // 待放款
 export const selectPendingLoan = () => {
@@ -15,6 +15,7 @@ export const selectPendingLoan = () => {
     console.log(data)
   }
 }
+
 // 待放款-拒绝
 export const updateStateLoan = subreddit => {
   return dispatch => {
@@ -97,5 +98,22 @@ export const selectTheDayLoan = () => {
       dispatch(failurePosts(data))
     }
     console.log(data)
+  }
+}
+
+// 备注-保存
+export const insertRemarks = (obj) => {
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.insertRemarksApi(obj)
+    if (data.success) {
+      dispatch(btnReceivePosts())
+      // 修改成功消息
+      Message.success('修改成功')
+      // 刷新当日到期列表
+      dispatch(selectTheDayLoan())
+    }else{
+      dispatch(btnFailurePosts())
+    }
   }
 }

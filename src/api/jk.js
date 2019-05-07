@@ -41,6 +41,7 @@ export default {
   'selectOrderCompleted': 'api/order/selectOrderCompleted', // 已完成
   'selectBill': 'api/bill/selectBill', // 已还款
   'selectTheDayLoan': 'api/order/selectTheDayLoan', // 当日到期
+  'insertRemarks': 'api/remarks/insertRemarks', // 备注
   // 黑名单管理
   'selectblackphone': 'api/blackPhone/selectblackphone', // 黑名单用户
   'deleteBlackphone': 'api/blackPhone/deleteBlackphone', // 删除黑名单
@@ -48,5 +49,18 @@ export default {
   'selectEmergency': 'api/emergency/selectEmergency', // 联系人认证
   'deleteEmergency': 'api/emergency/deleteEmergency', // 联系人认证删除
   'selectPhoneDate': 'api/phone/selectPhoneDate', // 手机认证
-  'deletePhoneReport': 'api/phone/deletePhoneReport' // 手机认证删除
+  'deletePhoneReport': 'api/phone/deletePhoneReport', // 手机认证删除
+  'selectBank': 'api/bank/selectBank', // 银行卡认证
+  'deleteBankByUserId': 'api/bank/deleteBankByUserId', // 银行卡认证-删除
+  'selectIdCard': 'api/idCard/selectIdCard', // 身份证认证
+  'deleteIdCard': 'api/idCard/deleteIdCard', // 身份证认证-删除
+  'selectAuthentication': 'api/authentication/selectAuthentication', // 认证参数
+  'updateStatus': 'api/authentication/updateStatus', // 认证参数-是否显示
+  'updateLoanType': 'api/authentication/updateLoanType', // 借款是否必须认证
+  'updateSort': 'api/authentication/updateSort', // 排序
+  // 系统管理-期限管理
+  'pageLoanterm': 'api/loanterm/pageLoanterm', //列表
+  // 系统管理-角色管理
+  'pageRole': 'api/role/pageRole', // 列表
+  'deleteRole': 'api/role/deleteRole' // 删除
 }

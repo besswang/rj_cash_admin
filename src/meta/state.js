@@ -9,6 +9,11 @@ export const COMPLETED = 'COMPLETED' // 已完成
 export const PAGE_SIZE = 10 // 一页有多少条数据
 export const CURRENT_PAGE = 1 //当前页
 
+// 认证状态
+export const PENDING_AUTH = 'PENDING_AUTH' // 待认证
+export const CERTITICATTON = 'CERTITICATTON' // 认证中
+// 认证完成 同上 COMPLETED
+
 // 打款状态
 export const NO_MONEY_PAID = 'NO_MONEY_PAID' // 未打款
 export const FIGHT_MONEY = 'FIGHT_MONEY' // 打款中

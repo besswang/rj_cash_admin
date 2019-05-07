@@ -82,5 +82,19 @@ export default {
       default:
         return '空值'
     }
+  },
+    // 认证状态
+  personalType(x) {
+    switch (x) {
+      case state.PENDING_AUTH:
+        return '待认证'
+      case state.CERTITICATTON:
+        return '认证中'
+      case state.COMPLETED:
+        return '认证完成'
+      default:
+        return '空值'
+    }
   }
 }
+
