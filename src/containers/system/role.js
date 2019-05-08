@@ -1,27 +1,35 @@
 import React, { Component } from 'react'
-import { Button, Loading, Table, Dialog,Form, Input } from 'element-react'
+import { Button, Loading, Table, Dialog,Form, Input, Tree } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { pageRole, deleteRole } from './actions'
+import { pageRole, deleteRole, addRole, selectRolemenus, updateRolemenus } from './actions'
 import MyPagination from '@components/MyPagination'
 // import filter from '@global/filter'
 class BlackUser extends Component {
 	static propTypes = {
-    list: PropTypes.object.isRequired,
+		list: PropTypes.object.isRequired,
+		treeData: PropTypes.object.isRequired,
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
 		pageRole: PropTypes.func.isRequired,
 		deleteRole: PropTypes.func.isRequired,
+		addRole: PropTypes.func.isRequired,
+		selectRolemenus: PropTypes.func.isRequired,
+		updateRolemenus: PropTypes.func.isRequired,
 		btnLoading: PropTypes.bool.isRequired
   }
 	constructor(props) {
 		super(props)
 		this.state = {
-			sort: null,
-			id: null,
+			roleId: null,
+			options: {
+				children: 'children',
+				label: 'text'
+			},
+			roleName: null,
 			dialogVisible: false,
 			columns: [{
 					type: 'index',
@@ -34,8 +42,8 @@ class BlackUser extends Component {
           render: row => {
             return (
 							<div>
-								<Button type="primary" size="mini">{'权限设置'}</Button>
-								<Button type="danger" size="mini" onClick={ this.props.deleteRole.bind(this, row) }>{'删除'}</Button>
+								<Button type="primary" size="mini" onClick={ this.openRules.bind(this,row.id) }>{'权限设置'}</Button>
+								<Button type="danger" size="mini" onClick={ this.props.deleteRole.bind(this, {roleId:row.id, state: 1}) }>{'删除'}</Button>
 							</div>
 
             )
@@ -59,28 +67,46 @@ class BlackUser extends Component {
 	}
 	onChange = e => {
 		this.setState({
-			sort: e
+			roleName: e
 		})
 	}
 	openDialog = e => {
     e.preventDefault()
 		this.setState({
 			dialogVisible: true,
-			sort: null
+			roleName: null
+		})
+	}
+	openRules = roleId => {
+		this.props.selectRolemenus({roleId:roleId})
+		this.setState({
+			roleId: roleId
 		})
 	}
 	saveContent = e => {
 		e.preventDefault()
-		// this.props.updateSort({
-		// 	sort: this.state.sort,
-		// 	id: this.state.id
-		// })
+		this.props.addRole({
+			roleName: this.state.roleName,
+		})
 		this.setState({
 			dialogVisible: false
 		})
 	}
+	getCheckedKeys = e => {
+		e.preventDefault()
+		console.log(this.tree.getCheckedKeys(true))
+		// console.log(this.tree.getCheckedNodes(true))
+		const brr = this.tree.getCheckedKeys(true)
+		const arr = []
+		for(let i=0;i<brr.length;i++){
+			arr.push({menuId:brr[i], roleId: this.state.roleId})
+		}
+		console.log(arr)
+		this.props.updateRolemenus(arr)
+	}
 	render() {
-		const { list, btnLoading } = this.props
+		const { list, btnLoading, treeData } = this.props
+		const { options } = this.state
 		return (
 			<div>
         <Button className="margin-bottom15" type="primary" onClick={ e => this.openDialog(e) }>{'添加'}</Button>
@@ -98,17 +124,14 @@ class BlackUser extends Component {
           onCurrentChange={ this.onCurrentChange }
         />
 				<Dialog
-					title="添加期限"
+					title="添加角色"
 					visible={ this.state.dialogVisible }
 					onCancel={ () => this.setState({ dialogVisible: false }) }
 				>
 					<Dialog.Body>
-						<Form>
-							<Form.Item label="额度" labelWidth="120">
-								<Input type="number" value={ this.state.sort } onChange={ e => this.onChange(e) } />
-							</Form.Item>
-							<Form.Item label="期限" labelWidth="120">
-								<Input type="number" value={ this.state.sort } onChange={ e => this.onChange(e) } />
+						<Form labelWidth="40">
+							<Form.Item label="角色">
+								<Input value={ this.state.roleName } onChange={ e => this.onChange(e) } />
 							</Form.Item>
 						</Form>
 					</Dialog.Body>
@@ -117,18 +140,30 @@ class BlackUser extends Component {
 						<Button type="primary" onClick={ this.saveContent } loading={ btnLoading }>{'确 定'}</Button>
 					</Dialog.Footer>
 				</Dialog>
+				<Loading loading={ treeData.loading }>
+					<Tree
+						ref={ e => {this.tree = e} }
+						data={ treeData.data }
+						options={ options }
+						isShowCheckbox
+						highlightCurrent
+						nodeKey="id"
+					/>
+				</Loading>
+				<Button type="primary" onClick={ this.saveTree } loading={ btnLoading }>{'确 定'}</Button>
+				<Button type="primary" onClick={ this.getCheckedKeys }>{'通过 key 获取'}</Button>
 			</div>
 		)
 	}
 }
 
 const mapStateToProps = state => {
-	const { list, btnLoading } = state
-	return { list, btnLoading }
+	const { list, btnLoading, treeData } = state
+	return { list, btnLoading, treeData }
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, pageRole, deleteRole }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, pageRole, deleteRole, addRole, selectRolemenus, updateRolemenus }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(BlackUser)

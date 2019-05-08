@@ -62,5 +62,8 @@ export default {
   'pageLoanterm': 'api/loanterm/pageLoanterm', //列表
   // 系统管理-角色管理
   'pageRole': 'api/role/pageRole', // 列表
-  'deleteRole': 'api/role/deleteRole' // 删除
+  'deleteRole': 'api/role/deleteRole', // 删除
+  'addRole': 'api/role/addRole', // 添加
+  'selectRolemenus': 'api/rolemenu/selectRolemenus', // 权限设置-menu
+  'updateRolemenus': 'api/rolemenu/updateRolemenus' //权限设置-提交
 }

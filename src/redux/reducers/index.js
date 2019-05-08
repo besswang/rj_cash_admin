@@ -9,6 +9,7 @@ import user from '@containers/user/reducer'
 import list from './list'
 import * as type from '../actionTypes'
 import { PAGE_SIZE, CURRENT_PAGE } from '@meta/state'
+import treeData from '@containers/system/reducers'
 
 // 搜索方式
 const typeId = (state = 0, action) => {
@@ -214,19 +215,6 @@ const listInfo = (state = {}, action) => {
   }
 }
 export default combineReducers({
-  routerReducer,
-  user,
-  typeId,
-  typeName,
-  searchAll,
-  time,
-  regTime,
-  payTime,
-  list,
-  listInfo,
-  selectClient,
-  selectTime,
-  router,
-  btnLoading,
-  realName
+  routerReducer, user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, selectClient, selectTime, router,
+  btnLoading, realName, treeData
 })

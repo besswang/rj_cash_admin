@@ -8,6 +8,10 @@ export const BTN_RECEIVE_POSTS = 'BTN_RECEIVE_POSTS' // 请求成功后的存储
 export const BTN_FAILURE_POSTS = 'BTN_FAILURE_POSTS' // 请求失败
 export const SAVE_USER = 'SAVE_USER' // 登陆成功后存储用户信息
 export const CLEAR_USER = 'CLEAR_USER' // 退出后清除用户信息
+// 角色权限
+export const MENU_REQUEST_POSTS = 'MENU_REQUEST_POSTS'
+export const MENU_RECEIVE_POSTS = 'MENU_RECEIVE_POSTS'
+export const MENU_FAILURE_POSTS = 'MENU_FAILURE_POSTS'
 //借款管理
 export const AUDIT_REFUSE_LIST = 'AUDIT_REFUSE_LIST'
 export const AUDIT_LIST = 'AUDIT_LIST'

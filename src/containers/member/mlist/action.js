@@ -78,17 +78,14 @@ export const addUserBlack = subreddit => {
 // 会员管理-移除黑名单
 export const removeUserBlack = subreddit => {
   return (dispatch) => {
-    MessageBox.confirm('将该用户添从黑名单移除, 是否继续?', '提示', {
+    MessageBox.confirm('将该用户从黑名单移除, 是否继续?', '提示', {
       type: 'warning'
     }).then(async () => {
       dispatch(requestPosts())
       const data = await api.removeUserBlackApi(subreddit)
       if (data.success) {
         dispatch(handelSearch())
-        Message({
-          type: 'success',
-          message: data.msg
-        })
+        Message.success('移除成功')
       } else {
         dispatch(failurePosts(data))
       }

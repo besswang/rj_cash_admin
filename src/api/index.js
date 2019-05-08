@@ -56,4 +56,7 @@ export default {
   pageLoantermApi: params => Fetch(jk.pageLoanterm, {method: 'post', body: params}),
   pageRoleApi: params => Fetch(jk.pageRole, {method: 'post', body: params}),
   deleteRoleApi: params => Fetch(jk.deleteRole, {method: 'delete', data: params}),
+  addRoleApi: params => Fetch(jk.addRole, {method: 'post', body: params}),
+  selectRolemenusApi: params => Fetch(jk.selectRolemenus, {method: 'get', data: params}),
+  updateRolemenusApi: params => Fetch(jk.updateRolemenus, {method: 'post', body: params}),
 }
