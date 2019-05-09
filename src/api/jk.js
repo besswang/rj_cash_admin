@@ -65,5 +65,13 @@ export default {
   'deleteRole': 'api/role/deleteRole', // 删除
   'addRole': 'api/role/addRole', // 添加
   'selectRolemenus': 'api/rolemenu/selectRolemenus', // 权限设置-menu
-  'updateRolemenus': 'api/rolemenu/updateRolemenus' //权限设置-提交
+  'updateRolemenus': 'api/rolemenu/updateRolemenus', //权限设置-提交
+  // 推广管理
+  'selectChannel': 'api/channel/selectChannel', // 渠道管理
+  'insertChannel': 'api/channel/insertChannel', // 渠道管理-添加
+  'updateChannel': 'api/channel/updateChannel', // 渠道管理-编辑
+  'selectPromotionStatistics': 'api/order/selectPromotionStatistics', // 推广统计
+  'selectChannelMember': 'api/user/selectChannelMember', // 渠道会员
+  // select-渠道名称搜索
+  'selectAllChannel': 'api/channel/selectAllChannel'
 }

@@ -59,4 +59,10 @@ export default {
   addRoleApi: params => Fetch(jk.addRole, {method: 'post', body: params}),
   selectRolemenusApi: params => Fetch(jk.selectRolemenus, {method: 'get', data: params}),
   updateRolemenusApi: params => Fetch(jk.updateRolemenus, {method: 'post', body: params}),
+  selectPromotionStatisticsApi: params => Fetch(jk.selectPromotionStatistics, {method: 'post', body: params}),
+  selectAllChannelApi: params => Fetch(jk.selectAllChannel, {method: 'post', body: params}),
+  selectChannelMemberApi: params => Fetch(jk.selectChannelMember, {method: 'get', data: params}),
+  selectChannelApi: params => Fetch(jk.selectChannel, {method: 'post', body: params}),
+  insertChannelApi: params => Fetch(jk.insertChannel, {method: 'post', body: params}),
+  updateChannelApi: params => Fetch(jk.updateChannel, {method: 'put', body: params}),
 }

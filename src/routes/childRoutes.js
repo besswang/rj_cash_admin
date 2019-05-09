@@ -51,6 +51,10 @@ import Setting from '@containers/attestation/setting'
 // 系统管理
 import Role from '@containers/system/role'
 import Borrowlimit from '@containers/system/borrowlimit'
+// 推广管理
+import ChannelManage from '@containers/generalize/channelManage'
+import Statistics from '@containers/generalize/statistics'
+import ChannelMember from '@containers/generalize/channelMember'
 export const CHILD_ROUTES = [
   {
     name: '首页',
@@ -272,6 +276,26 @@ export const CHILD_ROUTES = [
       }
     ]
   }, {
+    id: 9,
+    name: '推广管理',
+    path: '/generalize',
+    children: [{
+      name: '渠道管理',
+      path: '/generalize/channelManage',
+      exact: true,
+      component: ChannelManage
+    }, {
+      name: '推广统计',
+      path: '/generalize/statistics',
+      exact: true,
+      component: Statistics
+    }, {
+      name: '渠道会员',
+      path: '/generalize/channelMember',
+      exact: true,
+      component: ChannelMember
+    }]
+  }, {
     name: '会员详情',
     path: '/detail',
     exact: true,
@@ -279,3 +303,5 @@ export const CHILD_ROUTES = [
     component: Detail
   }
 ]
+
+

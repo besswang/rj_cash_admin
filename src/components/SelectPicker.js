@@ -1,16 +1,28 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Select } from 'element-react'
-const SelectPicker = ({ value, onChange, options, placeholder }) => (
+const SelectPicker = ({ value, stringValue, onChange, options, optionsArr, placeholder }) => (
   <Select
     onChange={ e => onChange(e) }
-    value={ value }
+    value={ value ? value : stringValue }
     clearable placeholder={ placeholder ? placeholder : '搜索类型' }
   >
     {
-      options.map(el =>
-        <Select.Option key={ el.value } label={ el.label } value={ el.value } />
+      options &&
+      options.map(el =>{
+          if (el.value) {
+            return (<Select.Option key={ el.value } label={ el.label } value={ el.value } />)
+          }else{
+            return(<Select.Option key={ el.id } label={ el.channelName } value={ el.channelName } />)
+          }
+        }
       )
+    }
+    {
+      optionsArr &&
+      optionsArr.map(el => {
+        return (<Select.Option key={ el } label={ el } value={ el } />)
+      })
     }
   </Select>
 )
@@ -18,8 +30,10 @@ const SelectPicker = ({ value, onChange, options, placeholder }) => (
 SelectPicker.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.object.isRequired
-  ).isRequired,
+  ),
+  optionsArr: PropTypes.array,
   value: PropTypes.number,
+  stringValue: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func
 }

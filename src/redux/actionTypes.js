@@ -31,3 +31,5 @@ export const SELECT_CLIENT = 'SELECT_CLIENT' // 新老客户
 export const SELECT_TIME_TYPE = 'SELECT_TIME_TYPE' // 日期搜索方式
 export const MENU_ACTIVE = 'MENU_ACTIVE' // 左侧按钮选中状态 defaultActive
 export const SAVE_REAL_NAME = 'SAVE_REAL_NAME' // 真实姓名
+export const SAVE_CHANNEL_NAME = 'SAVE_CHANNEL_NAME' // 搜索渠道
+export const SELECT_CHANNEL_NAME = 'SELECT_CHANNEL_NAME' // 下拉选中的渠道名称

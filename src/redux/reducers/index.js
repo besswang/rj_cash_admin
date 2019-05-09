@@ -138,6 +138,8 @@ const search = {
 }
 const searchAll = (state = search, action) => {
   switch (action.type) {
+    case type.SELECT_CHANNEL_NAME:
+      return {...state, channelName: action.data}
     case type.SAVE_REAL_NAME:
       return { ...state, realName: action.text }
     case type.SELECT_SUBREDDIT:{
@@ -214,7 +216,33 @@ const listInfo = (state = {}, action) => {
       return state
   }
 }
+const channelList = (state = [], action) => {
+    switch (action.type) {
+      case type.SAVE_CHANNEL_NAME:{
+        // const data = action.data.filter(item => {
+        //   item['value'] = item.channelName
+        //   return item
+        // })
+        return action.data
+      }
+
+      default:
+        return state
+    }
+}
+
+// 渠道名称
+const channelName = (state = '', action) => {
+  switch (action.type) {
+    case type.SELECT_CHANNEL_NAME:
+      return action.data
+    case type.CLEAR_SEARCH_ALL:
+      return ''
+    default:
+      return state
+  }
+}
 export default combineReducers({
   routerReducer, user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, selectClient, selectTime, router,
-  btnLoading, realName, treeData
+  btnLoading, realName, treeData, channelList, channelName
 })

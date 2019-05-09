@@ -24,6 +24,7 @@ class BlackUser extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			treeKey: '',
 			roleId: null,
 			options: {
 				children: 'children',
@@ -57,6 +58,10 @@ class BlackUser extends Component {
   componentDidMount() {
     this.props.pageRole()
 	}
+	componentWillUnmount() {
+		// this.ztreeObj.destory();
+		console.log('销毁')
+	}
   sizeChange = e => {
     this.props.sizeChange(e)
     this.props.pageRole()
@@ -78,9 +83,15 @@ class BlackUser extends Component {
 		})
 	}
 	openRules = roleId => {
+		this.renderTree()
 		this.props.selectRolemenus({roleId:roleId})
 		this.setState({
 			roleId: roleId
+		})
+	}
+	renderTree = () => {
+		this.setState({
+			treeKey: +new Date()
 		})
 	}
 	saveContent = e => {
@@ -94,19 +105,22 @@ class BlackUser extends Component {
 	}
 	getCheckedKeys = e => {
 		e.preventDefault()
+		console.log(this.tree)
+
 		console.log(this.tree.getCheckedKeys(true))
-		// console.log(this.tree.getCheckedNodes(true))
+		// console.log(this.tree.getCheckedNodes())
 		const brr = this.tree.getCheckedKeys(true)
 		const arr = []
 		for(let i=0;i<brr.length;i++){
 			arr.push({menuId:brr[i], roleId: this.state.roleId})
 		}
 		console.log(arr)
+
 		this.props.updateRolemenus(arr)
 	}
 	render() {
 		const { list, btnLoading, treeData } = this.props
-		const { options } = this.state
+		const { options, treeKey } = this.state
 		return (
 			<div>
         <Button className="margin-bottom15" type="primary" onClick={ e => this.openDialog(e) }>{'添加'}</Button>
@@ -145,6 +159,7 @@ class BlackUser extends Component {
 						ref={ e => {this.tree = e} }
 						data={ treeData.data }
 						options={ options }
+						key={ treeKey }
 						isShowCheckbox
 						highlightCurrent
 						nodeKey="id"

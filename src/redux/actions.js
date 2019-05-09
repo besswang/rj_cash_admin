@@ -1,8 +1,28 @@
 //存放分发的 action函数
 // 使用 action 来描述“ 发生了什么”
 import * as type from './actionTypes'
+import api from '@api/index'
 import { PAGE_SIZE, CURRENT_PAGE } from '@meta/state'
 import timeDate from '@global/timeDate'
+
+// 搜索渠道名称
+export const selectAllChannel = () => {
+  return async dispatch => {
+    const data = await api.selectAllChannelApi()
+    if (data.success) {
+      dispatch(saveChannelName(data.data))
+    }
+    console.log(data)
+  }
+}
+export const saveChannelName = data => ({
+  type: type.SAVE_CHANNEL_NAME,
+  data
+})
+export const selectChannel = data => ({
+  type: type.SELECT_CHANNEL_NAME,
+  data
+})
 
 export const initSearch = () => ({
   type: type.CLEAR_SEARCH_ALL,
@@ -18,7 +38,8 @@ export const initSearch = () => ({
     timeType: 0,
     typeId: 0,
     typeName: '',
-    realName: ''
+    realName: '',
+    channelName:''
   }
 })
 // select下搜索类型

@@ -104,3 +104,5 @@ export const ALLOT_TYPE = [{
   value: 2,
   label: '未分配'
 }]
+
+export const PROMOTION_TYPE = ['cpa', 'cps', 'uv']
