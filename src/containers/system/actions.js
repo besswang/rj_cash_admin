@@ -3,6 +3,20 @@ import * as type from '@redux/actionTypes'
 import { requestPosts, receivePosts, failurePosts, shouldFetchPosts } from '@redux/actions'
 import { MessageBox, Message } from 'element-react'
 
+// 用户列表
+export const pageAdmin = () => {
+  return async (dispatch, getState) => {
+    dispatch(requestPosts())
+    const searchAll = shouldFetchPosts(getState())
+    const data = await api.pageAdminApi(searchAll)
+    if (data.success) {
+      dispatch(receivePosts(data.data))
+    } else {
+      dispatch(failurePosts(data))
+    }
+    console.log(data)
+  }
+}
 // 请求loading的开始状态
 const menuRequestPosts = () => ({
   type: type.MENU_REQUEST_POSTS

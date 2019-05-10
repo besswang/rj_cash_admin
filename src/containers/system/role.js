@@ -116,7 +116,7 @@ class BlackUser extends Component {
 		}
 		console.log(arr)
 
-		this.props.updateRolemenus(arr)
+		// this.props.updateRolemenus(arr)
 	}
 	render() {
 		const { list, btnLoading, treeData } = this.props
@@ -163,6 +163,7 @@ class BlackUser extends Component {
 						isShowCheckbox
 						highlightCurrent
 						nodeKey="id"
+						defaultCheckedKeys={ [2,3,4,5] }
 					/>
 				</Loading>
 				<Button type="primary" onClick={ this.saveTree } loading={ btnLoading }>{'确 定'}</Button>

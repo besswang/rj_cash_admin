@@ -12,7 +12,6 @@ export const selectOverdueByParam = () => {
     } else {
       dispatch(failurePosts(data))
     }
-    console.log(data)
   }
 }
 
@@ -27,21 +26,9 @@ export const selectCollectionByParam = () => {
     } else {
       dispatch(failurePosts(data))
     }
-    console.log(data)
   }
 }
 
-// 搜索去空带时间戳的过滤
-// const shouldFetchPosts = (state) => {
-//   const params = state.searchAll
-//   const pam = {}
-//   for (const i in params) {
-//     if (params[i]) {
-//       pam[i] = params[i]
-//     }
-//   }
-//   return pam
-// }
 // 催收管理--个人对账
 export const selectthePersion = () => {
   return async (dispatch, getState) => {
@@ -54,7 +41,6 @@ export const selectthePersion = () => {
     } else {
       dispatch(failurePosts(data))
     }
-    console.log(data)
   }
 }
 
@@ -68,18 +54,12 @@ export const addUserBlack = subreddit => {
       const data = await api.addUserBlackApi(subreddit)
       if (data.success) {
         dispatch(selectOverdueByParam())
-        Message({
-          type: 'success',
-          message: data.msg
-        })
+        Message.success(data.msg)
       } else {
         dispatch(failurePosts(data))
       }
     }).catch(() => {
-      Message({
-        type: 'info',
-        message: '已取消操作'
-      })
+      Message.info('已取消操作')
     })
   }
 }
@@ -93,18 +73,12 @@ export const removeUserBlack = subreddit => {
       const data = await api.removeUserBlackApi(subreddit)
       if (data.success) {
         dispatch(selectOverdueByParam())
-        Message({
-          type: 'success',
-          message: data.msg
-        })
+        Message.success('从黑名单移除成功')
       } else {
         dispatch(failurePosts(data))
       }
     }).catch(() => {
-      Message({
-        type: 'info',
-        message: '已取消操作'
-      })
+      Message.info('已取消操作')
     })
   }
 }

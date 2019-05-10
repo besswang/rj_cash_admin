@@ -70,6 +70,7 @@ class Mlist extends Component{
 						 return (
 							 <DisableBtn
 									value={ row.blackStatus }
+									result={ 0 }
 									onClick={ this.userBlack.bind(this, row) }
 									text={ ['添加','移除'] }
 								/>
@@ -84,6 +85,7 @@ class Mlist extends Component{
 							<div className="flex flex-direction_row">
 								<DisableBtn
 									value={ row.type }
+									result={ 0 }
 									onClick={ this.updateUserType.bind(this, row) }
 									text={ ['启用','禁用'] }
 								/>

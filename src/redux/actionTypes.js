@@ -33,3 +33,6 @@ export const MENU_ACTIVE = 'MENU_ACTIVE' // 左侧按钮选中状态 defaultActi
 export const SAVE_REAL_NAME = 'SAVE_REAL_NAME' // 真实姓名
 export const SAVE_CHANNEL_NAME = 'SAVE_CHANNEL_NAME' // 搜索渠道
 export const SELECT_CHANNEL_NAME = 'SELECT_CHANNEL_NAME' // 下拉选中的渠道名称
+export const SAVE_ROLE_LIST = 'SAVE_ROLE_LIST' // 下拉选择角色
+export const ROLE_ID = 'ROLE_ID' // 选中的角色
+export const SAVE_ADMIN_NAME = 'SAVE_ADMIN_NAME' // 用户账号

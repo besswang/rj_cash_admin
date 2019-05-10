@@ -14,7 +14,16 @@ const treeData = (state = initTree, action) => {
     case type.MENU_RECEIVE_POSTS:{
       // const a = action.posts.map(item => item.id+','+item.pid+','+item.zid)
       // console.log(a)
-      // const defaultCheckedKeys = action.posts.filter(item => item)
+      // const keys = action.posts.map(item => {
+      //     let id = null
+      //     if(item.state1 !== null){
+      //       if (item.state1 === '1') {
+      //         id = item.id
+      //       }
+      //     }
+      //     return id
+      // })
+
       const b = action.posts.filter(item => {
         let data = null
         if (item.pid === 0){
@@ -23,15 +32,19 @@ const treeData = (state = initTree, action) => {
         }
         return data
       })
+      const keys = []
       for(let i=0;i<action.posts.length;i++){
         for(let j=0;j<b.length;j++){
           if (action.posts[i].pid === b[j].zid){
             b[j].children.push(action.posts[i])
           }
         }
+        if (action.posts[i].state1 === '1'){
+          keys.push(action.posts[i].id)
+        }
       }
       return {
-        ...state, data: b, loading: false
+        ...state, data: b, loading: false, defaultCheckedKeys:keys
       }
     }
 

@@ -4,11 +4,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch, menuActive } from '@redux/actions'
-import { selectChannel, insertChannel, updateChannel } from './actions'
+import { selectChannel, insertChannel, updateChannel, prohibitChannel } from './actions'
 import MyPagination from '@components/MyPagination'
 import Search from '@components/Search'
 import SelectPicker from '@components/SelectPicker'
 import { PROMOTION_TYPE } from '@meta/select'
+import DisableBtn from '@components/DisableBtn'
 class Apply extends Component {
 	static propTypes = {
 		location: PropTypes.object.isRequired,
@@ -21,10 +22,12 @@ class Apply extends Component {
 		btnLoading: PropTypes.bool.isRequired,
 		insertChannel: PropTypes.func.isRequired,
 		updateChannel: PropTypes.func.isRequired,
+		prohibitChannel: PropTypes.func.isRequired,
 	}
 	constructor(props) {
 		super(props)
 		this.state = {
+			dialogTitle:'',
 			id: null,
 			form: {
 				channelName: '', // 渠道名称,
@@ -38,10 +41,38 @@ class Apply extends Component {
 			rules: {
 				channelName: [{required: true,message: '请输入渠道名称',trigger: 'blur'}],
 				daiName: [{required: true,message: '请输入超贷名称',trigger: 'blur'}],
-				price: [{required: true,message: '请输入单价',trigger: 'blur'}],
+				price: [{
+						required:true,
+						validator: (rule, value, callback) => {
+							if (value === '' || value === null) {
+								callback(new Error('请输入单价'))
+							} else {
+								callback()
+							}
+						}
+					}
+				],
 				type: [{required: true,message: '请选择推广方式',trigger: 'blur'}],
-				machineScore: [{required: true,message: '请输入机审分数',trigger: 'blur'}],
-				userScore: [{required: true,message: '请输入人工审核分数',trigger: 'blur'}],
+				machineScore: [{
+					required: true,
+					validator: (rule, value, callback) => {
+						if (value === '' || value === null) {
+							callback(new Error('请输入机审分数'))
+						} else {
+							callback()
+						}
+					}
+				}],
+				userScore: [{
+					required: true,
+					validator: (rule, value, callback) => {
+						if (value === '' || value === null) {
+							callback(new Error('请输入人工审核分数'))
+						} else {
+							callback()
+						}
+					}
+				}],
 				remake: [{required: true,message: '请输入备注',trigger: 'blur'}]
 			},
 			dialogVisible: false,
@@ -83,16 +114,13 @@ class Apply extends Component {
 					}
 				}, {
 						label: '操作',
-						width:120,
+						width:140,
 						fixed: 'right',
 						render: row => {
 							return (
 								<div>
 									<Button type="primary" size="mini" onClick={ this.openDialog.bind(this, row) }>{'编辑'}</Button>
-									{
-										row.state === 0 &&
-										<Button type="danger" size="mini">{'禁用'}</Button>
-									}
+									<DisableBtn value={ row.state } result={ 1 } text={ ['启用','禁用'] } onClick={ this.props.prohibitChannel.bind(this,{channelName:row.channelName,id:row.id,state:row.state}) }/>
 								</div>
 							)
 						}
@@ -125,11 +153,13 @@ class Apply extends Component {
 		this.form.resetFields()
 		if(obj === 'add'){
 			this.setState({
+				dialogTitle:'添加',
 				id: null
 			})
 		} else {
 			console.log(obj)
 			this.setState({
+				dialogTitle:'编辑',
 				form:{
 					channelName: obj.channelName,
 					daiName: obj.daiName,
@@ -147,6 +177,7 @@ class Apply extends Component {
 	}
 	saveContent = e => {
 		e.preventDefault()
+		console.log(this.state.form)
 		this.form.validate((valid) => {
 			if (valid) {
 				if(this.state.id){// 编辑
@@ -174,6 +205,7 @@ class Apply extends Component {
 	}
 	render(){
 		const { list, btnLoading } = this.props
+		const { dialogTitle, columns, dialogVisible, form, rules, id } = this.state
 		return(
 			<div>
 				<Search showChannel>
@@ -185,7 +217,7 @@ class Apply extends Component {
 				<Loading loading={ list.loading }>
 					<Table
 						style={ { width: '100%' } }
-						columns={ this.state.columns }
+						columns={ columns }
 						data={ list.data }
 						border
 					/>
@@ -196,37 +228,37 @@ class Apply extends Component {
 					onCurrentChange={ this.onCurrentChange }
 				/>
 				<Dialog
-					title="添加"
-					visible={ this.state.dialogVisible }
+					title={ dialogTitle }
+					visible={ dialogVisible }
 					onCancel={ () => this.setState({ dialogVisible: false }) }
 				>
 					<Dialog.Body>
-						<Form labelWidth="120" ref={ e => {this.form=e} } model={ this.state.form } rules={ this.state.rules }>
+						<Form labelWidth="120" ref={ e => {this.form=e} } model={ form } rules={ rules }>
 							<Form.Item label="渠道名称" prop="channelName">
-								<Input disabled={ this.state.id ? true : false } value={ this.state.form.channelName } onChange={ this.onChange.bind(this, 'channelName') } />
+								<Input disabled={ id ? true : false } value={ form.channelName } onChange={ this.onChange.bind(this, 'channelName') } />
 							</Form.Item>
 							<Form.Item label="贷超名称" prop="daiName">
-								<Input value={ this.state.form.daiName } onChange={ this.onChange.bind(this, 'daiName') } />
+								<Input value={ form.daiName } onChange={ this.onChange.bind(this, 'daiName') } />
 							</Form.Item>
 							<Form.Item label="单价" prop="price">
-								<Input type="number" value={ this.state.form.price } onChange={ this.onChange.bind(this, 'price') } />
+								<Input type="number" value={ form.price } onChange={ this.onChange.bind(this, 'price') } />
 							</Form.Item>
 							<Form.Item label="推广方式" prop="type">
 								<SelectPicker
-									stringValue={ this.state.form.type }
+									stringValue={ form.type }
 									onChange={ this.onChange.bind(this, 'type') }
 									optionsArr={ PROMOTION_TYPE }
 									placeholder={ '选择方式' }
 								/>
 							</Form.Item>
 							<Form.Item label="机审分数" prop="machineScore">
-								<Input type="number" value={ this.state.form.machineScore } onChange={ this.onChange.bind(this, 'machineScore') } />
+								<Input type="number" value={ form.machineScore } onChange={ this.onChange.bind(this, 'machineScore') } />
 							</Form.Item>
 							<Form.Item label="人工审核分数" prop="userScore">
-								<Input type="number" value={ this.state.form.userScore } onChange={ this.onChange.bind(this, 'userScore') } />
+								<Input type="number" value={ form.userScore } onChange={ this.onChange.bind(this, 'userScore') } />
 							</Form.Item>
 							<Form.Item label="备注" prop="remake">
-								<Input value={ this.state.form.remake } onChange={ this.onChange.bind(this, 'remake') } />
+								<Input value={ form.remake } onChange={ this.onChange.bind(this, 'remake') } />
 							</Form.Item>
 						</Form>
 					</Dialog.Body>
@@ -245,7 +277,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, menuActive, selectChannel, insertChannel, updateChannel}, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, menuActive, selectChannel, insertChannel, updateChannel, prohibitChannel}, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Apply)

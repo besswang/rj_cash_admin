@@ -38,7 +38,7 @@ export default {
   selectOrderCompletedApi: params => Fetch(jk.selectOrderCompleted, {method: 'post', body: params}),
   selectBillApi: params => Fetch(jk.selectBill, {method: 'post', body: params}),
   selectTheDayLoanApi: params => Fetch(jk.selectTheDayLoan, {method: 'post', body: params}),
-  selectblackphoneApi: params => Fetch(jk.selectblackphone, {method: 'get', data: params}),
+  selectblackphoneApi: params => Fetch(jk.selectblackphone, {method: 'post', body: params}),
   deleteBlackphoneApi: params => Fetch(jk.deleteBlackphone, {method: 'delete', data: params}),
   selectEmergencyApi: params => Fetch(jk.selectEmergency, {method: 'post', body: params}),
   deleteEmergencyApi: params => Fetch(jk.deleteEmergency, {method: 'get', data: params}),
@@ -65,4 +65,7 @@ export default {
   selectChannelApi: params => Fetch(jk.selectChannel, {method: 'post', body: params}),
   insertChannelApi: params => Fetch(jk.insertChannel, {method: 'post', body: params}),
   updateChannelApi: params => Fetch(jk.updateChannel, {method: 'put', body: params}),
+  prohibitChannelApi: params => Fetch(jk.prohibitChannel, {method: 'put', body: params}),
+  pageAdminApi: params => Fetch(jk.pageAdmin, {method: 'post', body: params}),
+  allRolesApi: params => Fetch(jk.allRoles, {method: 'post', body: params}),
 }

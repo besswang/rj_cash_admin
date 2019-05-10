@@ -9,8 +9,8 @@ import user from '@containers/user/reducer'
 import list from './list'
 import * as type from '../actionTypes'
 import { PAGE_SIZE, CURRENT_PAGE } from '@meta/state'
-import treeData from '@containers/system/reducers'
-
+import treeData from '@containers/system/reducers/treeData'
+import roleList from './roleList'
 // 搜索方式
 const typeId = (state = 0, action) => {
   switch (action.type) {
@@ -138,6 +138,10 @@ const search = {
 }
 const searchAll = (state = search, action) => {
   switch (action.type) {
+    case type.SAVE_ADMIN_NAME:
+      return {...state,adminName:action.data}
+    case type.ROLE_ID:
+      return {...state, roleId: action.data}
     case type.SELECT_CHANNEL_NAME:
       return {...state, channelName: action.data}
     case type.SAVE_REAL_NAME:
@@ -242,7 +246,34 @@ const channelName = (state = '', action) => {
       return state
   }
 }
+// 角色id
+const roleId = (state = null, action) => {
+  switch (action.type) {
+    case type.ROLE_ID:{
+      if(action.data !== ''){
+        return action.data
+      }else{
+        return null
+      }
+    }
+    case type.CLEAR_SEARCH_ALL:
+      return null
+    default:
+      return state
+  }
+}
+// 用户账号
+const adminName = (state = '', action) => {
+  switch (action.type) {
+    case type.SAVE_ADMIN_NAME:
+      return action.data
+    case type.CLEAR_SEARCH_ALL:
+      return ''
+    default:
+      return state
+  }
+}
 export default combineReducers({
   routerReducer, user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, selectClient, selectTime, router,
-  btnLoading, realName, treeData, channelList, channelName
+  btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName
 })

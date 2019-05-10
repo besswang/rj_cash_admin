@@ -114,6 +114,7 @@ class Overdue extends Component{
 						return (
 							<DisableBtn
 								value={ row.blackStatus }
+								result={ 0 }
 								onClick={ this.userBlack.bind(this, row) }
 								text={ ['添加','移除'] }
 							/>
@@ -157,7 +158,7 @@ class Overdue extends Component{
 	userBlack(r){
 		if(r.blackStatus === 0){ // 添加
 			const trans = {
-				idCard: r.idNumber,
+				idCard: r.idcardNumber,
 				phone: r.phone,
 				realName: r.realName
 			}

@@ -3,7 +3,7 @@ import { Form, Input } from 'element-react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
-import { selectSubreddit, selectSearchText,saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType, selectAllChannel,selectChannel } from '@redux/actions'
+import { selectSubreddit, selectSearchText,saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType, selectAllChannel,selectChannel, allRoles, changeRole, changeAdminName } from '@redux/actions'
 import SelectPicker from '@components/SelectPicker'
 import Time from '@components/Settime'
 import { MLIST_SELECT, AUDIT_SELECT, AUDIT_SELECT_LESS, CUSTOMER_SELECT, TIME_SELECT, TIME_SELECT_LESS, LOAN_TYPE, LOAN_MODE,ALLOT_TYPE } from '@meta/select'
@@ -42,6 +42,14 @@ class Search extends Component {
     showChannel: PropTypes.bool,
     selectChannel: PropTypes.func.isRequired,
     channelName: PropTypes.string,
+    roleList: PropTypes.array,
+    showRole: PropTypes.bool,
+    allRoles: PropTypes.func.isRequired,
+    changeRole: PropTypes.func.isRequired,
+    roleId:PropTypes.number,
+    showAdminName: PropTypes.bool,
+    changeAdminName: PropTypes.func.isRequired,
+    adminName:PropTypes.string,
   }
   componentWillMount() {
     // 查询表单的初始化
@@ -49,11 +57,36 @@ class Search extends Component {
     if(this.props.showChannel){
       this.props.selectAllChannel()
     }
+    if(this.props.showRole){
+      this.props.allRoles()
+    }
   }
   render() {
-    const { typeId, typeName, realName, time, regTime, selectClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType, showRealName, showChannel, channelList,channelName } = this.props
+    const { typeId, typeName, realName, time, regTime, selectClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType, showRealName, showChannel, channelList,channelName, roleList, showRole, roleId, showAdminName, adminName } = this.props
     return (
       <Form inline>
+        {
+          showAdminName &&
+          <Form.Item>
+            <Input
+              value={ adminName }
+              onChange={ val => this.props.changeAdminName(val) }
+              placeholder="请输入账号"
+              clearable="true"
+            />
+          </Form.Item>
+        }
+        {
+          showRole &&
+          <Form.Item>
+            <SelectPicker
+              value={ roleId }
+              onChange={ e => this.props.changeRole(e) }
+              options={ roleList }
+              placeholder={ '选择角色' }
+            />
+          </Form.Item>
+        }
         {
           showChannel &&
           <Form.Item>
@@ -209,15 +242,15 @@ class Search extends Component {
 }
 const mapStateToProps = state => {
 	const {
-		typeId, typeName, time, regTime, selectClient, selectTime, realName, channelList, channelName
+		typeId, typeName, time, regTime, selectClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName
 	} = state
 	return {
-		typeId, typeName, time, regTime, selectClient, selectTime, realName, channelList, channelName
+		typeId, typeName, time, regTime, selectClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName
 	}
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ selectSubreddit, selectSearchText, saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType,selectAllChannel ,selectChannel }, dispatch)
+		...bindActionCreators({ selectSubreddit, selectSearchText, saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType,selectAllChannel ,selectChannel, allRoles, changeRole, changeAdminName }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Search)

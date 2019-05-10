@@ -166,3 +166,29 @@ export const menuActive = defaultActive => ({
   type: type.MENU_ACTIVE,
   defaultActive
 })
+
+// 存储角色列表
+const saveRoleList = data => ({
+  type: type.SAVE_ROLE_LIST,
+  data
+})
+// 获取角色select
+export const allRoles = () => {
+  return async dispatch => {
+    const data = await api.allRolesApi()
+    if (data.success) {
+      dispatch(saveRoleList(data.data))
+    }
+    console.log(data)
+  }
+}
+
+export const changeRole = data => ({
+  type: type.ROLE_ID,
+  data
+})
+
+export const changeAdminName = data => ({
+  type:type.SAVE_ADMIN_NAME,
+  data
+})

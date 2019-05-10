@@ -49,6 +49,7 @@ import Bank from '@containers/attestation/bank'
 import Idcard from '@containers/attestation/idcard'
 import Setting from '@containers/attestation/setting'
 // 系统管理
+import Admin from '@containers/system/admin'
 import Role from '@containers/system/role'
 import Borrowlimit from '@containers/system/borrowlimit'
 // 推广管理
@@ -264,6 +265,11 @@ export const CHILD_ROUTES = [
     name: '系统管理',
     path: '/system',
     children: [{
+        name: '用户管理',
+        path: '/system/admin',
+        exact: true,
+        component: Admin
+      }, {
         name: '角色管理',
         path: '/system/role',
         exact: true,

@@ -60,6 +60,8 @@ export default {
   'updateSort': 'api/authentication/updateSort', // 排序
   // 系统管理-期限管理
   'pageLoanterm': 'api/loanterm/pageLoanterm', //列表
+  // 系统管理-用户管理
+  'pageAdmin': 'api/admin/pageAdmin', // 列表
   // 系统管理-角色管理
   'pageRole': 'api/role/pageRole', // 列表
   'deleteRole': 'api/role/deleteRole', // 删除
@@ -70,8 +72,10 @@ export default {
   'selectChannel': 'api/channel/selectChannel', // 渠道管理
   'insertChannel': 'api/channel/insertChannel', // 渠道管理-添加
   'updateChannel': 'api/channel/updateChannel', // 渠道管理-编辑
+  'prohibitChannel': 'api/channel/prohibitChannel', // 渠道管理-禁用
   'selectPromotionStatistics': 'api/order/selectPromotionStatistics', // 推广统计
   'selectChannelMember': 'api/user/selectChannelMember', // 渠道会员
   // select-渠道名称搜索
-  'selectAllChannel': 'api/channel/selectAllChannel'
+  'selectAllChannel': 'api/channel/selectAllChannel',
+  'allRoles': 'api/role/allRoles'
 }
