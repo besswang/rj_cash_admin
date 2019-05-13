@@ -10,6 +10,7 @@ import { selectPendingRepay } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
+import timeDate from '@global/timeDate'
 class WaitHuan extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -63,13 +64,23 @@ class WaitHuan extends Component {
 					prop: 'loanTerm'
 				}, {
 					label: '申请时间',
-					prop: 'nextApplyTime'
+					prop: 'nextApplyTime',
+					width: 120,
+					render: row => {
+						const date = timeDate.time(row.nextApplyTime, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '审核客服',
 					prop: 'examineCustomer'
 				}, {
 					label: '审核时间',
-					prop: 'examineDate'
+					prop: 'examineDate',
+					width:120,
+					render: row => {
+						const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '打款状态',
 					prop: 'payStatus',

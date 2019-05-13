@@ -26,7 +26,8 @@ class RepayMent extends Component {
           type:'index'
         }, {
           label:'日期',
-          prop: 'date'
+          prop: 'date',
+          width:120
         }, {
           label: '还款表现',
           prop: 'repaymentRate'

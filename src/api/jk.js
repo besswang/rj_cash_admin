@@ -58,16 +58,25 @@ export default {
   'updateStatus': 'api/authentication/updateStatus', // 认证参数-是否显示
   'updateLoanType': 'api/authentication/updateLoanType', // 借款是否必须认证
   'updateSort': 'api/authentication/updateSort', // 排序
-  // 系统管理-期限管理
-  'pageLoanterm': 'api/loanterm/pageLoanterm', //列表
   // 系统管理-用户管理
   'pageAdmin': 'api/admin/pageAdmin', // 列表
+  'addAdmin': 'api/admin/addAdmin', // 添加用户
+  'updateAdmin': 'api/admin/updateAdmin', // 编辑用户
   // 系统管理-角色管理
   'pageRole': 'api/role/pageRole', // 列表
   'deleteRole': 'api/role/deleteRole', // 删除
   'addRole': 'api/role/addRole', // 添加
   'selectRolemenus': 'api/rolemenu/selectRolemenus', // 权限设置-menu
   'updateRolemenus': 'api/rolemenu/updateRolemenus', //权限设置-提交
+  // 系统管理-数据备份
+  'pageBackup': 'api/sqlCopy/pageBackup',
+  'backup': 'api/sqlCopy/backup', // 备份
+  // 系统管理-借款额度管理
+  'pageQuota': 'api/quota/pageQuota', //列表
+  'addQuota': 'api/quota/addQuota', // 添加
+  'deleteQuota': 'api/quota/deleteQuota', // 设置为默认，删除
+  // 系统管理-帮助中心
+  'pageGlobalconfig': 'api/globalConfig/pageGlobalconfig', //列表
   // 推广管理
   'selectChannel': 'api/channel/selectChannel', // 渠道管理
   'insertChannel': 'api/channel/insertChannel', // 渠道管理-添加

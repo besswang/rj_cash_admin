@@ -9,6 +9,7 @@ import { selectthePersion } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
+import timeDate from '@global/timeDate'
 class Self extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -59,7 +60,12 @@ class Self extends Component {
 					prop: 'overdueNumber'
 				}, {
 					label: '分单时间',
-					prop: 'fendanDate'
+					prop: 'fendanDate',
+					width: 120,
+					render: row => {
+						const date = timeDate.time(row.fendanDate, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '催回时间',
 					prop: 'realRepaymentDate'

@@ -44,9 +44,11 @@ class BlackUser extends Component {
             return (
 							<div>
 								<Button type="primary" size="mini" onClick={ this.openRules.bind(this,row.id) }>{'权限设置'}</Button>
-								<Button type="danger" size="mini" onClick={ this.props.deleteRole.bind(this, {roleId:row.id, state: 1}) }>{'删除'}</Button>
+								{
+									row.id !== 1 &&
+									<Button type="danger" size="mini" onClick={ this.props.deleteRole.bind(this, {roleId:row.id, state: 1}) }>{'删除'}</Button>
+								}
 							</div>
-
             )
           }
         }]

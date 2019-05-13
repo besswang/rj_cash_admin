@@ -1,23 +1,18 @@
-// 财务管理-已完成
 import React, { Component } from 'react'
 import { Button, Loading, Table } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectPhoneDate, deletePhoneReport } from './actions'
-import Search from '@components/Search'
+import { pageGlobalconfig } from './actions'
 import MyPagination from '@components/MyPagination'
-import filter from '@global/filter'
-import timeDate from '@global/timeDate'
-class BlackUser extends Component {
+class Help extends Component {
 	static propTypes = {
-    list: PropTypes.object.isRequired,
+		list: PropTypes.object.isRequired,
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
-		selectPhoneDate: PropTypes.func.isRequired,
-		deletePhoneReport: PropTypes.func.isRequired
+		pageGlobalconfig: PropTypes.func.isRequired
   }
 	constructor(props) {
 		super(props)
@@ -26,60 +21,39 @@ class BlackUser extends Component {
 					type: 'index',
 					fixed: 'left'
 				}, {
-				  label: '手机号码',
-				  prop: 'phone'
+					label: '标签',
+					prop: 'title'
 				}, {
-					label: '真实姓名',
-					prop: 'realName'
-				}, {
-				  label: '认证时间',
-					prop: 'gmt',
-					render: row => {
-						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
-						return date
-					}
-				}, {
-					label: '状态',
-					prop: 'mobileType',
-					render: row => {
-						const text = filter.personalType(row.mobileType)
-						return text
-					}
+					label: '内容',
+					prop: 'configValue'
 				}, {
 					label: '操作',
 					render: row => {
 						return (
-              <Button type="danger" size="mini" onClick={ this.props.deletePhoneReport.bind(this, { userId: row.userId }) }>{'删除'}</Button>
+							<Button type="primary">{'编辑'}</Button>
 						)
 					}
-      }]
+				}]
 		}
 	}
 	componentWillMount() {
     this.props.initSearch()
   }
   componentDidMount() {
-    this.props.selectPhoneDate()
+    this.props.pageGlobalconfig()
 	}
-  handleSearch = e => {
-    e.preventDefault()
-    this.props.selectPhoneDate()
-  }
   sizeChange = e => {
     this.props.sizeChange(e)
-    this.props.selectPhoneDate()
+    this.props.pageGlobalconfig()
   }
   onCurrentChange = e => {
     this.props.currentChange(e)
-    this.props.selectPhoneDate()
+    this.props.pageGlobalconfig()
 	}
 	render() {
 		const { list } = this.props
 		return (
 			<div>
-				<Search showRealName>
-					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
-				</Search>
 				<Loading loading={ list.loading }>
 					<Table
 						style={ { width: '100%' } }
@@ -104,7 +78,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectPhoneDate, deletePhoneReport }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, pageGlobalconfig }, dispatch)
 	}
 }
-export default connect(mapStateToProps, mapDispatchToProps)(BlackUser)
+export default connect(mapStateToProps, mapDispatchToProps)(Help)

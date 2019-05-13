@@ -51,7 +51,9 @@ import Setting from '@containers/attestation/setting'
 // 系统管理
 import Admin from '@containers/system/admin'
 import Role from '@containers/system/role'
+import Backup from '@containers/system/backup'
 import Borrowlimit from '@containers/system/borrowlimit'
+import Help from '@containers/system/help'
 // 推广管理
 import ChannelManage from '@containers/generalize/channelManage'
 import Statistics from '@containers/generalize/statistics'
@@ -275,10 +277,20 @@ export const CHILD_ROUTES = [
         exact: true,
         component: Role
       }, {
+        name: '数据备份',
+        path: '/system/backup',
+        exact: true,
+        component: Backup
+      }, {
         name: '借款额度管理',
         path: '/system/borrowlimit',
         exact: true,
         component: Borrowlimit
+      }, {
+        name: '帮助中心',
+        path: '/system/help',
+        exact: true,
+        component: Help
       }
     ]
   }, {

@@ -9,6 +9,7 @@ import { selectBill } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
+import timeDate from '@global/timeDate'
 class AlreadyHuan extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -45,10 +46,20 @@ class AlreadyHuan extends Component {
 					prop: 'orderNumber'
 				}, {
 					label: '约定还款日',
-					prop: 'appointmentDate'
+					prop: 'appointmentDate',
+					width:120,
+					render: row => {
+						const date = timeDate.time(row.appointmentDate, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '实际还款日',
-					prop: 'realDate'
+					prop: 'realDate',
+					width:120,
+					render: row => {
+						const date = timeDate.time(row.realDate, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '申请金额',
 					prop: 'applyMoney'

@@ -2,7 +2,29 @@ import api from '@api/index'
 import * as type from '@redux/actionTypes'
 import { requestPosts, receivePosts, failurePosts, shouldFetchPosts } from '@redux/actions'
 import { MessageBox, Message } from 'element-react'
-
+// 数据备份列表
+export const pageBackup = () => {
+  return async (dispatch, getState) => {
+    dispatch(requestPosts())
+    const searchAll = shouldFetchPosts(getState())
+    const data = await api.pageBackupApi(searchAll)
+    if (data.success) {
+      dispatch(receivePosts(data.data))
+    } else {
+      dispatch(failurePosts(data))
+    }
+    console.log(data)
+  }
+}
+// 备份
+export const backup = obj => {
+  return async dispatch => {
+    const data = await api.backupApi(obj)
+    if (data.success) {
+      Message.success(data.msg)
+    }
+  }
+}
 // 用户列表
 export const pageAdmin = () => {
   return async (dispatch, getState) => {
@@ -15,6 +37,43 @@ export const pageAdmin = () => {
       dispatch(failurePosts(data))
     }
     console.log(data)
+  }
+}
+
+// 用户-添加
+export const addAdmin = obj => {
+  return async dispatch => {
+    const data = await api.addAdminApi(obj)
+    if (data.success) {
+      Message.success('添加成功')
+      dispatch(pageAdmin())
+    }
+  }
+}
+// 用户-编辑
+export const updateAdmin = (obj, t) => {
+  return async dispatch => {
+    if (t === 'distribution' || t === 'adminState') {
+      const text = t === 'distribution' ? '分配状态' : '用户状态'
+			MessageBox.confirm(`修改${ text }, 是否继续?`, '提示', {
+				type: 'warning'
+			}).then(async () => {
+        const data = await api.updateAdminApi(obj)
+        if (data.success) {
+          Message.success('修改成功')
+          dispatch(pageAdmin())
+        }
+			}).catch(() => {
+        Message.info('取消操作')
+			})
+    }else{
+      const data = await api.updateAdminApi(obj)
+      if (data.success) {
+        Message.success('保存成功')
+        dispatch(pageAdmin())
+      }
+    }
+
   }
 }
 // 请求loading的开始状态
@@ -31,12 +90,12 @@ const menuFailurePosts = json => ({
   type: type.MENU_FAILURE_POSTS,
   posts: json
 })
-// 期限列表
-export const pageLoanterm = () => {
+// 借款额度管理列表
+export const pageQuota = () => {
   return async (dispatch, getState) => {
     dispatch(requestPosts())
     const searchAll = shouldFetchPosts(getState())
-    const data = await api.pageLoantermApi(searchAll)
+    const data = await api.pageQuotaApi(searchAll)
     if (data.success) {
       dispatch(receivePosts(data.data))
     } else {
@@ -45,7 +104,26 @@ export const pageLoanterm = () => {
     console.log(data)
   }
 }
-
+// 借款额度管理-添加
+export const addQuota = obj => {
+  return async dispatch => {
+    const data = await api.addQuotaApi(obj)
+    if (data.success) {
+      Message.success(data.msg)
+      dispatch(pageQuota())
+    }
+  }
+}
+// 借款额度管理-删除
+export const deleteQuota = obj => {
+  return async dispatch => {
+    const data = await api.deleteQuotaApi(obj)
+    if (data.success) {
+      Message.success(data.msg)
+      dispatch(pageQuota())
+    }
+  }
+}
 // 角色列表
 export const pageRole = () => {
   return async (dispatch, getState) => {
@@ -120,6 +198,21 @@ export const updateRolemenus = (obj) => {
     // } else {
     //   dispatch(menuFailurePosts(data))
     // }
+    console.log(data)
+  }
+}
+
+// 帮助中心列表
+export const pageGlobalconfig = () => {
+  return async (dispatch, getState) => {
+    dispatch(requestPosts())
+    const searchAll = shouldFetchPosts(getState())
+    const data = await api.pageGlobalconfigApi(searchAll)
+    if (data.success) {
+      dispatch(receivePosts(data.data))
+    } else {
+      dispatch(failurePosts(data))
+    }
     console.log(data)
   }
 }

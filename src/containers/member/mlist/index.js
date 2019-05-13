@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 import DisableBtn from '@components/DisableBtn'
 import MyPagination from '@components/MyPagination'
 import Search from '@components/Search'
+import timeDate from '@global/timeDate'
 class Mlist extends Component{
 	static propTypes = {
 		list: PropTypes.object.isRequired,
@@ -35,10 +36,12 @@ class Mlist extends Component{
 					fixed: 'left'
 				},{
 					label: '手机号码',
-					prop: 'phone'
+					prop: 'phone',
+					width:128
 				},{
 					label: '身份证号',
-					prop: 'idNumber'
+					prop: 'idNumber',
+					width:112
 				},
 				{
 					label: '渠道名称',
@@ -56,7 +59,12 @@ class Mlist extends Component{
 					prop: 'loanNum'
 				}, {
 					label: '注册时间',
-					prop: 'gmt'
+					prop: 'gmt',
+					width:120,
+					render: row => {
+						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '登陆IP',
 					prop: 'loginIp'

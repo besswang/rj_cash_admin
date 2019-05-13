@@ -9,6 +9,7 @@ import { selectBank, deleteBankByUserId } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
+import timeDate from '@global/timeDate'
 class BlackUser extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -41,7 +42,11 @@ class BlackUser extends Component {
 					prop: 'reservePhone'
 				}, {
 					label: '认证时间',
-					prop: 'gmt'
+					prop: 'gmt',
+					render: row => {
+						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '状态',
 					prop: 'bankAuthType',

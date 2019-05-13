@@ -11,6 +11,7 @@ import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import DisableBtn from '@components/DisableBtn'
 import filter from '@global/filter'
+import timeDate from '@global/timeDate'
 class Overdue extends Component{
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -91,13 +92,28 @@ class Overdue extends Component{
 					 }
 				}, {
 					label: '申请时间',
-					prop: 'nextApplyTime'
+					prop: 'nextApplyTime',
+					width: 120,
+					render: row => {
+						const date = timeDate.time(row.nextApplyTime, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '审核时间',
-					prop: 'examineDate'
+					prop: 'examineDate',
+					width: 120,
+					render: row => {
+						const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '放款时间',
-					prop: 'loanDate'
+					prop: 'loanDate',
+					width:120,
+					render: row => {
+						const date = timeDate.time(row.loanDate, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '打款单号',
 					prop: 'loanNumber'

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { pageAdmin } from './actions'
+import { pageAdmin, addAdmin, updateAdmin } from './actions'
 import MyPagination from '@components/MyPagination'
 import DisableBtn from '@components/DisableBtn'
 import Search from '@components/Search'
@@ -17,12 +17,15 @@ class BlackUser extends Component {
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
 		pageAdmin: PropTypes.func.isRequired,
+		addAdmin: PropTypes.func.isRequired,
+		updateAdmin: PropTypes.func.isRequired,
 		btnLoading: PropTypes.bool.isRequired,
 		roleList: PropTypes.array
   }
 	constructor(props) {
 		super(props)
 		this.state = {
+			dialogTitle:'',
 			form:{
 				adminName:'',
 				nickName:'',
@@ -67,7 +70,7 @@ class BlackUser extends Component {
 					render: row => {
 						let text = ''
 						this.props.roleList.find(item => {
-							if(item.id === row.id){
+							if(item.id === row.roleId){
 								text = item.roleName
 							}
 							return text
@@ -78,22 +81,22 @@ class BlackUser extends Component {
 					label: '用户状态',
 					prop: 'adminState',
 					render: row => {
-						return row.adminState === 1 ? '启用':'禁用'
+						return row.adminState === 0 ? '启用':'禁用'
 					}
 				}, {
 					label: '分配状态',
 					prop: 'distribution',
 					render: row => {
-						return row.distribution === 1 ? '正常分配' : '未分配'
+						return row.distribution === 0 ? '正常分配' : '未分配'
 					}
 				}, {
           label: '操作',
           render: row => {
             return (
 							<div>
-								<Button type="primary" size="mini">{'编辑'}</Button>
-								<DisableBtn value={ row.admindistribution } result={ 0 } text={ ['正常分配','不分配'] } />
-								<DisableBtn value={ row.adminState } result={ 0 } text={ ['启用','禁用'] } />
+								<Button type="primary" size="mini" onClick={ this.openDialog.bind(this,row) }>{'编辑'}</Button>
+								<DisableBtn value={ row.distribution } result={ 1 } text={ ['正常分配','不分配'] } onClick={ this.updateAdmin.bind(this,row,'distribution') } />
+								<DisableBtn value={ row.adminState } result={ 1 } text={ ['启用','禁用'] } onClick={ this.updateAdmin.bind(this,row) } />
 							</div>
             )
           }
@@ -105,6 +108,16 @@ class BlackUser extends Component {
   }
   componentDidMount() {
     this.props.pageAdmin()
+	}
+	updateAdmin = (r, type) => {
+		if (type === 'distribution'){
+			const state = r.distribution === 0 ? 1 : 0
+			this.props.updateAdmin({ id:r.id,distribution:state }, 'distribution')
+		}else{
+			const state = r.adminState === 0 ? 1 : 0
+			this.props.updateAdmin({ id:r.id,adminState:state }, 'adminState')
+		}
+
 	}
 	handleSearch = e => {
 		e.preventDefault()
@@ -123,23 +136,45 @@ class BlackUser extends Component {
 			form: Object.assign({}, this.state.form, { [key]: value })
 		})
 	}
-	openDialog = e => {
-		e.preventDefault()
+	openDialog = r => {
 		this.form.resetFields()
 		this.setState({
 			dialogVisible: true
 		})
+		if (r === 'add') { //添加
+			this.setState({
+				dialogTitle: '添加用户'
+			})
+		} else { // 编辑
+			console.log(r)
+			this.setState({
+				dialogTitle: '编辑用户',
+				form: {
+					adminName: r.adminName,
+					nickName: r.nickName,
+					roleId: r.roleId,
+					adminState: r.adminState, // 用户状态
+					distribution: r.distribution // 是否分配
+				},
+				id:r.id
+			})
+		}
 	}
 	saveContent = e => {
 		e.preventDefault()
-		console.log(this.state.form)
 		this.form.validate((valid) => {
 			if (valid) {
-				alert('submit!')
 				this.setState({
 					dialogVisible: false
 				})
 				console.log(this.state.form)
+				if (this.state.id) {
+					const trans = Object.assign({},this.state.form,{id:this.state.id})
+					this.props.updateAdmin(trans)
+				} else {
+					this.props.addAdmin(this.state.form)
+				}
+
 			} else {
 				console.log('error submit!!')
 				return false
@@ -151,13 +186,13 @@ class BlackUser extends Component {
 	}
 	render() {
 		const { list, btnLoading, roleList } = this.props
-		const { form, rules } = this.state
+		const { form, rules, dialogTitle } = this.state
 		return (
 			<div>
 				<Search showRole showAdminName>
 					<div>
 						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
-						<Button type="primary" onClick={ e => this.openDialog(e) }>{'添加'}</Button>
+						<Button type="primary" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
 					</div>
 				</Search>
 				<Loading loading={ list.loading }>
@@ -174,7 +209,7 @@ class BlackUser extends Component {
           onCurrentChange={ this.onCurrentChange }
         />
 				<Dialog
-					title="添加期限"
+					title= { dialogTitle }
 					visible={ this.state.dialogVisible }
 					onCancel={ () => this.setState({ dialogVisible: false }) }
 				>
@@ -219,7 +254,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, pageAdmin }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, pageAdmin, addAdmin, updateAdmin}, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(BlackUser)

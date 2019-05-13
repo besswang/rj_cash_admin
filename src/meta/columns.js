@@ -1,3 +1,4 @@
+import timeDate from '@global/timeDate'
 export const APPLY_COLUMNS = [
   {
     type:'index'
@@ -16,7 +17,11 @@ export const APPLY_COLUMNS = [
   },
   {
     label: '注册时间',
-    prop: 'gmt'
+    prop: 'gmt',
+    render: row => {
+      const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
+      return date
+    }
   }
 ]
 export const NORMAL_COLUMNS = [
@@ -36,10 +41,18 @@ export const NORMAL_COLUMNS = [
     prop: 'idcard'
   }, {
     label: '注册时间',
-    prop: 'time'
+    prop: 'time',
+    render: row => {
+      const date = timeDate.time(row.time, 'yyyy-MM-dd hh:mm:ss')
+      return date
+    }
   }, {
     label: '最后还款日期',
-    prop: 'lasttime'
+    prop: 'lasttime',
+    render: row => {
+      const date = timeDate.time(row.lasttime, 'yyyy-MM-dd hh:mm:ss')
+      return date
+    }
   }, {
     label: '借款次数',
     prop: 'num'
@@ -206,7 +219,8 @@ export const CONSUME = [
     type: 'index'
   }, {
     label: '日期',
-    prop: 'date'
+    prop: 'date',
+    width:120
   }, {
     label: '总费用',
     prop: 'costCount'
