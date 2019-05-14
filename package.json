@@ -64,6 +64,7 @@
     "style-loader": "0.23.1",
     "terser-webpack-plugin": "1.2.2",
     "url-loader": "1.1.2",
+    "wangeditor": "^3.1.1",
     "webpack": "4.28.3",
     "webpack-dev-server": "3.1.14",
     "webpack-manifest-plugin": "2.0.4",
@@ -149,7 +150,16 @@
       "no-case-declarations": 1,
       "no-return-assign": 1,
       "no-param-reassign": 0,
-      "no-shadow": [1, { "hoist": "never", "allow": ["resolve","reject"] }],
+      "no-shadow": [
+        1,
+        {
+          "hoist": "never",
+          "allow": [
+            "resolve",
+            "reject"
+          ]
+        }
+      ],
       "camelcase": 1,
       "no-unused-vars": 1
     }

@@ -54,6 +54,8 @@ import Role from '@containers/system/role'
 import Backup from '@containers/system/backup'
 import Borrowlimit from '@containers/system/borrowlimit'
 import Help from '@containers/system/help'
+import Banner from '@containers/system/banner'
+import Quota from '@containers/system/quota'
 // 推广管理
 import ChannelManage from '@containers/generalize/channelManage'
 import Statistics from '@containers/generalize/statistics'
@@ -291,6 +293,16 @@ export const CHILD_ROUTES = [
         path: '/system/help',
         exact: true,
         component: Help
+      }, {
+        name: '轮播图管理',
+        path: '/system/banner',
+        exact: true,
+        component: Banner
+      }, {
+        name: '提额管理',
+        path: '/system/quota',
+        exact: true,
+        component: Quota
       }
     ]
   }, {

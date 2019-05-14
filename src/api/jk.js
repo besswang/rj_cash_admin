@@ -77,6 +77,13 @@ export default {
   'deleteQuota': 'api/quota/deleteQuota', // 设置为默认，删除
   // 系统管理-帮助中心
   'pageGlobalconfig': 'api/globalConfig/pageGlobalconfig', //列表
+  'updateGlobalConfig': 'api/globalConfig/updateGlobalConfig', // 编辑
+  // 轮播图管理
+  'pageRotationChart': 'api/rotationChart/pageRotationChart', // 列表
+  'deleteRotationChart': 'api/rotationChart/deleteRotationChart', // 删除
+  'updateRotationChart': 'api/rotationChart/updateRotationChart', // 上/下架
+  // 提额管理
+  'pageuserQuota': 'api/userQuota/pageuserQuota', // 列表
   // 推广管理
   'selectChannel': 'api/channel/selectChannel', // 渠道管理
   'insertChannel': 'api/channel/insertChannel', // 渠道管理-添加

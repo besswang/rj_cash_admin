@@ -4,19 +4,16 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { pageAdmin, addAdmin, updateAdmin } from './actions'
+import { pageuserQuota, addAdmin, updateAdmin } from './actions'
 import MyPagination from '@components/MyPagination'
-import DisableBtn from '@components/DisableBtn'
-import Search from '@components/Search'
 import SelectPicker from '@components/SelectPicker'
-// import filter from '@global/filter'
 class BlackUser extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
-		pageAdmin: PropTypes.func.isRequired,
+		pageuserQuota: PropTypes.func.isRequired,
 		addAdmin: PropTypes.func.isRequired,
 		updateAdmin: PropTypes.func.isRequired,
 		btnLoading: PropTypes.bool.isRequired,
@@ -64,44 +61,18 @@ class BlackUser extends Component {
 					type: 'index',
 					fixed: 'left'
 				}, {
-					label: '用户账号',
-					prop: 'adminName'
+					label: '借款次数',
+					prop: 'orderNumber'
 				}, {
-					label: '用户昵称',
-					prop: 'nickName'
-				}, {
-					label: '用户角色',
-					prop: 'roleName',
-					render: row => {
-						let text = ''
-						this.props.roleList.find(item => {
-							if(item.id === row.roleId){
-								text = item.roleName
-							}
-							return text
-						})
-						return text
-					}
-				}, {
-					label: '用户状态',
-					prop: 'adminState',
-					render: row => {
-						return row.adminState === 0 ? '启用':'禁用'
-					}
-				}, {
-					label: '分配状态',
-					prop: 'distribution',
-					render: row => {
-						return row.distribution === 0 ? '正常分配' : '未分配'
-					}
-				}, {
+					label: '提额额度',
+					prop: 'money'
+				},{
           label: '操作',
           render: row => {
             return (
 							<div>
 								<Button type="primary" size="mini" onClick={ this.openDialog.bind(this,row) }>{'编辑'}</Button>
-								<DisableBtn value={ row.distribution } result={ 1 } text={ ['正常分配','不分配'] } onClick={ this.updateAdmin.bind(this,row,'distribution') } />
-								<DisableBtn value={ row.adminState } result={ 1 } text={ ['启用','禁用'] } onClick={ this.updateAdmin.bind(this,row) } />
+								<Button type="danger" size="mini">{'删除'}</Button>
 							</div>
             )
           }
@@ -112,7 +83,7 @@ class BlackUser extends Component {
 		this.props.initSearch()
   }
   componentDidMount() {
-    this.props.pageAdmin()
+    this.props.pageuserQuota()
 	}
 	updateAdmin = (r, type) => {
 		if (type === 'distribution'){
@@ -126,15 +97,15 @@ class BlackUser extends Component {
 	}
 	handleSearch = e => {
 		e.preventDefault()
-		this.props.pageAdmin()
+		this.props.pageuserQuota()
 	}
   sizeChange = e => {
     this.props.sizeChange(e)
-    this.props.pageAdmin()
+    this.props.pageuserQuota()
   }
   onCurrentChange = e => {
     this.props.currentChange(e)
-    this.props.pageAdmin()
+    this.props.pageuserQuota()
 	}
 	onChange(key, value) {
 		this.setState({
@@ -195,12 +166,7 @@ class BlackUser extends Component {
 		const { form, rules, dialogTitle, adminDisabled } = this.state
 		return (
 			<div>
-				<Search showRole showAdminName>
-					<div>
-						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
-						<Button type="primary" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
-					</div>
-				</Search>
+				<Button type="primary" className="margin-bottom15" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
 				<Loading loading={ list.loading }>
 					<Table
 						style={ { width: '100%' } }
@@ -269,7 +235,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, pageAdmin, addAdmin, updateAdmin}, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, pageuserQuota, addAdmin, updateAdmin}, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(BlackUser)

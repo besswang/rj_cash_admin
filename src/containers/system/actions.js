@@ -216,3 +216,81 @@ export const pageGlobalconfig = () => {
     console.log(data)
   }
 }
+// 帮助中心-编辑
+export const updateGlobalConfig = (obj) => {
+  return async dispatch => {
+    const data = await api.updateGlobalConfigApi(obj)
+    if (data.success) {
+      Message.success(data.msg)
+      dispatch(pageGlobalconfig())
+    }
+  }
+}
+
+// 轮播图管理-列表
+export const pageRotationChart = () => {
+  return async (dispatch, getState) => {
+    dispatch(requestPosts())
+    const searchAll = shouldFetchPosts(getState())
+    const data = await api.pageRotationChartApi(searchAll)
+    if (data.success) {
+      dispatch(receivePosts(data.data))
+    } else {
+      dispatch(failurePosts(data))
+    }
+  }
+}
+// 轮播图管理-删除
+export const deleteRotationChart = subreddit => {
+  return dispatch => {
+    MessageBox.confirm('删除该图片, 是否继续?', '提示', {
+      type: 'warning'
+    }).then(async () => {
+      dispatch(requestPosts())
+      const data = await api.deleteRotationChartApi(subreddit)
+      if (data.success) {
+        dispatch(pageRotationChart())
+        Message.success('删除成功')
+      } else {
+        dispatch(failurePosts(data))
+      }
+    }).catch(() => {
+      Message.info('取消删除')
+    })
+  }
+}
+
+// 轮播图管理-上/下架
+export const updateRotationChart = subreddit => {
+  const t = subreddit.status === 1 ? '上架' : '下架'
+  return dispatch => {
+    MessageBox.confirm(`${ t }该图片, 是否继续?`, '提示', {
+      type: 'warning'
+    }).then(async () => {
+      dispatch(requestPosts())
+      const data = await api.updateRotationChartApi(subreddit)
+      if (data.success) {
+        dispatch(pageRotationChart())
+        Message.success('删除成功')
+      } else {
+        dispatch(failurePosts(data))
+      }
+    }).catch(() => {
+      Message.info('取消操作')
+    })
+  }
+}
+
+// 提额管理
+export const pageuserQuota = () => {
+  return async (dispatch, getState) => {
+    dispatch(requestPosts())
+    const searchAll = shouldFetchPosts(getState())
+    const data = await api.pageuserQuotaApi(searchAll)
+    if (data.success) {
+      dispatch(receivePosts(data.data))
+    } else {
+      dispatch(failurePosts(data))
+    }
+  }
+}
