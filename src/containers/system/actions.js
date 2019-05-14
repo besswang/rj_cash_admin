@@ -271,7 +271,7 @@ export const updateRotationChart = subreddit => {
       const data = await api.updateRotationChartApi(subreddit)
       if (data.success) {
         dispatch(pageRotationChart())
-        Message.success('删除成功')
+        Message.success(`${ t }成功`)
       } else {
         dispatch(failurePosts(data))
       }

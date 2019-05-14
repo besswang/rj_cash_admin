@@ -78,6 +78,6 @@ export default {
   updateGlobalConfigApi: params => Fetch(jk.updateGlobalConfig, {method: 'post', body: params}),
   pageRotationChartApi: params => Fetch(jk.pageRotationChart, {method: 'post', body: params}),
   deleteRotationChartApi: params => Fetch(jk.deleteRotationChart, {method: 'delete', data: params}),
-  updateRotationChartApi: params => Fetch(jk.updateRotationChart, {method: 'put', data: params}),
+  updateRotationChartApi: params => Fetch(jk.updateRotationChart, {method: 'post', body: params}),
   pageuserQuotaApi: params => Fetch(jk.pageuserQuota, {method: 'post', body: params}),
 }
