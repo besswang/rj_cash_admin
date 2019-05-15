@@ -49,7 +49,7 @@ class Banner extends Component {
           render: row => {
             return (
 							<div>
-								<DisableBtn value={ row.distribution } result={ 1 } text={ ['上架','下架'] } onClick={ this.props.updateRotationChart.bind( this,{id:row.id, status:row.status}) }/>
+								<DisableBtn value={ row.status } result={ 1 } text={ ['上架','下架'] } onClick={ this.props.updateRotationChart.bind( this,{id:row.id, status:row.status}) }/>
 								<Button type="danger" size="mini" onClick={ this.props.deleteRotationChart.bind(this,{id:row.id}) }>{'删除'}</Button>
 							</div>
             )

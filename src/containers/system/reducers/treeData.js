@@ -5,7 +5,11 @@ const initTree = {
   loading: false,
   defaultExpandedKeys:[], // 展开的项
   defaultCheckedKeys:[], // 选中的项
-  data: []
+  data: [],
+  options: {
+    children: 'children',
+    label: 'text'
+  }
 }
 const treeData = (state = initTree, action) => {
   switch (action.type) {
@@ -23,7 +27,6 @@ const treeData = (state = initTree, action) => {
       //     }
       //     return id
       // })
-
       const b = action.posts.filter(item => {
         let data = null
         if (item.pid === 0){
@@ -47,8 +50,6 @@ const treeData = (state = initTree, action) => {
         ...state, data: b, loading: false, defaultCheckedKeys:keys
       }
     }
-
-
     case type.MENU_FAILURE_POSTS:{
       Notification.warning(action.posts.msg)
       return {...state, loading: false, data: []}

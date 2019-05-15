@@ -210,3 +210,4 @@ const mapDispatchToProps = dispatch => {
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Help)
+// https: //www.kancloud.cn/wangfupeng/wangeditor3/332599

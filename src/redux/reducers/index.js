@@ -220,6 +220,14 @@ const listInfo = (state = {}, action) => {
       return state
   }
 }
+const idCardInfo = (state = {}, action) => {
+  switch (action.type) {
+    case type.SAVE_ID_CARD_INFO:
+      return action.data
+    default:
+      return state
+  }
+}
 const channelList = (state = [], action) => {
     switch (action.type) {
       case type.SAVE_CHANNEL_NAME:{
@@ -274,6 +282,6 @@ const adminName = (state = '', action) => {
   }
 }
 export default combineReducers({
-  routerReducer, user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, selectClient, selectTime, router,
+  routerReducer, user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, selectClient, selectTime, router,
   btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName
 })

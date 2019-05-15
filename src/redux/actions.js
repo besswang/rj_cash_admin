@@ -160,6 +160,11 @@ export const saveList = data => ({
   type: type.SAVE_LIST_INFO,
   data
 })
+// 身份证信息
+export const saveIdCardInfo = data => ({
+  type: type.SAVE_ID_CARD_INFO,
+  data
+})
 
 // menu选中状态
 export const menuActive = defaultActive => ({

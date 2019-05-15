@@ -10,7 +10,7 @@ export default {
   // 会员管理
   'selectUserBySeach': 'api/user/selectUserBySeach', // 会员列表
   'selectIdCardByUserId': 'api/idCard/selectIdCardByUserId', // 会员详情-身份证信息
-  'selectPhoneReportByUserId': 'api/phone/selectPhoneReportByUserId', //会员详情-手机认证
+  'selectPhoneDateByUserId': 'api/phone/selectPhoneDateByUserId', //会员详情-手机认证
   'selectEmergencyByUserId': 'api/emergency/selectEmergencyByUserId', // 会员详情-紧急联系人
   'selectBankByUserId': 'api/bank/selectBankByUserId', // 会员详情-银行卡信息
   'selectReportMail': 'api/phone/selectReportMail', // 会员详情-通讯录

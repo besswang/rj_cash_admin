@@ -1,5 +1,18 @@
 import * as state from '@meta/state'
 export default {
+  //实名认证结果
+  verifyStatus(x){
+    switch (x) {
+      case '1':
+        return '姓名与号码一致'
+      case '2':
+        return '姓名与号码不一致'
+      case '3':
+        return '查询无结果'
+      default:
+        return '空值'
+    }
+  },
   // 还款类型
   moneyType(x) {
     switch (x) {

@@ -26,12 +26,9 @@ class BlackUser extends Component {
 		this.state = {
 			treeKey: '',
 			roleId: null,
-			options: {
-				children: 'children',
-				label: 'text'
-			},
 			roleName: null,
 			dialogVisible: false,
+			treeDialogVisible: false,
 			columns: [{
 					type: 'index',
 					fixed: 'left'
@@ -58,7 +55,7 @@ class BlackUser extends Component {
     this.props.initSearch()
   }
   componentDidMount() {
-    this.props.pageRole()
+		this.props.pageRole()
 	}
 	componentWillUnmount() {
 		// this.ztreeObj.destory();
@@ -85,11 +82,17 @@ class BlackUser extends Component {
 		})
 	}
 	openRules = roleId => {
-		this.renderTree()
 		this.props.selectRolemenus({roleId:roleId})
 		this.setState({
-			roleId: roleId
+			roleId: roleId,
+			treeDialogVisible: true
 		})
+		console.log(this.props.treeData.data)
+		if(this.props.treeData.data.length>0){
+			console.log('xuanran')
+			this.tree.setCheckedKeys([2,3,4])
+		}
+		this.renderTree()
 	}
 	renderTree = () => {
 		this.setState({
@@ -111,18 +114,25 @@ class BlackUser extends Component {
 
 		console.log(this.tree.getCheckedKeys(true))
 		// console.log(this.tree.getCheckedNodes())
+
 		const brr = this.tree.getCheckedKeys(true)
 		const arr = []
 		for(let i=0;i<brr.length;i++){
 			arr.push({menuId:brr[i], roleId: this.state.roleId})
 		}
 		console.log(arr)
-
 		// this.props.updateRolemenus(arr)
+		this.setState({
+			treeDialogVisible: false
+		})
+	}
+	setCheckedKeys() {
+		this.tree.setCheckedKeys([4])
 	}
 	render() {
 		const { list, btnLoading, treeData } = this.props
-		const { options, treeKey } = this.state
+		console.log(treeData)
+		const { dialogVisible,treeKey, treeDialogVisible, roleName } = this.state
 		return (
 			<div>
         <Button className="margin-bottom15" type="primary" onClick={ e => this.openDialog(e) }>{'添加'}</Button>
@@ -141,13 +151,13 @@ class BlackUser extends Component {
         />
 				<Dialog
 					title="添加角色"
-					visible={ this.state.dialogVisible }
+					visible={ dialogVisible }
 					onCancel={ () => this.setState({ dialogVisible: false }) }
 				>
 					<Dialog.Body>
 						<Form labelWidth="40">
 							<Form.Item label="角色">
-								<Input value={ this.state.roleName } onChange={ e => this.onChange(e) } />
+								<Input value={ roleName } onChange={ e => this.onChange(e) } />
 							</Form.Item>
 						</Form>
 					</Dialog.Body>
@@ -156,20 +166,32 @@ class BlackUser extends Component {
 						<Button type="primary" onClick={ this.saveContent } loading={ btnLoading }>{'确 定'}</Button>
 					</Dialog.Footer>
 				</Dialog>
-				<Loading loading={ treeData.loading }>
-					<Tree
-						ref={ e => {this.tree = e} }
-						data={ treeData.data }
-						options={ options }
-						key={ treeKey }
-						isShowCheckbox
-						highlightCurrent
-						nodeKey="id"
-						defaultCheckedKeys={ [2,3,4,5] }
-					/>
-				</Loading>
-				<Button type="primary" onClick={ this.saveTree } loading={ btnLoading }>{'确 定'}</Button>
-				<Button type="primary" onClick={ this.getCheckedKeys }>{'通过 key 获取'}</Button>
+
+				<Dialog
+					title="权限设置"
+					visible={ treeDialogVisible }
+					onCancel={ () => this.setState({ treeDialogVisible: false }) }
+				>
+					<Dialog.Body>
+						{/* <Loading loading={ treeData.loading }> */}
+							<Tree
+								ref={ e => {this.tree = e} }
+								data={ treeData.data }
+								options={ treeData.options }
+								key={ treeKey }
+								isShowCheckbox
+								nodeKey="id"
+								defaultCheckedKeys={ treeData.defaultCheckedKeys }
+								defaultExpandedKeys={ [1] }
+							/>
+						{/* </Loading> */}
+					</Dialog.Body>
+					<Dialog.Footer className="dialog-footer">
+						<Button onClick={ () => this.setState({ treeDialogVisible: false }) }>{'取 消'}</Button>
+						<Button type="primary" onClick={ this.getCheckedKeys }>{'确定'}</Button>
+						<Button onClick={ ()=>this.setCheckedKeys() }>{'通过 key 设置'}</Button>
+					</Dialog.Footer>
+				</Dialog>
 			</div>
 		)
 	}

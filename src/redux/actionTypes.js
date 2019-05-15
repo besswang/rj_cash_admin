@@ -36,3 +36,4 @@ export const SELECT_CHANNEL_NAME = 'SELECT_CHANNEL_NAME' // 下拉选中的渠�
 export const SAVE_ROLE_LIST = 'SAVE_ROLE_LIST' // 下拉选择角色
 export const ROLE_ID = 'ROLE_ID' // 选中的角色
 export const SAVE_ADMIN_NAME = 'SAVE_ADMIN_NAME' // 用户账号
+export const SAVE_ID_CARD_INFO = 'SAVE_ID_CARD_INFO' // 身份证信息
