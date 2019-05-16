@@ -13,13 +13,15 @@ const list = (state = {
   switch (action.type) {
     case type.REQUEST_POSTS:
       return {...state, loading: true}
-    case type.RECEIVE_POSTS:
-      return {
-        ...state,
-        data: action.posts.list,
-        total: action.posts.total,
-        loading: false
+    case type.RECEIVE_POSTS:{
+      let arr = null
+      if (action.posts.list){
+        arr = action.posts.list
+      }else{
+        arr = []
       }
+      return {...state, data: arr, total: action.posts.total, loading: false}
+    }
     case type.FAILURE_POSTS:{
       Notification.warning(action.posts.msg)
       return {...state, loading: false, data: []}

@@ -76,13 +76,21 @@ class Ditch extends Component {
 				}, {
 				  label: '操作',
           prop: 'operate',
-          width:180,
+          width:220,
           fixed:'right',
-          render: (row,columns,index) => {
+          render: row => {
             return (
-              <Link to="/statistics/ditchinside">
-                <Button type="text" size="mini">{'当天/总转化/渠道费用'}</Button>
-              </Link>
+              <div>
+                <Link to={ {pathname:'/statistics/ditchinside',state:{date:row.date,active:'1'}} }>
+                  <Button type="primary" size="mini">{'当天'}</Button>
+                </Link>
+                <Link to={ {pathname:'/statistics/ditchinside',state:{date:row.date,active:'2'}} }>
+                  <Button style={ {margin:'0 15px'} } type="primary" size="mini">{'总转化'}</Button>
+                </Link>
+                <Link to={ {pathname:'/statistics/ditchinside',state:{date:row.date,active:'3'}} }>
+                  <Button type="primary" size="mini">{'渠道费用'}</Button>
+                </Link>
+              </div>
             )
           }
 				}

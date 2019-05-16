@@ -1,4 +1,5 @@
 import timeDate from '@global/timeDate'
+import filter from '@global/filter'
 export const APPLY_COLUMNS = [
   {
     type:'index'
@@ -286,52 +287,60 @@ export const BANK = [{
   type: 'index',
 }, {
   label: '银行卡号',
-  prop: ''
+  prop: 'bankNumber'
 }, {
   label: '所属银行',
-  prop: ''
+  prop: 'bank'
 }, {
   label: '开户行地址',
   prop: ''
 }, {
   label: '预留号码',
-  prop: ''
+  prop: 'reservePhone'
 }, {
   label: '状态',
-  prop: ''
+  prop: 'bankType',
+  render: row => {
+    const type = filter.personalType(row.bankType)
+    return type
+  }
 }, {
   label: '认证时间',
-  prop: ''
+  prop: 'gmt',
+  render: row => {
+    const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
+    return date
+  }
 }]
 export const ADDRESS = [{
   type: 'index',
 }, {
   label: '姓名',
-  prop: ''
+  prop: 'contact_name'
 }, {
   label: '电话',
-  prop: ''
+  prop: 'contact_phone'
 }, {
   label: '通话次数',
-  prop: ''
+  prop: 'conversation_number'
 }]
 //通话记录
 export const CALL_LOG = [{
   type: 'index',
 }, {
   label: '通讯号码',
-  prop: ''
+  prop: 'communicationPhone'
 }, {
   label: '通讯时间',
-  prop: ''
+  prop: 'communicationTime'
 }, {
   label: '通讯方式',
-  prop: ''
+  prop: 'communicationType'
 }, {
   label: '通话时长/秒',
-  prop: ''
+  prop: 'communicationType'
 }, {
   label: '通话地点',
-  prop: ''
+  prop: 'communicationAddress'
 }]
 

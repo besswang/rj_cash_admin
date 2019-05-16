@@ -46,7 +46,7 @@ export const bankInfo = id => {
     dispatch(requestPosts())
     const data = await api.selectBankByUserIdApi(id)
     if (data.success) {
-      dispatch(receivePosts(data.data))
+      dispatch(receivePosts({list:data.data}))
     } else {
       dispatch(failurePosts(data))
     }
@@ -61,6 +61,21 @@ export const selectReportMail = posts => {
     const searchAll = shouldFetchPosts(getState())
     const trans = Object.assign({},searchAll,posts)
     const data = await api.selectReportMailApi(trans)
+    if (data.success) {
+      dispatch(receivePosts(data.data))
+    } else {
+      dispatch(failurePosts(data))
+    }
+    console.log(data)
+  }
+}
+// 通话记录
+export const selectReport = posts => {
+  return async (dispatch, getState) => {
+    dispatch(requestPosts())
+    const searchAll = shouldFetchPosts(getState())
+    const trans = Object.assign({}, searchAll, posts)
+    const data = await api.selectReportApi(trans)
     if (data.success) {
       dispatch(receivePosts(data.data))
     } else {

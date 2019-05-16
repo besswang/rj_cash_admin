@@ -1,46 +1,69 @@
 import React, { Component } from 'react'
-import { Table, Pagination } from 'element-react'
+import { Table, Loading } from 'element-react'
 import PropTypes from 'prop-types'
-export default class Detailtable extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-			total:25,
-			pageSizes: [5,10,20,30],
-			pageSize:5,
-			currentPage:1,
-			data: [{id:1}]
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { sizeChange, currentChange, initSearch } from '@redux/actions'
+import { selectReportMail, selectReport } from '@containers/detail/action'
+import MyPagination from './MyPagination'
+class Detailtable extends Component {
+  static propTypes = {
+    list: PropTypes.object,
+    num: PropTypes.number,
+    userId: PropTypes.number,
+    columns: PropTypes.array,
+    sizeChange: PropTypes.func.isRequired,
+    currentChange: PropTypes.func.isRequired,
+    selectReportMail: PropTypes.func.isRequired,
+    selectReport: PropTypes.func.isRequired
+  }
+  sizeChange = e => {
+    this.props.sizeChange(e)
+    const { num, userId } = this.props
+    if(num === 1){
+      this.props.selectReportMail({userId:userId})
+    } else {
+      this.props.selectReport({userId:userId})
     }
   }
-  componentWillMount() {
-    console.log(this.props)
-  }
-  componentDidMount() {
-
-  }
+  onCurrentChange = e => {
+    console.log(e)
+    this.props.currentChange(e)
+    const { num, userId } = this.props
+    if(num === 1){
+      this.props.selectReportMail({userId:userId})
+    } else {
+      this.props.selectReport({userId:userId})
+    }
+	}
   render() {
+    const { list, columns } = this.props
     return (
-      <div>
-        <Table
-          style={ { width: '100%' } }
-          columns={ this.props.columns }
-          data={ this.state.data }
-          border
-        />
-        <div className="pagination-con flex flex-direction_row justify-content_flex-center">
-          <Pagination
-          layout="total, sizes, prev, pager, next, jumper"
-          total={ this.state.total }
-          pageSizes={ this.state.pageSizes }
-          pageSize={ this.state.pageSize }
-          currentPage={ this.state.currentPage }
+      <div style={ {paddingBottom:240} }>
+        <Loading loading={ list.loading }>
+          <Table
+            style={ { width: '100%' } }
+            columns={ columns }
+            data={ list.data }
+            border
           />
-        </div>
+        </Loading>
+        <MyPagination
+          total={ list.total }
+          onSizeChange={ this.sizeChange }
+          onCurrentChange={ this.onCurrentChange }
+        />
       </div>
     )
   }
 }
-Detailtable.propTypes = {
-  // tabName: PropTypes.string,
-  columns: PropTypes.array
+const mapStateToProps = state => {
+	const { list } = state
+	return { list }
 }
+const mapDispatchToProps = dispatch => {
+	return {
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectReportMail, selectReport }, dispatch)
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Detailtable)

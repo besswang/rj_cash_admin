@@ -80,4 +80,9 @@ export default {
   deleteRotationChartApi: params => Fetch(jk.deleteRotationChart, {method: 'delete', data: params}),
   updateRotationChartApi: params => Fetch(jk.updateRotationChart, {method: 'post', body: params}),
   pageuserQuotaApi: params => Fetch(jk.pageuserQuota, {method: 'post', body: params}),
+  selectReportApi: params => Fetch(jk.selectReport, {method: 'get', data: params}),
+  pageChannelTheDayCountApi: params => Fetch(jk.pageChannelTheDayCount, {method: 'post', body: params}),
+  pageChannelTotalCountApi: params => Fetch(jk.pageChannelTotalCount, {method: 'post', body: params}),
+  pageChannelCostApi: params => Fetch(jk.pageChannelCost, {method: 'post', body: params}),
 }
+

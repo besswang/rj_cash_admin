@@ -14,6 +14,7 @@ export default {
   'selectEmergencyByUserId': 'api/emergency/selectEmergencyByUserId', // 会员详情-紧急联系人
   'selectBankByUserId': 'api/bank/selectBankByUserId', // 会员详情-银行卡信息
   'selectReportMail': 'api/phone/selectReportMail', // 会员详情-通讯录
+  'selectReport': 'api/phone/selectReport', // 通话记录
   'updateUserType': 'api/user/updateUserType', // 修改用户禁用状态
   'addUserBlack': 'api/user/addUserBlack', // 添加黑名单
   'removeUserBlack': 'api/user/removeUserBlack', // 移除黑名单
@@ -21,6 +22,9 @@ export default {
   'selectUserNoLoan': 'api/user/selectUserNoLoan', // 正常还款未借
   // 报表统计
   'pageChannelCount': 'api/reportForm/pageChannelCount', // 渠道统计
+  'pageChannelTheDayCount': 'api/reportForm/pageChannelTheDayCount', // 渠道统计-当天
+  'pageChannelTotalCount': 'api/reportForm/pageChannelTotalCount', // 渠道统计-总转化
+  'pageChannelCost': 'api/reportForm/pageChannelCost', // 渠道统计-渠道费用
   'pageOverdueCount': 'api/reportForm/pageOverdueCount', // 逾期统计
   'pageLoanCount': 'api/reportForm/pageLoanCount', // 放款统计
   'pageRepaymentCount': 'api/reportForm/pageRepaymentCount', // 还款统计

@@ -1,6 +1,6 @@
 // 催收管理-个人对账
 import React, { Component } from 'react'
-import { Button, Loading, Table } from 'element-react'
+import { Button, Loading, Table, Dialog, Form, Input } from 'element-react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -13,7 +13,8 @@ import filter from '@global/filter'
 import timeDate from '@global/timeDate'
 class WaitHuan extends Component {
 	static propTypes = {
-    list: PropTypes.object.isRequired,
+		list: PropTypes.object.isRequired,
+		btnLoading: PropTypes.bool.isRequired,
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
@@ -22,6 +23,31 @@ class WaitHuan extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			dialogVisible: false,
+			form: {
+				channelName: '', // 渠道名称,
+				daiName: '', // 贷超名称,
+				price: null, // 单价,
+				type: '', // 类型,
+				machineScore: null, // 机审分数,
+				userScore: null, // 人工分数
+				remake: '', // 备注,
+			},
+			rules: {
+				channelName: [{required: true,message: '请输入渠道名称',trigger: 'blur'}],
+				daiName: [{required: true,message: '请输入超贷名称',trigger: 'blur'}],
+				price: [{
+						required:true,
+						validator: (rule, value, callback) => {
+							if (value === '' || value === null) {
+								callback(new Error('请输入单价'))
+							} else {
+								callback()
+							}
+						}
+					}
+				]
+			},
 			columns: [{
 					type: 'index',
 					fixed: 'left'
@@ -135,7 +161,8 @@ class WaitHuan extends Component {
     this.props.selectPendingRepay()
 	}
 	render() {
-		const { list } = this.props
+		const { list, btnLoading } = this.props
+		const { columns, dialogVisible, form, rules, id } = this.state
 		return (
 			<div>
 				<Search showSelect2 showLoanType showSelectClient showSelectTime showTime>
@@ -144,7 +171,7 @@ class WaitHuan extends Component {
 				<Loading loading={ list.loading }>
 					<Table
 						style={ { width: '100%' } }
-						columns={ this.state.columns }
+						columns={ columns }
 						data={ list.data }
 						border
 					/>
@@ -154,14 +181,54 @@ class WaitHuan extends Component {
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />
+				<Dialog
+					title="线下还款"
+					visible={ dialogVisible }
+					onCancel={ () => this.setState({ dialogVisible: false }) }
+				>
+					<Dialog.Body>
+						<Form labelWidth="120" ref={ e => {this.form=e} } model={ form } rules={ rules }>
+							<Form.Item label="渠道名称" prop="channelName">
+								<Input disabled={ id ? true : false } value={ form.channelName } onChange={ this.onChange.bind(this, 'channelName') } />
+							</Form.Item>
+							<Form.Item label="贷超名称" prop="daiName">
+								<Input value={ form.daiName } onChange={ this.onChange.bind(this, 'daiName') } />
+							</Form.Item>
+							<Form.Item label="单价" prop="price">
+								<Input type="number" value={ form.price } onChange={ this.onChange.bind(this, 'price') } />
+							</Form.Item>
+							<Form.Item label="推广方式" prop="type">
+								{/* <SelectPicker
+									stringValue={ form.type }
+									onChange={ this.onChange.bind(this, 'type') }
+									optionsArr={ PROMOTION_TYPE }
+									placeholder={ '选择方式' }
+								/> */}
+							</Form.Item>
+							<Form.Item label="机审分数" prop="machineScore">
+								<Input type="number" value={ form.machineScore } onChange={ this.onChange.bind(this, 'machineScore') } />
+							</Form.Item>
+							<Form.Item label="人工审核分数" prop="userScore">
+								<Input type="number" value={ form.userScore } onChange={ this.onChange.bind(this, 'userScore') } />
+							</Form.Item>
+							<Form.Item label="备注" prop="remake">
+								<Input value={ form.remake } onChange={ this.onChange.bind(this, 'remake') } />
+							</Form.Item>
+						</Form>
+					</Dialog.Body>
+					<Dialog.Footer className="dialog-footer">
+						<Button onClick={ () => this.setState({ dialogVisible: false }) }>{'取 消'}</Button>
+						<Button type="primary" onClick={ this.saveContent } loading={ btnLoading }>{'确 定'}</Button>
+					</Dialog.Footer>
+				</Dialog>
 			</div>
 		)
 	}
 }
 
 const mapStateToProps = state => {
-	const { list } = state
-	return { list }
+	const { list, btnLoading } = state
+	return { list, btnLoading }
 }
 const mapDispatchToProps = dispatch => {
 	return {

@@ -53,7 +53,28 @@ class Mlist extends Component{
 				},
 				{
 					label: '认证参数',
-					prop: 'certification'
+					prop: 'authentype',
+					render: row => {
+						const text = []
+						if (row.authentype){
+							row.authentype.map(item => {
+								if (item === 'COMPLETED') {
+									text.push('red')
+								} else {
+									text.push('')
+								}
+								return text
+							})
+						}
+						return (
+							<div>
+								<span className={ text[0] }>{'身'}</span>{'、'}
+								<span className={ text[1] }>{'个'}</span>{'、'}
+								<span className={ text[2] }>{'手'}</span>{'、'}
+								<span className={ text[3] }>{'银'}</span>
+							</div>
+						)
+					}
 				}, {
 					label: '借款次数',
 					prop: 'loanNum'

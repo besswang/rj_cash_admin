@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Breadcrumb, Tabs, Button } from 'element-react'
+import { Breadcrumb, Tabs, Button, Table, Loading } from 'element-react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { selectIdCardByUserId, selectPhoneDateByUserId, emergency, bankInfo, selectReportMail } from './action'
+import { initSearch } from '@redux/actions'
+import { selectIdCardByUserId, selectPhoneDateByUserId, emergency, bankInfo, selectReportMail, selectReport } from './action'
 import Detailtable from '@components/detailTable'
 import { BANK, ADDRESS, CALL_LOG } from '@meta/columns'
 import '@styles/detail.less'
@@ -13,25 +14,18 @@ import filter from '@global/filter'
 class Detail extends Component{
   static propTypes = {
     listInfo: PropTypes.object,
+    list: PropTypes.object,
     idCardInfo: PropTypes.object,
     selectIdCardByUserId: PropTypes.func.isRequired,
     selectPhoneDateByUserId: PropTypes.func.isRequired,
     emergency:PropTypes.func.isRequired,
     bankInfo: PropTypes.func.isRequired,
-    selectReportMail:PropTypes.func.isRequired
-	}
-	constructor(props){
-		super(props)
-		this.state = {
-
-		}
+    selectReportMail:PropTypes.func.isRequired,
+    selectReport: PropTypes.func.isRequired,
+    initSearch: PropTypes.func.isRequired
 	}
 	componentWillMount() {
-    // this.props.selectIdCardByUserId({userId: 12})
-    // this.props.selectPhoneDateByUserId({userId: 12})
-    // this.props.emergency({userId: 12})
-    // this.props.bankInfo({userId: 12})
-    // this.props.selectReportMail({userId:1,page:1,limit:10})
+    this.props.initSearch()
 	}
 	componentDidMount() {
 
@@ -46,14 +40,20 @@ class Detail extends Component{
         return this.props.selectPhoneDateByUserId({userId: userId})
       }
       case '4':{ // 紧急联系人
+
         return this.props.emergency({userId: userId})
       }
       case '5':{ // 银行卡信息
         return this.props.bankInfo({userId: userId})
       }
-      case '6':{ // 通讯录
-        return this.props.selectReportMail({userId:userId})
-      }
+      case '6': // 通讯录
+        this.props.initSearch()
+        this.props.selectReportMail({userId:userId})
+        break
+      case '7': // 通话记录
+        this.props.initSearch()
+        this.props.selectReport({userId:userId})
+        break
       default:
         return ''
     }
@@ -65,7 +65,7 @@ class Detail extends Component{
     }
   }
 	render(){
-    const { listInfo, idCardInfo } = this.props
+    const { listInfo, idCardInfo, list } = this.props
 		return(
 			<div>
 				<Breadcrumb separator="/">
@@ -122,6 +122,23 @@ class Detail extends Component{
           </Tabs.Pane>
           <Tabs.Pane label="身份证信息" name="2">
             <ul className="flex flex-direction_column info-ul">
+              <li className="flex flex-direction_row info-li">
+                <p>{'身份证信息'}</p>
+              </li>
+              <li className="flex flex-direction_row info-li">
+                <div className="photo">
+                  <img src = { `data:image/jpeg;base64,${ idCardInfo.idcardFrontPhoto }` } alt="" />
+                  <p>{'身份证正面'}</p>
+                </div>
+                <div className="photo">
+                  <img src={ `data:image/jpeg;base64,${ idCardInfo.idcardBackPhoto }` } alt="" />
+                  <p>{'身份证反面'}</p>
+                </div>
+                <div className="photo">
+                  <img src={ `data:image/jpeg;base64,${ idCardInfo.idcardPortraitPhoto }` } alt="" />
+                  <p>{'人脸照片'}</p>
+                </div>
+              </li>
               <li className="flex flex-direction_row info-li">
                 <p>{'姓名：'}{ idCardInfo.realName }</p>
                 <p>{'性别：'}{ idCardInfo.gender }</p>
@@ -187,13 +204,20 @@ class Detail extends Component{
             </ul>
           </Tabs.Pane>
           <Tabs.Pane label="银行卡信息" name="5">
-            <Detailtable columns={ BANK }/>
+            <Loading loading={ list.loading }>
+              <Table
+                style={ { width: '100%' } }
+                columns={ BANK }
+                data={ list.data }
+                border
+              />
+            </Loading>
           </Tabs.Pane>
           <Tabs.Pane label="通讯录" name="6">
-            <Detailtable columns={ ADDRESS }/>
+            <Detailtable columns={ ADDRESS } num={ 1 } userId={ listInfo.id } />
           </Tabs.Pane>
           <Tabs.Pane label="通话记录" name="7">
-            <Detailtable columns={ CALL_LOG }/>
+            <Detailtable columns={ CALL_LOG } num={ 2 } userId={ listInfo.id }/>
           </Tabs.Pane>
         </Tabs>
 			</div>
@@ -201,12 +225,12 @@ class Detail extends Component{
 	}
 }
 const mapStateToProps = state => {
-	const { listInfo, idCardInfo } = state
-	return { listInfo, idCardInfo }
+	const { listInfo, idCardInfo, list } = state
+	return { listInfo, idCardInfo, list }
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ selectIdCardByUserId, selectPhoneDateByUserId, emergency, bankInfo, selectReportMail }, dispatch)
+		...bindActionCreators({ selectIdCardByUserId, selectPhoneDateByUserId, emergency, bankInfo, initSearch, selectReportMail, selectReport }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Detail)
