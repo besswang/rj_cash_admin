@@ -3,7 +3,7 @@ import { Form, Input } from 'element-react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
-import { selectSubreddit, selectSearchText,saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType, selectAllChannel,selectChannel, allRoles, changeRole, changeAdminName } from '@redux/actions'
+import { selectSubreddit, selectSearchText,saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType, selectAllChannel,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType } from '@redux/actions'
 import SelectPicker from '@components/SelectPicker'
 import Time from '@components/Settime'
 import { MLIST_SELECT, AUDIT_SELECT, AUDIT_SELECT_LESS, CUSTOMER_SELECT, TIME_SELECT, TIME_SELECT_LESS, LOAN_TYPE, LOAN_MODE,ALLOT_TYPE } from '@meta/select'
@@ -50,6 +50,8 @@ class Search extends Component {
     showAdminName: PropTypes.bool,
     changeAdminName: PropTypes.func.isRequired,
     adminName:PropTypes.string,
+    changeLoanType: PropTypes.func.isRequired,
+    loanType: PropTypes.number,
   }
   componentWillMount() {
     // 查询表单的初始化
@@ -62,7 +64,7 @@ class Search extends Component {
     }
   }
   render() {
-    const { typeId, typeName, realName, time, regTime, selectClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType, showRealName, showChannel, channelList,channelName, roleList, showRole, roleId, showAdminName, adminName } = this.props
+    const { typeId, typeName, realName, time, regTime, selectClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType, showRealName, showChannel, channelList,channelName, roleList, showRole, roleId, showAdminName, adminName, loanType } = this.props
     return (
       <Form inline>
         {
@@ -166,8 +168,8 @@ class Search extends Component {
           showLoanType &&
           <Form.Item>
             <SelectPicker
-              value={ selectClient }
-              onChange={ e => this.props.changeClient(e) }
+              value={ loanType }
+              onChange={ e => this.props.changeLoanType(e) }
               options={ LOAN_TYPE }
               placeholder={ '选择借贷类型' }
             />
@@ -243,14 +245,14 @@ class Search extends Component {
 const mapStateToProps = state => {
 	const {
 		typeId, typeName, time, regTime, selectClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName
-	} = state
+	,loanType} = state
 	return {
-		typeId, typeName, time, regTime, selectClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName
+		typeId, typeName, time, regTime, selectClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName,loanType
 	}
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ selectSubreddit, selectSearchText, saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType,selectAllChannel ,selectChannel, allRoles, changeRole, changeAdminName }, dispatch)
+		...bindActionCreators({ selectSubreddit, selectSearchText, saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType,selectAllChannel ,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Search)

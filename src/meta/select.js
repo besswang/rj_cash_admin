@@ -67,9 +67,6 @@ export const TIME_SELECT_LESS = [{
 }]
 
 export const LOAN_TYPE = [{
-  value: 0,
-  label: '正常'
-}, {
   value: 1,
   label: '延期'
 }, {
@@ -106,3 +103,11 @@ export const ALLOT_TYPE = [{
 }]
 
 export const PROMOTION_TYPE = ['cpa', 'cps', 'uv']
+
+export const REPAYMENT_TYPE = [{
+  value: 3,
+  label: '线下支付宝'
+}, {
+  value: 4,
+  label: '线下微信'
+}]

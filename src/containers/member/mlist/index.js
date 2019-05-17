@@ -3,7 +3,7 @@ import { Button, Table, Loading } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { sizeChange, currentChange, initSearch, saveList } from '@redux/actions'
+import { sizeChange, currentChange, initSearch, saveList, menuActive } from '@redux/actions'
 import { handelSearch, updateUserType, exportUser, addUserBlack, removeUserBlack } from './action'
 import { Link } from 'react-router-dom'
 import DisableBtn from '@components/DisableBtn'
@@ -12,6 +12,7 @@ import Search from '@components/Search'
 import timeDate from '@global/timeDate'
 class Mlist extends Component{
 	static propTypes = {
+		location: PropTypes.object.isRequired,
 		list: PropTypes.object.isRequired,
 		sizeChange: PropTypes.func.isRequired,
 		currentChange: PropTypes.func.isRequired,
@@ -21,7 +22,8 @@ class Mlist extends Component{
 		exportUser: PropTypes.func.isRequired,
 		addUserBlack: PropTypes.func.isRequired,
 		removeUserBlack: PropTypes.func.isRequired,
-		saveList: PropTypes.func.isRequired
+		saveList: PropTypes.func.isRequired,
+		menuActive: PropTypes.func.isRequired
 	}
 	constructor(props) {
 		super(props)
@@ -118,7 +120,7 @@ class Mlist extends Component{
 									onClick={ this.updateUserType.bind(this, row) }
 									text={ ['启用','禁用'] }
 								/>
-								<Link to="/detail">
+								<Link to={ {pathname:'/detail',state:{name:'用户信息',title:'会员列表',url:'/member/mlist'}} }>
 									<Button type="text" size="small" onClick={ this.props.saveList.bind(this, row) }>{'会员详情'}</Button>
 								</Link>
 							</div>
@@ -130,6 +132,7 @@ class Mlist extends Component{
 	}
 	componentWillMount() {
 		this.props.initSearch()
+		this.props.menuActive(this.props.location.pathname)
 	}
 	componentDidMount() {
 		console.log('mlist')
@@ -198,7 +201,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ sizeChange, currentChange, initSearch, handelSearch, updateUserType, exportUser, addUserBlack, removeUserBlack, saveList}, dispatch)
+		...bindActionCreators({ sizeChange, currentChange, initSearch, handelSearch, updateUserType, exportUser, addUserBlack, removeUserBlack, saveList, menuActive}, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Mlist)

@@ -1,11 +1,11 @@
 import api from '@api/index'
-import { requestPosts, receivePosts, failurePosts, shouldFetch } from '@redux/actions'
+import { requestPosts, receivePosts, failurePosts, shouldFetchPosts } from '@redux/actions'
 import { MessageBox, Message } from 'element-react'
 // 催收管理--逾期列表
 export const selectOverdueByParam = () => {
   return async (dispatch, getState) => {
     dispatch(requestPosts())
-    const searchAll = shouldFetch(getState())
+    const searchAll = shouldFetchPosts(getState())
     const data = await api.selectOverdueByParamApi(searchAll)
     if (data.success) {
       dispatch(receivePosts(data.data))
@@ -19,7 +19,7 @@ export const selectOverdueByParam = () => {
 export const selectCollectionByParam = () => {
   return async (dispatch, getState) => {
     dispatch(requestPosts())
-    const searchAll = shouldFetch(getState())
+    const searchAll = shouldFetchPosts(getState())
     const data = await api.selectCollectionByParamApi(searchAll)
     if (data.success) {
       dispatch(receivePosts(data.data))
@@ -33,8 +33,7 @@ export const selectCollectionByParam = () => {
 export const selectthePersion = () => {
   return async (dispatch, getState) => {
     dispatch(requestPosts())
-    const searchAll = shouldFetch(getState())
-    // const trans = Object.assign({}, searchAll, {typeId: 0}, {typeName: ''})
+    const searchAll = shouldFetchPosts(getState())
     const data = await api.selectthePersionApi(searchAll)
     if (data.success) {
       dispatch(receivePosts(data.data))

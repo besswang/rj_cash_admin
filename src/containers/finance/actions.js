@@ -26,18 +26,12 @@ export const updateStateLoan = subreddit => {
       const data = await api.updateStateLoanApi(subreddit)
       if (data.success) {
         dispatch(selectPendingLoan())
-        Message({
-          type: 'success',
-          message: data.msg
-        })
+        Message.success(data.msg)
       } else {
         dispatch(failurePosts(data))
       }
     }).catch(() => {
-      Message({
-        type: 'info',
-        message: '已取消操作'
-      })
+      Message.info('已取消操作')
     })
   }
 }
@@ -53,6 +47,32 @@ export const selectPendingRepay = () => {
       dispatch(failurePosts(data))
     }
     console.log(data)
+  }
+}
+// 待还款-全款
+export const updateStateComplete = obj => {
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.updateStateCompleteApi(obj)
+    if (data.success) {
+      dispatch(selectPendingRepay())
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
+    }
+  }
+}
+// 待还款-延期
+export const updateStateDelay = obj => {
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.updateStateDelayApi(obj)
+    if (data.success) {
+      dispatch(selectPendingRepay())
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
+    }
   }
 }
 
@@ -107,13 +127,10 @@ export const insertRemarks = (obj) => {
     dispatch(btnRequestPosts())
     const data = await api.insertRemarksApi(obj)
     if (data.success) {
-      dispatch(btnReceivePosts())
-      // 修改成功消息
-      Message.success('修改成功')
-      // 刷新当日到期列表
       dispatch(selectTheDayLoan())
+      dispatch(btnReceivePosts(data.msg))
     }else{
-      dispatch(btnFailurePosts())
+      dispatch(btnFailurePosts(data.msg))
     }
   }
 }

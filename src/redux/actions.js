@@ -39,8 +39,14 @@ export const initSearch = () => ({
     typeId: 0,
     typeName: '',
     realName: '',
-    channelName:''
+    channelName:'',
+    loanType: 0
   }
+})
+// menu选中状态
+export const menuActive = defaultActive => ({
+  type: type.MENU_ACTIVE,
+  defaultActive
 })
 // select下搜索类型
 export const selectSubreddit = typeId => ({
@@ -63,7 +69,11 @@ export const changeClient = id => ({
   type: type.SELECT_CLIENT,
   id
 })
-
+// select借款类型
+export const changeLoanType = data => ({
+  type: type.SELECT_LOAN_TYPE,
+  data
+})
 // select 日期搜索方式
 export const changeTimeType = id => ({
   type: type.SELECT_TIME_TYPE,
@@ -111,13 +121,15 @@ export const btnRequestPosts = () => ({
   type: type.BTN_REQUEST_POSTS
 })
 // 按钮的请求成功
-export const btnReceivePosts = () => ({
-  type: type.BTN_RECEIVE_POSTS
+export const btnReceivePosts = data => ({
+  type: type.BTN_RECEIVE_POSTS,
+  data
 })
 
 // 按钮的请求失败
-export const btnFailurePosts = () => ({
-  type: type.BTN_FAILURE_POSTS
+export const btnFailurePosts = data => ({
+  type: type.BTN_FAILURE_POSTS,
+  data
 })
 
 // 不过滤搜索
@@ -164,12 +176,6 @@ export const saveList = data => ({
 export const saveIdCardInfo = data => ({
   type: type.SAVE_ID_CARD_INFO,
   data
-})
-
-// menu选中状态
-export const menuActive = defaultActive => ({
-  type: type.MENU_ACTIVE,
-  defaultActive
 })
 
 // 存储角色列表

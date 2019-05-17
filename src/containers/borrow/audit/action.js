@@ -1,12 +1,8 @@
 import api from '@api/index'
 import { MessageBox, Message } from 'element-react'
-import { requestPosts, receivePosts, failurePosts } from '@redux/actions'
+import { requestPosts, receivePosts, failurePosts, shouldFetchPosts } from '@redux/actions'
 import { TO_BE_AUDITED, PENDING_LOAN } from '@meta/state'
 // 会员管理-会员列表
-const shouldFetchPosts = (state) => {
-  const posts = state.searchAll
-  return posts
-}
 export const handelSearch = () => {
   return async (dispatch, getState) => {
     dispatch(requestPosts())

@@ -108,6 +108,20 @@ export default {
       default:
         return '空值'
     }
+  },
+
+  // 审核状态
+  auditType(x) {
+    switch (x) {
+      case state.AUDIT:
+        return '待审核'
+      case state.FALSE:
+        return '审核失败'
+      case state.PENDING_LOAN:
+        return '审核成功'
+      default:
+        return '空值'
+    }
   }
 }
 

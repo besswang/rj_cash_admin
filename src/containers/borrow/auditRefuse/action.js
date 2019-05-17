@@ -1,11 +1,7 @@
 import api from '@api/index'
 import { AUDIT_FAILURE } from '@meta/state'
-import { requestPosts, receivePosts, failurePosts } from '@redux/actions'
+import { requestPosts, receivePosts, failurePosts, shouldFetchPosts } from '@redux/actions'
 // 会员管理-会员列表
-const shouldFetchPosts = (state) => {
-  const posts = state.searchAll
-  return posts
-}
 export const handelSearch = () => {
   return async (dispatch, getState) => {
     dispatch(requestPosts())

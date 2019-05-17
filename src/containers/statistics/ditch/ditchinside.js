@@ -24,7 +24,7 @@ class Ditchinside extends Component {
   constructor(props){
     super(props)
     this.state = {
-      breadcrumbTitle:'当天',
+      breadcrumbTitle:'',
       activeName:''
     }
   }
@@ -41,10 +41,19 @@ class Ditchinside extends Component {
     const { activeName } = this.state
     if (activeName === '1') {
       this.props.pageChannelTheDayCount({theDay:this.props.location.state.date})
+      this.setState({
+        breadcrumbTitle:'当天'
+      })
     } else if (activeName === '2'){
       this.props.pageChannelTotalCount({theDay:this.props.location.state.date})
+      this.setState({
+        breadcrumbTitle: '总转化'
+      })
     } else{
       this.props.pageChannelCost({theDay:this.props.location.state.date})
+      this.setState({
+        breadcrumbTitle: '渠道费用'
+      })
     }
   }
   sizeChange = e => {
@@ -90,7 +99,7 @@ class Ditchinside extends Component {
     const { breadcrumbTitle, activeName } = this.state
     return (
       <div>
-        <Breadcrumb separator="/">
+        <Breadcrumb separator="/" className="margin-bottom15">
           <Breadcrumb.Item>
             <Link to="/statistics/ditch">
               {'渠道统计'}

@@ -150,6 +150,9 @@ p{
 .pb15{
   padding-bottom:15px;
 }
+.ptb5{
+  padding:.3125rem 0;
+}
 .bgc1{
   background-color: #F0F2F5
 }

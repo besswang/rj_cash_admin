@@ -84,5 +84,7 @@ export default {
   pageChannelTheDayCountApi: params => Fetch(jk.pageChannelTheDayCount, {method: 'post', body: params}),
   pageChannelTotalCountApi: params => Fetch(jk.pageChannelTotalCount, {method: 'post', body: params}),
   pageChannelCostApi: params => Fetch(jk.pageChannelCost, {method: 'post', body: params}),
+  updateStateCompleteApi: params => Fetch(jk.updateStateComplete, {method: 'put', body: params}),
+  updateStateDelayApi: params => Fetch(jk.updateStateDelay, {method: 'put', body: params}),
 }
 

@@ -11,6 +11,8 @@ import * as type from '../actionTypes'
 import { PAGE_SIZE, CURRENT_PAGE } from '@meta/state'
 import treeData from '@containers/system/reducers/treeData'
 import roleList from './roleList'
+import { Message } from 'element-react'
+import { Notification } from 'element-react'
 // 搜索方式
 const typeId = (state = 0, action) => {
   switch (action.type) {
@@ -107,10 +109,14 @@ const btnLoading = (state = false, action) => {
   switch (action.type) {
     case type.BTN_REQUEST_POSTS:
       return true
-    case type.BTN_RECEIVE_POSTS:
+    case type.BTN_RECEIVE_POSTS:{
+      Message.success(action.data)
       return false
-    case type.BTN_FAILURE_POSTS:
+    }
+    case type.BTN_FAILURE_POSTS:{
+      Notification.error({title:'失败',message:action.data, duration:0})
       return false
+    }
     default:
       return state
   }
@@ -134,10 +140,13 @@ const search = {
   timeType: 0,
   typeId: 0,
   typeName: '',
-  realName: ''
+  realName: '',
+  loanType: 0
 }
 const searchAll = (state = search, action) => {
   switch (action.type) {
+    case type.SELECT_LOAN_TYPE:
+      return { ...state, loanType: action.data}
     case type.SAVE_ADMIN_NAME:
       return {...state,adminName:action.data}
     case type.ROLE_ID:
@@ -281,7 +290,24 @@ const adminName = (state = '', action) => {
       return state
   }
 }
+// 借款类型
+const loanType = (state = 0, action) => {
+  switch (action.type) {
+    case type.SELECT_LOAN_TYPE:{
+      let t = null
+      if (action.data !== '') {
+        t = action.data
+      } else {
+        t = 0
+      }
+      return t
+    }
+    case type.CLEAR_SEARCH_ALL:
+      return 0
+    default:
+      return state
+  }
+}
 export default combineReducers({
-  routerReducer, user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, selectClient, selectTime, router,
-  btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName
+  routerReducer, user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, selectClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType
 })

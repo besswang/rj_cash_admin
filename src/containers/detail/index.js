@@ -13,6 +13,7 @@ import timeDate from '@global/timeDate'
 import filter from '@global/filter'
 class Detail extends Component{
   static propTypes = {
+    location: PropTypes.object.isRequired,
     listInfo: PropTypes.object,
     list: PropTypes.object,
     idCardInfo: PropTypes.object,
@@ -23,15 +24,25 @@ class Detail extends Component{
     selectReportMail:PropTypes.func.isRequired,
     selectReport: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired
-	}
+  }
+  constructor(props) {
+      super(props)
+      this.state = {
+        name: ''
+      }
+  }
 	componentWillMount() {
     this.props.initSearch()
+    this.setState({
+      name: this.props.location.state.name
+    })
+    console.log(this.props)
 	}
 	componentDidMount() {
 
   }
   tabChange = (e) => {
-    const userId = this.props.listInfo.id
+    const userId = this.props.listInfo.userId ? this.props.listInfo.userId : this.props.listInfo.id
     switch (e) {
       case '2':{ // 身份证信息
         return this.props.selectIdCardByUserId({userId: userId})
@@ -66,60 +77,108 @@ class Detail extends Component{
   }
 	render(){
     const { listInfo, idCardInfo, list } = this.props
+    const { title, url } = this.props.location.state
+    const { name } = this.state
 		return(
 			<div>
-				<Breadcrumb separator="/">
-					{/* <Breadcrumb.Item>会员管理</Breadcrumb.Item> */}
+				<Breadcrumb separator="/" className="margin-bottom15">
 					<Breadcrumb.Item>
-						<Link to="/member/mlist">
-							{'会员列表'}
-						</Link>
+						<Link to={ url }>{ title }</Link>
 					</Breadcrumb.Item>
-					<Breadcrumb.Item>{'详情'}</Breadcrumb.Item>
+					<Breadcrumb.Item>{'用户详情'}</Breadcrumb.Item>
 				</Breadcrumb>
         <Tabs activeName="1" onTabClick={ tab => this.tabChange(tab.props.name) }>
-          <Tabs.Pane label="申请信息" name="1">
-            <ul className="flex flex-direction_column info-ul">
-              <li className="flex flex-direction_row info-li">
-                <p>{'真实姓名：'}{ listInfo.realName }</p>
-              </li>
-              <li className="flex flex-direction_row info-li">
-                <p>{'注册手机：'}{ listInfo.phone }</p>
-                <p>{'会员状态：'}{ listInfo.type === 0? '禁用':'启用' }</p>
-              </li>
-              <li className="flex flex-direction_row info-li">
-                <p>{'最后登陆时间：'}{ timeDate.time(listInfo.upt, 'yyyy-MM-dd hh:mm:ss') }</p>
-                <p>{'登陆IP地址：'}{ listInfo.loginIp }</p>
-              </li>
-              <li className="flex flex-direction_row info-li">
-                <p>{'注册时间：'}{ timeDate.time(listInfo.gmt, 'yyyy-MM-dd hh:mm:ss') }</p>
-              </li>
-              <li className="flex flex-direction_row info-li">
-                <p>{'家庭住址：'}</p>
-                <p>{'月收入：'}</p>
-              </li>
-              <li className="flex flex-direction_row info-li">
-                <p>{'单位名称：'}</p>
-                <p>{'单位电话：'}</p>
-              </li>
-              <li className="flex flex-direction_row info-li">
-                <p>{'单位地址：'}</p>
-                <p>{'职业：'}</p>
-              </li>
-              <li className="flex flex-direction_row info-li">
-                <p>{'QQ：'}</p>
-                <p>{'微信：'}</p>
-              </li>
-              <li className="flex flex-direction_row info-li">
-                <p>{'昵称：'}</p>
-                <p>{'性别：'}</p>
-              </li>
-              <li className="flex flex-direction_row info-li">
-                <p>{'借款次数：'}{ listInfo.loanNum }</p>
-                <p>{'登陆次数：'}</p>
-              </li>
-            </ul>
-          </Tabs.Pane>
+          {
+              name === '申请信息' &&
+              <Tabs.Pane label={ name } name="1">
+                <ul className="flex flex-direction_column info-ul">
+                  <li className="flex flex-direction_row info-li">
+                    <p>{'真实姓名：'}{ listInfo.realName }</p>
+                  </li>
+                  <li className="flex flex-direction_row info-li">
+                    <p>{'手机号码：'}{ listInfo.phone }</p>
+                    <p>{'借款金额：'}{ listInfo.applyMoney }</p>
+                  </li>
+                  <li className="flex flex-direction_row info-li">
+                    <p>{'申请期限：'}{ listInfo.applyTerm }</p>
+                    <p>{'申请时间：'}{ listInfo.gmt }</p>
+                  </li>
+                  <li className="flex flex-direction_row info-li">
+                    <p>{'审核状态：'}{ filter.auditType(listInfo.state) }</p>
+                    <p>{'贷款利率：'}{ timeDate.time(listInfo.gmt, 'yyyy-MM-dd hh:mm:ss') }</p>
+                  </li>
+                  <li className="flex flex-direction_row info-li">
+                    <p>{'息费：'}</p>
+                    <p>{'服务费：'}{ listInfo.serviceMoney }</p>
+                  </li>
+                  <li className="flex flex-direction_row info-li">
+                    <p>{'到期应还：'}{ listInfo.repaymentMoney }</p>
+                    <p>{'应放金额：'}{ listInfo.loanMoney }</p>
+                  </li>
+                  <li className="flex flex-direction_row info-li">
+                    <p>{'实际还款：'}{ listInfo.realRepaymentMoney }</p>
+                    <p>{'逾期费用：'}{ listInfo.overdueMoney }</p>
+                  </li>
+                  <li className="flex flex-direction_row info-li">
+                    <p>{'约定还款时间：'}{ listInfo.repaymentDate }</p>
+                    <p>{'还款时间：'}{ listInfo.finalDate }</p>
+                  </li>
+                  <li className="flex flex-direction_row info-li">
+                    <p>{'优惠券：'}</p>
+                    <p>{'打款单号：'}{ listInfo.loanNumber }</p>
+                  </li>
+                  <li className="flex flex-direction_row info-li">
+                    <p>{'打款方式：'}{ filter.loanMode(listInfo.loanMode) }</p>
+                    <p>{'打款账号：'}{ listInfo.accountNumber }</p>
+                  </li>
+                </ul>
+              </Tabs.Pane>
+          }
+          {
+            name === '用户信息' &&
+            <Tabs.Pane label={ name } name="1">
+              <ul className="flex flex-direction_column info-ul">
+                <li className="flex flex-direction_row info-li">
+                  <p>{'真实姓名：'}{ listInfo.realName }</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <p>{'注册手机：'}{ listInfo.phone }</p>
+                  <p>{'会员状态：'}{ listInfo.type === 0? '禁用':'启用' }</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <p>{'最后登陆时间：'}{ timeDate.time(listInfo.upt, 'yyyy-MM-dd hh:mm:ss') }</p>
+                  <p>{'登陆IP地址：'}{ listInfo.loginIp }</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <p>{'注册时间：'}{ timeDate.time(listInfo.gmt, 'yyyy-MM-dd hh:mm:ss') }</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <p>{'家庭住址：'}</p>
+                  <p>{'月收入：'}</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <p>{'单位名称：'}</p>
+                  <p>{'单位电话：'}</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <p>{'单位地址：'}</p>
+                  <p>{'职业：'}</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <p>{'QQ：'}</p>
+                  <p>{'微信：'}</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <p>{'昵称：'}</p>
+                  <p>{'性别：'}</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <p>{'借款次数：'}{ listInfo.loanNum }</p>
+                  <p>{'登陆次数：'}</p>
+                </li>
+              </ul>
+            </Tabs.Pane>
+          }
           <Tabs.Pane label="身份证信息" name="2">
             <ul className="flex flex-direction_column info-ul">
               <li className="flex flex-direction_row info-li">

@@ -8,7 +8,11 @@ export const selectIdCardByUserId = id => {
   return async dispatch => {
     const data = await api.selectIdCardByUserIdApi(id)
     if (data.success) {
-      dispatch(saveIdCardInfo(data.data))
+      if(data.data){
+        dispatch(saveIdCardInfo(data.data))
+      }else{
+        Message.info('无数据')
+      }
     }
   }
 }
@@ -21,7 +25,7 @@ export const selectPhoneDateByUserId = id => {
       if (data.data){
         dispatch(saveIdCardInfo(data.data))
       }else{
-        Message.info('数据为空')
+        Message.info('无数据')
       }
     }
   }
@@ -35,7 +39,7 @@ export const emergency = id => {
       if (data.data) {
         dispatch(saveIdCardInfo(data.data))
       } else {
-        Message.info('数据为空')
+        Message.info('无数据')
       }
     }
   }

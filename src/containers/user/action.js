@@ -19,15 +19,12 @@ export const managelogin = (form, fn) => {
     dispatch(btnRequestPosts())
     const data = await api.manageloginApi(form)
     if (data.success) {
-      dispatch(btnReceivePosts())
       dispatch(saveUser(form, data))
-      Message.success(data.msg)
+      dispatch(btnReceivePosts(data.msg))
       fn.push('/home')
     } else {
-      dispatch(btnFailurePosts())
-      Message.error(data.msg)
+      dispatch(btnFailurePosts(data.msg))
     }
-    console.log(data)
   }
 }
 // 退出(用户名-密码)
@@ -46,10 +43,7 @@ export const logout = (fn) => {
       }
       console.log(data)
     }).catch(() => {
-      Message({
-        type: 'info',
-        message: '已取消退出'
-      })
+      Message.info('已取消退出')
     })
   }
 }

@@ -5,7 +5,7 @@ import { Button, Loading, Table } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { sizeChange, currentChange, initSearch } from '@redux/actions'
+import { sizeChange, currentChange, initSearch, saveList } from '@redux/actions'
 import { selectOverdueByParam, addUserBlack, removeUserBlack } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
@@ -20,7 +20,8 @@ class Overdue extends Component{
     initSearch: PropTypes.func.isRequired,
 		selectOverdueByParam: PropTypes.func.isRequired,
 		addUserBlack: PropTypes.func.isRequired,
-		removeUserBlack: PropTypes.func.isRequired
+		removeUserBlack: PropTypes.func.isRequired,
+		saveList: PropTypes.func.isRequired,
   }
 	constructor(props) {
 		super(props)
@@ -92,10 +93,10 @@ class Overdue extends Component{
 					 }
 				}, {
 					label: '申请时间',
-					prop: 'nextApplyTime',
+					prop: 'gmt',
 					width: 120,
 					render: row => {
-						const date = timeDate.time(row.nextApplyTime, 'yyyy-MM-dd hh:mm:ss')
+						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
 						return date
 					}
 				}, {
@@ -140,11 +141,11 @@ class Overdue extends Component{
 					label: '操作',
 					fixed: 'right',
 					align: 'center',
-					render: () => {
+					render: row => {
 						return (
 							<div className="flex flex-direction_row">
-								<Link to="/member/mlist/detail">
-									<Button type="text" size="small">{'会员详情'}</Button>
+								<Link to={ {pathname:'/detail',state:{name:'申请信息',title:'逾期列表',url:'/collection/overdue'}} }>
+									<Button type="text" size="small" onClick={ this.props.saveList.bind(this, row) }>{'会员详情'}</Button>
 								</Link>
 							</div>
 						)
@@ -215,7 +216,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectOverdueByParam, addUserBlack, removeUserBlack }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectOverdueByParam, addUserBlack, removeUserBlack, saveList }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Overdue)

@@ -1,5 +1,5 @@
 import api from '@api/index'
-import { requestPosts, receivePosts, failurePosts, shouldFetchPosts } from '@redux/actions'
+import { requestPosts, receivePosts, failurePosts, shouldFetchPosts, btnRequestPosts, btnReceivePosts, btnFailurePosts } from '@redux/actions'
 import { MessageBox, Message } from 'element-react'
 // 推广统计
 export const selectPromotionStatistics = () => {
@@ -49,24 +49,28 @@ export const selectChannel = () => {
 // 渠道管理-添加
 export const insertChannel = obj => {
   return async dispatch => {
+    dispatch(btnRequestPosts())
     const data = await api.insertChannelApi(obj)
     if (data.success) {
-      Message.success('添加成功')
       dispatch(selectChannel())
+      dispatch(btnReceivePosts(data.msg))
+    }else{
+      dispatch(btnFailurePosts(data.msg))
     }
-    console.log(data)
   }
 }
 
 // 渠道管理-编辑
 export const updateChannel = obj => {
   return async dispatch => {
+    dispatch(btnRequestPosts())
     const data = await api.updateChannelApi(obj)
     if (data.success) {
-      Message.success('保存成功')
       dispatch(selectChannel())
+      dispatch(btnReceivePosts(data.msg))
+    }else{
+      dispatch(btnFailurePosts(data.msg))
     }
-    console.log(data)
   }
 }
 
@@ -80,16 +84,10 @@ export const prohibitChannel = obj => {
       const data = await api.prohibitChannelApi(obj)
       if (data.success) {
         dispatch(selectChannel())
-        Message({
-          type: 'success',
-          message: data.msg
-        })
+        Message.success(data.msg)
       }
     }).catch(() => {
-      Message({
-        type: 'info',
-        message: '已取消禁用'
-      })
+      Message.info(`已取消${ t }`)
     })
   }
 }

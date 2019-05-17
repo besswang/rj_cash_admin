@@ -3,13 +3,14 @@ import { Form, Button, Table, Loading } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { sizeChange, currentChange, initSearch, registerTime } from '@redux/actions'
+import { sizeChange, currentChange, initSearch, registerTime, menuActive } from '@redux/actions'
 import { normalSearch, endPayTime } from './actions'
 import Time from '@components/Settime'
 import MyPagination from '@components/MyPagination'
 import { NORMAL_COLUMNS } from '@meta/columns'
 class Apply extends Component{
 	static propTypes = {
+		location: PropTypes.object.isRequired,
 		list: PropTypes.object.isRequired,
 		regTime: PropTypes.array,
 		payTime: PropTypes.array,
@@ -19,9 +20,11 @@ class Apply extends Component{
 		registerTime: PropTypes.func.isRequired,
 		endPayTime: PropTypes.func.isRequired,
 		normalSearch: PropTypes.func.isRequired,
+		menuActive: PropTypes.func.isRequired
 	}
 	componentWillMount() {
 		this.props.initSearch()
+		this.props.menuActive(this.props.location.pathname)
 	}
 	componentDidMount() {
 		this.props.normalSearch()
@@ -90,7 +93,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, normalSearch, registerTime, endPayTime}, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, normalSearch, registerTime, endPayTime, menuActive}, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Apply)

@@ -1,16 +1,18 @@
 // 催收管理-个人对账
 import React, { Component } from 'react'
-import { Button, Loading, Table, Dialog, Form, Input } from 'element-react'
+import { Button, Loading, Table, Dialog, Form, Input, Tabs } from 'element-react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectPendingRepay } from './actions'
+import { selectPendingRepay, updateStateComplete, updateStateDelay } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
 import timeDate from '@global/timeDate'
+import SelectPicker from '@components/SelectPicker'
+import { REPAYMENT_TYPE } from '@meta/select'
 class WaitHuan extends Component {
 	static propTypes = {
 		list: PropTypes.object.isRequired,
@@ -18,35 +20,92 @@ class WaitHuan extends Component {
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
-		selectPendingRepay: PropTypes.func.isRequired
+		selectPendingRepay: PropTypes.func.isRequired,
+		updateStateComplete: PropTypes.func.isRequired,
+		updateStateDelay: PropTypes.func.isRequired
   }
 	constructor(props) {
 		super(props)
 		this.state = {
+			activeName: '1',
+			orderNumber:'', // 订单号
+			realRepaymentMoney: null, // 应还金额
+			applyMoney: null, // 借款金额
+			serviceMoney: null, // 服务费
+			orderId: null,
+			loanDate: '', // 放款时间
+			repaymentDate: '', // 约定还款日
 			dialogVisible: false,
 			form: {
-				channelName: '', // 渠道名称,
-				daiName: '', // 贷超名称,
-				price: null, // 单价,
-				type: '', // 类型,
-				machineScore: null, // 机审分数,
-				userScore: null, // 人工分数
-				remake: '', // 备注,
+				repaymentType: 3, // 还款方式（3:线下支付宝，4：线下微信）
+				repaymentMoney:null, // 还款金额
+				reductionMoney: null, // 减免金额
+				payNumber: null, // 支付单号
+				delayNumber: null, // 延期天数
+				reMoney: null // 延期金额
 			},
 			rules: {
-				channelName: [{required: true,message: '请输入渠道名称',trigger: 'blur'}],
-				daiName: [{required: true,message: '请输入超贷名称',trigger: 'blur'}],
-				price: [{
+				delayNumber: [{
+					required: true,
+					validator: (rule, value, callback) => {
+						if (value === '' || value === null) {
+							callback(new Error('请输入延期天数'))
+						} else {
+							callback()
+						}
+					}
+				}],
+				reMoney: [{
+					required: true,
+					validator: (rule, value, callback) => {
+						if (value === '' || value === null) {
+							callback(new Error('请输入延期金额'))
+						} else {
+							callback()
+						}
+					}
+				}],
+				repaymentType: [{
+					required: true,
+					validator: (rule, value, callback) => {
+						if (value === '' || value === null) {
+							callback(new Error('请选择还款方式'))
+						} else {
+							callback()
+						}
+					}
+				}],
+				repaymentMoney: [{
 						required:true,
 						validator: (rule, value, callback) => {
 							if (value === '' || value === null) {
-								callback(new Error('请输入单价'))
+								callback(new Error('请输入还款金额'))
 							} else {
 								callback()
 							}
 						}
 					}
-				]
+				],
+				reductionMoney: [{
+					required: true,
+					validator: (rule, value, callback) => {
+						if (value === '' || value === null) {
+							callback(new Error('请输入减免金额'))
+						} else {
+							callback()
+						}
+					}
+				}],
+				payNumber: [{
+					required: true,
+					validator: (rule, value, callback) => {
+						if (value === '' || value === null) {
+							callback(new Error('请输入支付单号'))
+						} else {
+							callback()
+						}
+					}
+				}]
 			},
 			columns: [{
 					type: 'index',
@@ -130,7 +189,7 @@ class WaitHuan extends Component {
 					render: row => {
 							return (
 								<div className="flex flex-direction_row">
-									<Button className="margin_right10" type="primary" size="mini">
+									<Button className="margin_right10" type="primary" size="mini" onClick={ this.openDialog.bind(this,row) }>
 										{'还款'}
 									</Button>
 									<Link to="/borrow/auddetail">
@@ -160,9 +219,60 @@ class WaitHuan extends Component {
     this.props.currentChange(e)
     this.props.selectPendingRepay()
 	}
+	onChange(key, value) {
+		this.setState({
+			form: Object.assign({}, this.state.form, { [key]: value })
+		})
+	}
+	openDialog = obj => {
+		this.setState({
+			dialogVisible: true,
+			orderId: obj.id,
+			orderNumber: obj.orderNumber, // 订单号
+			realRepaymentMoney: obj.realRepaymentMoney, // 应还金额
+			applyMoney: obj.applyMoney, // 借款金额
+			serviceMoney: obj.serviceMoney, // 服务费
+			loanDate: obj.loanDate, // 放款时间
+			repaymentDate: obj.repaymentDate, // 约定还款日
+		})
+		this.tabClick('1')
+		this.form.resetFields()
+	}
+	saveContent = e => {
+		e.preventDefault()
+		this.form.validate((valid) => {
+			if (valid) {
+				const obj = {}
+				const { activeName, form, orderId } = this.state
+				for(const a in form){
+					if (form[a]){
+						obj[a] = form[a]
+					}
+				}
+				const data = Object.assign({}, obj, {orderId:orderId})
+				if(activeName === '1'){ // 全款
+					this.props.updateStateComplete(data)
+				} else { // 延期
+					this.props.updateStateDelay(data)
+				}
+				this.setState({
+					dialogVisible: false
+				})
+			} else {
+				console.log('error submit!!')
+				return false
+			}
+		})
+	}
+	tabClick = v => {
+		this.setState({
+			activeName: v
+		})
+		this.form.resetFields()
+	}
 	render() {
 		const { list, btnLoading } = this.props
-		const { columns, dialogVisible, form, rules, id } = this.state
+		const { columns, dialogVisible, form, rules, orderNumber, realRepaymentMoney, applyMoney, serviceMoney, loanDate, repaymentDate, activeName } = this.state
 		return (
 			<div>
 				<Search showSelect2 showLoanType showSelectClient showSelectTime showTime>
@@ -187,32 +297,61 @@ class WaitHuan extends Component {
 					onCancel={ () => this.setState({ dialogVisible: false }) }
 				>
 					<Dialog.Body>
-						<Form labelWidth="120" ref={ e => {this.form=e} } model={ form } rules={ rules }>
-							<Form.Item label="渠道名称" prop="channelName">
-								<Input disabled={ id ? true : false } value={ form.channelName } onChange={ this.onChange.bind(this, 'channelName') } />
+						<Tabs activeName={ activeName } onTabClick={ (tab) => this.tabClick(tab.props.name) }>
+							<Tabs.Pane label="全款" name="1"></Tabs.Pane>
+							<Tabs.Pane label="延期" name="2"></Tabs.Pane>
+						</Tabs>
+						<ul className="flex flex-direction_column margin-bottom15">
+							<li className="flex flex-direction_row justify-content_flex-justify ptb5">
+								<p>{'订单号:'}{ orderNumber }</p>
+							</li>
+							<li className="flex flex-direction_row justify-content_flex-justify ptb5">
+								<p>{'应还金额:'}{ realRepaymentMoney }</p>
+								<p>{'借款金额:'}{ applyMoney }</p>
+							</li>
+							<li className="flex flex-direction_row justify-content_flex-justify ptb5">
+								<p>{'服务费:'}{ serviceMoney }</p>
+
+								<p>{'借款期限:'}{ timeDate.time(loanDate, 'yyyy-MM-dd hh:mm:ss') }{'-'}{ repaymentDate }</p>
+							</li>
+							<li className="flex flex-direction_row justify-content_flex-justify ptb5">
+								<p className="red">{'剩余应还:'}{ realRepaymentMoney }</p>
+							</li>
+						</ul>
+						<Form labelWidth="80" ref={ e => {this.form=e} } model={ form } rules={ rules }>
+							<Form.Item label="还款方式" prop="repaymentType">
+								<SelectPicker
+									value={ form.repaymentType }
+									onChange={ this.onChange.bind(this, 'repaymentType') }
+									options={ REPAYMENT_TYPE }
+									placeholder={ '选择还款方式' }
+								/>
 							</Form.Item>
-							<Form.Item label="贷超名称" prop="daiName">
-								<Input value={ form.daiName } onChange={ this.onChange.bind(this, 'daiName') } />
-							</Form.Item>
-							<Form.Item label="单价" prop="price">
-								<Input type="number" value={ form.price } onChange={ this.onChange.bind(this, 'price') } />
-							</Form.Item>
-							<Form.Item label="推广方式" prop="type">
-								{/* <SelectPicker
-									stringValue={ form.type }
-									onChange={ this.onChange.bind(this, 'type') }
-									optionsArr={ PROMOTION_TYPE }
-									placeholder={ '选择方式' }
-								/> */}
-							</Form.Item>
-							<Form.Item label="机审分数" prop="machineScore">
-								<Input type="number" value={ form.machineScore } onChange={ this.onChange.bind(this, 'machineScore') } />
-							</Form.Item>
-							<Form.Item label="人工审核分数" prop="userScore">
-								<Input type="number" value={ form.userScore } onChange={ this.onChange.bind(this, 'userScore') } />
-							</Form.Item>
-							<Form.Item label="备注" prop="remake">
-								<Input value={ form.remake } onChange={ this.onChange.bind(this, 'remake') } />
+							{
+								activeName === '1' &&
+								<Form.Item label="还款金额" prop="repaymentMoney">
+									<Input type="number" value={ form.repaymentMoney } onChange={ this.onChange.bind(this, 'repaymentMoney') } />
+								</Form.Item>
+							}
+							{ activeName === '1' &&
+								<Form.Item label="减免金额" prop="reductionMoney">
+									<Input type="number" value={ form.reductionMoney } onChange={ this.onChange.bind(this, 'reductionMoney') } />
+								</Form.Item>
+							}
+							{
+								activeName === '2' &&
+								<Form.Item label="延期天数" prop="delayNumber">
+									<Input type="number" value={ form.delayNumber } onChange={ this.onChange.bind(this, 'delayNumber') } />
+								</Form.Item>
+							}
+							{ activeName === '2' &&
+								<Form.Item label="延期金额" prop="reMoney">
+									<Input type="number" value={ form.reMoney } onChange={ this.onChange.bind(this, 'reMoney') } />
+								</Form.Item>
+							}
+
+							<Form.Item label="还款单号" prop="payNumber">
+								<Input type="number" value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
 							</Form.Item>
 						</Form>
 					</Dialog.Body>
@@ -232,7 +371,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectPendingRepay }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectPendingRepay, updateStateComplete, updateStateDelay }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(WaitHuan)

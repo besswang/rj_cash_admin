@@ -42,6 +42,8 @@ export default {
   'selectPendingLoan': 'api/order/selectPendingLoan', // 待放款
   'updateStateLoan': 'api/order/updateStateLoan', // 拒绝放款
   'selectPendingRepay': 'api/order/selectPendingRepay', // 待还款
+  'updateStateComplete': 'api/order/updateStateComplete', // 待还款-还款-全款
+  'updateStateDelay': 'api/order/updateStateDelay', // 待还款-还款-延期
   'selectOrderCompleted': 'api/order/selectOrderCompleted', // 已完成
   'selectBill': 'api/bill/selectBill', // 已还款
   'selectTheDayLoan': 'api/order/selectTheDayLoan', // 当日到期
