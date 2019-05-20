@@ -1,6 +1,5 @@
 // 催收管理-逾期列表
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { Button, Loading, Table } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -10,8 +9,10 @@ import { selectOverdueByParam, addUserBlack, removeUserBlack } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import DisableBtn from '@components/DisableBtn'
+import DetailBtn from '@components/DetailBtn'
 import filter from '@global/filter'
 import timeDate from '@global/timeDate'
+import { doverdue } from '@meta/details'
 class Overdue extends Component{
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -143,11 +144,7 @@ class Overdue extends Component{
 					align: 'center',
 					render: row => {
 						return (
-							<div className="flex flex-direction_row">
-								<Link to={ {pathname:'/detail',state:{name:'申请信息',title:'逾期列表',url:'/collection/overdue'}} }>
-									<Button type="text" size="small" onClick={ this.props.saveList.bind(this, row) }>{'会员详情'}</Button>
-								</Link>
-							</div>
+							<DetailBtn linkTo={ doverdue } row={ row } />
 						)
 					}
       }]
@@ -179,9 +176,9 @@ class Overdue extends Component{
 				phone: r.phone,
 				realName: r.realName
 			}
-			this.props.addUserBlack(trans)
+			this.props.addUserBlack(trans,'overdue')
 		} else { // 移除
-			this.props.removeUserBlack({phone: r.phone})
+			this.props.removeUserBlack({phone: r.phone},'overdue')
 		}
 	}
 	render() {

@@ -37,18 +37,12 @@ export const handelAudit = subreddit => {
       const data = await api.updataStateApi(subreddit)
       if (data.success) {
         dispatch(handelSearch())
-        Message({
-          type: 'success',
-          message: data.msg
-        })
+        Message.success(data.msg)
       } else {
         dispatch(failurePosts(data))
       }
     }).catch(() => {
-      Message({
-        type: 'info',
-        message: `已取消${ t }`
-      })
+      Message.info(`已取消${ t }`)
     })
   }
 }

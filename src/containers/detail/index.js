@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { initSearch } from '@redux/actions'
-import { selectIdCardByUserId, selectPhoneDateByUserId, emergency, bankInfo, selectReportMail, selectReport } from './action'
+import { selectIdCardByUserId, selectPhoneDateByUserId, emergency, bankInfo, selectReportMail, selectReport, selectMobileReport } from './action'
 import Detailtable from '@components/detailTable'
 import { BANK, ADDRESS, CALL_LOG } from '@meta/columns'
 import '@styles/detail.less'
@@ -23,7 +23,9 @@ class Detail extends Component{
     bankInfo: PropTypes.func.isRequired,
     selectReportMail:PropTypes.func.isRequired,
     selectReport: PropTypes.func.isRequired,
-    initSearch: PropTypes.func.isRequired
+    initSearch: PropTypes.func.isRequired,
+    selectMobileReport: PropTypes.func.isRequired,
+    mobileData: PropTypes.object
   }
   constructor(props) {
       super(props)
@@ -48,10 +50,10 @@ class Detail extends Component{
         return this.props.selectIdCardByUserId({userId: userId})
       }
       case '3':{ // 手机认证
+        this.props.selectMobileReport({userId: userId})
         return this.props.selectPhoneDateByUserId({userId: userId})
       }
       case '4':{ // 紧急联系人
-
         return this.props.emergency({userId: userId})
       }
       case '5':{ // 银行卡信息
@@ -74,6 +76,16 @@ class Detail extends Component{
       const t = JSON.parse(obj)
       return t.living_attack === '0' ? '未检测到活体攻击' : '存在活体攻击风险'
     }
+  }
+  goReport = () => {
+    const { mobileData } = this.props
+    const url = `https://tenant.51datakey.com/carrier/mxreport_data?data=${ mobileData.reportData }&contact=${ mobileData.relativesPhone }:${ mobileData.relativesName }:${ mobileData.relatives },${ mobileData.sociologyPhone }:${ mobileData.sociologyName }:${ mobileData.sociology }`
+    console.log(url)
+    const a = document.createElement('a')
+    a.setAttribute('target', 'view_window')
+    a.setAttribute('href', url)
+    a.click()
+    console.log(url)
   }
 	render(){
     const { listInfo, idCardInfo, list } = this.props
@@ -234,7 +246,7 @@ class Detail extends Component{
               </li>
             </ul>
             <div className="flex flex-direction_row justify-content_flex-end">
-              <Button size="small" type="primary" className="margin_top15">{'查看手机报表'}</Button>
+              <Button size="small" type="primary" className="margin_top15" onClick={ this.goReport.bind(this) }>{'查看手机报表'}</Button>
             </div>
           </Tabs.Pane>
           <Tabs.Pane label="紧急联系人" name="4">
@@ -284,12 +296,12 @@ class Detail extends Component{
 	}
 }
 const mapStateToProps = state => {
-	const { listInfo, idCardInfo, list } = state
-	return { listInfo, idCardInfo, list }
+	const { listInfo, idCardInfo, list, mobileData } = state
+	return { listInfo, idCardInfo, list, mobileData }
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ selectIdCardByUserId, selectPhoneDateByUserId, emergency, bankInfo, initSearch, selectReportMail, selectReport }, dispatch)
+		...bindActionCreators({ selectIdCardByUserId, selectPhoneDateByUserId, emergency, bankInfo, initSearch, selectReportMail, selectReport, selectMobileReport }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Detail)

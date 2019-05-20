@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Button, Table, Loading } from 'element-react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
@@ -8,6 +7,10 @@ import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { handelSearch } from './action'
 import MyPagination from '@components/MyPagination'
 import Search from '@components/Search'
+import DetailBtn from '@components/DetailBtn'
+import { dauditRefuse } from '@meta/details'
+import filter from '@global/filter'
+import timeDate from '@global/timeDate'
 class AuditRefuse extends Component{
 	static propTypes = {
 		list: PropTypes.object.isRequired,
@@ -29,43 +32,61 @@ class AuditRefuse extends Component{
 					fixed: 'left'
 				},{
 					label: '渠道名称',
-					prop: 'configKey'
+					prop: 'channelName'
 				},{
 					label: '真实姓名',
-					prop: 'idcard'
+					prop: 'channelName'
 				},
 				{
 					label: '风控分数',
-					prop: 'ditch'
+					prop: 'riskNum'
 				},
 				{
 					label: '手机号码',
-					prop: 'zip'
+					prop: 'phone'
 				},
 				{
 					label: '身份证号',
-					prop: 'zip'
+					prop: 'idcardNumber'
 				}, {
 					label: '申请金额',
-					prop: 'zip'
+					prop: 'applyMoney'
 				}, {
 					label: '申请期限',
-					prop: 'zip'
+					prop: 'applyTerm'
 				}, {
 					label: '服务费',
-					prop: 'zip'
+					prop: 'serviceMoney'
 				}, {
 					label: '催款次数',
-					prop: 'zip'
+					prop: 'loanTerm'
 				}, {
 					label: '新老客户',
-					prop: 'zip'
+					prop: 'loanTerm',
+					render: row => {
+						const text = filter.loanTerm(row.loanTerm)
+						return text
+					}
 				}, {
 					label: '申请时间',
-					prop: 'zip'
+					prop: 'nextApplyTime'
 				}, {
-					label: '审核建议',
-					prop: 'zip'
+					label: '审核客服',
+					prop: 'examineCustomer'
+				}, {
+					label: '审核时间',
+					prop: 'examineDate',
+					render: row => {
+						const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
+				}, {
+					label: '拒绝时间',
+					prop: 'gmt',
+					render: row => {
+						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '操作',
 					fixed: 'right',
@@ -76,10 +97,7 @@ class AuditRefuse extends Component{
 									<Button className="margin_right10" type="success" size="mini">
 										{'开放申请'}
 									</Button>
-									{/* <Button type="text" size="small" onClick={this.deleteRow.bind(this, index)}>会员详情</Button> */}
-									<Link to="/borrow/auddetail">
-										<Button type="text" size="small">{'用户详情'}</Button>
-									</Link>
+									<DetailBtn linkTo={ dauditRefuse } row={ row } />
 								</div>
 							)
 					}

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectblackphone, deleteBlackphone } from './actions'
+import { selectblackphone, deleteBlackphone, download } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 class BlackUser extends Component {
@@ -15,7 +15,8 @@ class BlackUser extends Component {
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
 		selectblackphone: PropTypes.func.isRequired,
-		deleteBlackphone: PropTypes.func.isRequired
+		deleteBlackphone: PropTypes.func.isRequired,
+		download: PropTypes.func.isRequired,
   }
 	constructor(props) {
 		super(props)
@@ -73,7 +74,10 @@ class BlackUser extends Component {
 		return (
 			<div>
 				<Search showSelect2>
-					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+					<div>
+						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+						<Button onClick={ this.props.download } type="primary">{'模版下载'}</Button>
+					</div>
 				</Search>
 				<Loading loading={ list.loading }>
 					<Table
@@ -99,7 +103,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectblackphone, deleteBlackphone }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectblackphone, deleteBlackphone, download }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(BlackUser)

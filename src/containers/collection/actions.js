@@ -1,5 +1,5 @@
 import api from '@api/index'
-import { requestPosts, receivePosts, failurePosts, shouldFetchPosts } from '@redux/actions'
+import { requestPosts, receivePosts, failurePosts, shouldFetchPosts, btnRequestPosts, btnReceivePosts, btnFailurePosts } from '@redux/actions'
 import { MessageBox, Message } from 'element-react'
 // 催收管理--逾期列表
 export const selectOverdueByParam = () => {
@@ -43,8 +43,8 @@ export const selectthePersion = () => {
   }
 }
 
-// 添加黑名单
-export const addUserBlack = subreddit => {
+// 逾期-添加黑名单
+export const addUserBlack = (subreddit,text) => {
   return dispatch => {
     MessageBox.confirm('将该用户添加至黑名单, 是否继续?', '提示', {
       type: 'warning'
@@ -52,7 +52,11 @@ export const addUserBlack = subreddit => {
       dispatch(requestPosts())
       const data = await api.addUserBlackApi(subreddit)
       if (data.success) {
-        dispatch(selectOverdueByParam())
+        if(text === 'overdue'){ // 逾期
+          dispatch(selectOverdueByParam())
+        }else{
+          dispatch(selectCollectionByParam())
+        }
         Message.success(data.msg)
       } else {
         dispatch(failurePosts(data))
@@ -62,8 +66,8 @@ export const addUserBlack = subreddit => {
     })
   }
 }
-// 移除黑名单
-export const removeUserBlack = subreddit => {
+// 逾期-移除黑名单
+export const removeUserBlack = (subreddit, text) => {
   return dispatch => {
     MessageBox.confirm('将该用户添从黑名单移除, 是否继续?', '提示', {
       type: 'warning'
@@ -71,7 +75,11 @@ export const removeUserBlack = subreddit => {
       dispatch(requestPosts())
       const data = await api.removeUserBlackApi(subreddit)
       if (data.success) {
-        dispatch(selectOverdueByParam())
+        if (text === 'overdue') { // 逾期
+          dispatch(selectOverdueByParam())
+        }else{
+          dispatch(selectCollectionByParam())
+        }
         Message.success('从黑名单移除成功')
       } else {
         dispatch(failurePosts(data))
@@ -79,5 +87,18 @@ export const removeUserBlack = subreddit => {
     }).catch(() => {
       Message.info('已取消操作')
     })
+  }
+}
+// 备注-保存
+export const insertRemarks = (obj) => {
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.insertRemarksApi(obj)
+    if (data.success) {
+      dispatch(selectCollectionByParam())
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
+    }
   }
 }

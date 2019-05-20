@@ -1,15 +1,17 @@
 // 催收管理-催收列表
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { Button, Loading, Table } from 'element-react'
+import { Button, Loading, Table, Dialog, Input, Form } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectCollectionByParam, addUserBlack, removeUserBlack } from './actions'
+import { selectCollectionByParam, addUserBlack, removeUserBlack, insertRemarks } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import DisableBtn from '@components/DisableBtn'
+import DetailBtn from '@components/DetailBtn'
+import { dcollection } from '@meta/details'
+import filter from '@global/filter'
 class Collection extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -18,14 +20,23 @@ class Collection extends Component {
     initSearch: PropTypes.func.isRequired,
 		selectCollectionByParam: PropTypes.func.isRequired,
 		addUserBlack: PropTypes.func.isRequired,
-		removeUserBlack: PropTypes.func.isRequired
+		removeUserBlack: PropTypes.func.isRequired,
+		btnLoading: PropTypes.bool.isRequired,
+		insertRemarks: PropTypes.func.isRequired
   }
 	constructor(props) {
 		super(props)
 		this.state = {
+			dialogVisible: false,
+			content: '',
+			orderNumber: '',
+			orderId: null,
 			columns: [{
 					type: 'index',
 					fixed: 'left'
+				}, {
+					label: '备注信息',
+					prop: 'content'
 				}, {
 					label: '渠道名称',
 					prop: 'channelName'
@@ -48,7 +59,7 @@ class Collection extends Component {
 					label: '服务费',
 					prop: 'serviceMoney'
 				}, {
-					label: '到账金额',// 已放金额
+					label: '已放金额',// 已放金额/到账金额
 					prop: 'loanMoney'
 				}, {
 					label: '银行名称',
@@ -66,7 +77,7 @@ class Collection extends Component {
 					label: '逾期天数',
 					prop: 'overdueNumber'
 				}, {
-					label: '逾期费用', // 逾期金额
+					label: '逾期金额', // 逾期金额
 					prop: 'overdueMoney'
 				}, {
 					label: '借款次数',
@@ -95,10 +106,17 @@ class Collection extends Component {
 					prop: 'loanNumber'
 				}, {
 					label: '打款方式',
-					prop: 'loanMode'
+					prop: 'loanMode',
+					render: row => {
+						const text = filter.loanModeState(row.loanMode)
+						return text
+					}
 				}, {
 					label: '跟单人',
 					prop: 'tracker'
+				}, {
+					label: '催收状态',
+					prop: ''
 				}, {
 					label: '申请单号',
 					prop: 'orderNumber'
@@ -109,6 +127,7 @@ class Collection extends Component {
 						 return (
 							 <DisableBtn
 									value={ row.blackStatus }
+									result={ 0 }
 									onClick={ this.userBlack.bind(this, row) }
 									text={ ['添加','移除'] }
 								/>
@@ -118,12 +137,14 @@ class Collection extends Component {
 					label: '操作',
 					fixed: 'right',
 					align: 'center',
-					render: () => {
+					width: 140,
+					render: row => {
 						return (
 							<div className="flex flex-direction_row">
-								<Link to="/member/mlist/detail">
-									<Button type="text" size="small">{'会员详情'}</Button>
-								</Link>
+								<Button className="margin_right10" type="primary" size="mini" onClick={ this.openDialog.bind(this, row) }>
+									{'备注'}
+								</Button>
+								<DetailBtn linkTo={ dcollection } row={ row } />
 							</div>
 						)
 					}
@@ -152,7 +173,7 @@ class Collection extends Component {
 	userBlack(r){
 		if(r.blackStatus === 0){ // 添加
 			const trans = {
-				idCard: r.idNumber,
+				idCard: r.idcardNumber,
 				phone: r.phone,
 				realName: r.realName
 			}
@@ -161,8 +182,31 @@ class Collection extends Component {
 			this.props.removeUserBlack({phone: r.phone})
 		}
 	}
+	openDialog = r => {
+		this.setState({
+			dialogVisible: true,
+			content: r.content,
+			orderNumber: r.orderNumber,
+			orderId: r.id
+		})
+	}
+	onChange = e => {
+		this.setState({
+			content: e
+		})
+	}
+	saveContent = e => {
+		e.preventDefault()
+		this.props.insertRemarks({
+			content: this.state.content,
+			orderId: this.state.orderId
+		})
+		this.setState({
+			dialogVisible: false
+		})
+	}
 	render() {
-		const { list } = this.props
+		const { list, btnLoading } = this.props
 		return (
 			<div>
 				<Search showSelect2 showSelectClient showSelectTime showTime>
@@ -181,18 +225,38 @@ class Collection extends Component {
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />
+				<Dialog
+					title="修改备注"
+					visible={ this.state.dialogVisible }
+					onCancel={ () => this.setState({ dialogVisible: false }) }
+				>
+					<Dialog.Body>
+						<Form>
+							<Form.Item label="订单号" labelWidth="120">
+								<p>{ this.state.orderNumber }</p>
+							</Form.Item>
+							<Form.Item label="备注信息" labelWidth="120">
+								<Input type="textarea" value={ this.state.content } onChange={ e => this.onChange(e) } />
+							</Form.Item>
+						</Form>
+					</Dialog.Body>
+					<Dialog.Footer className="dialog-footer">
+						<Button onClick={ () => this.setState({ dialogVisible: false }) }>{'取 消'}</Button>
+						<Button type="primary" onClick={ this.saveContent } loading={ btnLoading }>{'确 定'}</Button>
+					</Dialog.Footer>
+				</Dialog>
 			</div>
 		)
 	}
 }
 
 const mapStateToProps = state => {
-	const { list } = state
-	return { list }
+	const { list, btnLoading } = state
+	return { list, btnLoading }
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectCollectionByParam, addUserBlack, removeUserBlack }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectCollectionByParam, addUserBlack, removeUserBlack,insertRemarks }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Collection)

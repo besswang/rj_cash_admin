@@ -11,6 +11,7 @@ export default {
   'selectUserBySeach': 'api/user/selectUserBySeach', // 会员列表
   'selectIdCardByUserId': 'api/idCard/selectIdCardByUserId', // 会员详情-身份证信息
   'selectPhoneDateByUserId': 'api/phone/selectPhoneDateByUserId', //会员详情-手机认证
+  'selectMobileReport': 'api/phone/selectMobileReport', // 查看手机报表
   'selectEmergencyByUserId': 'api/emergency/selectEmergencyByUserId', // 会员详情-紧急联系人
   'selectBankByUserId': 'api/bank/selectBankByUserId', // 会员详情-银行卡信息
   'selectReportMail': 'api/phone/selectReportMail', // 会员详情-通讯录

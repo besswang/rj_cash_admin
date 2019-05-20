@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import { Button, Table, Loading } from 'element-react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { handelSearch, handelAudit } from './action'
 import MyPagination from '@components/MyPagination'
-import { AUDIT_FAILURE, PENDING_LOAN } from '@meta/state'
 import Search from '@components/Search'
+import DetailBtn from '@components/DetailBtn'
+import { daudit } from '@meta/details'
+import { FALSE, PENDING_LOAN } from '@meta/state'
+import filter from '@global/filter'
 // import store from '@redux/store'
 class Audit extends Component{
 	static propTypes = {
@@ -65,13 +67,17 @@ class Audit extends Component{
 					prop: 'loanTerm'
 				}, {
 					label: '新老客户',
-					prop: 'zip'
+					prop: 'loanTerm',
+					render: row => {
+						const text = filter.loanTerm(row.loanTerm)
+						return text
+					}
 				}, {
 					label: '申请时间',
-					prop: 'finalDate'
+					prop: 'nextApplyTime'
 				}, {
 					label: '审核建议',
-					prop: 'zip'
+					prop: ''
 				}, {
 					label: '操作',
 					fixed: 'right',
@@ -85,13 +91,11 @@ class Audit extends Component{
 										{'通过'}
 									</Button>
 									<Button className="margin_right10" type="danger" size="mini"
-										onClick={ this.handelAudit.bind(this,row.id, AUDIT_FAILURE) }
+										onClick={ this.handelAudit.bind(this,row.id, FALSE) }
 									>
 										{'拒绝'}
 									</Button>
-									<Link to="/borrow/auddetail">
-										<Button type="text" size="small">{'用户详情'}</Button>
-									</Link>
+									<DetailBtn linkTo={ daudit } row={ row } />
 								</div>
 							)
 					}

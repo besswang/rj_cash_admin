@@ -9,6 +9,8 @@ import { selectOrderCompleted } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
+import DetailBtn from '@components/DetailBtn'
+import { dalreadyWan } from '@meta/details'
 class AlreadyWan extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -21,8 +23,7 @@ class AlreadyWan extends Component {
 		super(props)
 		this.state = {
 			columns: [{
-					type: 'index',
-					fixed: 'left'
+					type: 'index'
 				}, {
 					label: '渠道名称',
 					prop: 'channelName'
@@ -116,7 +117,14 @@ class AlreadyWan extends Component {
 				}, {
 					label: '银行账号',
 					prop: 'bankNumber'
-				}]
+				}, {
+					label: '操作',
+					render: row => {
+							return (
+								<DetailBtn linkTo={ dalreadyWan } row={ row } />
+							)
+					}
+      }]
 		}
 	}
 	componentWillMount() {

@@ -86,5 +86,6 @@ export default {
   pageChannelCostApi: params => Fetch(jk.pageChannelCost, {method: 'post', body: params}),
   updateStateCompleteApi: params => Fetch(jk.updateStateComplete, {method: 'put', body: params}),
   updateStateDelayApi: params => Fetch(jk.updateStateDelay, {method: 'put', body: params}),
+  selectMobileReportApi: params => Fetch(jk.selectMobileReport, {method: 'get', data: params}),
 }
 

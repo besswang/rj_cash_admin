@@ -38,3 +38,4 @@ export const ROLE_ID = 'ROLE_ID' // 选中的角色
 export const SAVE_ADMIN_NAME = 'SAVE_ADMIN_NAME' // 用户账号
 export const SAVE_ID_CARD_INFO = 'SAVE_ID_CARD_INFO' // 身份证信息
 export const SELECT_LOAN_TYPE = 'SELECT_LOAN_TYPE' // 借款类型
+export const SAVE_MOBILE_DATA = 'SAVE_MOBILE_DATA' // 手机报表查询数据

@@ -1,7 +1,7 @@
 // 打款状态
 export const TO_BE_AUDITED = 'AUDIT' // 待审核
 export const AUDIT = 'AUDIT' // 待审核
-export const AUDIT_FAILURE = 'FALSE' // 审核失败
+// export const AUDIT_FAILURE = 'FALSE' // 审核失败
 export const PENDING_LOAN = 'PENDING_LOAN' // 待放款/审核成功
 export const LOAN_FAILURE = 'LOAN_FAILURE' // 放款失败
 export const PENDING_REPAYMENT = 'PENDING_REPAYMENT' // 待还款
@@ -25,7 +25,7 @@ export const SUCCESS = 'SUCCESS' // ("成功")
 export const ANDROID = 'ANDROID' // 安卓
 export const IOS = 'IOS' // 苹果
 
-// 还款方式
+// 还款方式/打款方式
 export const WX = 'WX' // ("微信"),
 export const ALI = 'ALI' // ("支付宝"),
 export const BANK = 'BANK' // ("银行卡"),

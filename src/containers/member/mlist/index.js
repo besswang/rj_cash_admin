@@ -3,13 +3,14 @@ import { Button, Table, Loading } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { sizeChange, currentChange, initSearch, saveList, menuActive } from '@redux/actions'
+import { sizeChange, currentChange, initSearch, saveList, menuActive} from '@redux/actions'
 import { handelSearch, updateUserType, exportUser, addUserBlack, removeUserBlack } from './action'
-import { Link } from 'react-router-dom'
 import DisableBtn from '@components/DisableBtn'
 import MyPagination from '@components/MyPagination'
 import Search from '@components/Search'
+import DetailBtn from '@components/DetailBtn'
 import timeDate from '@global/timeDate'
+import { dmlist } from '@meta/details'
 class Mlist extends Component{
 	static propTypes = {
 		location: PropTypes.object.isRequired,
@@ -120,9 +121,7 @@ class Mlist extends Component{
 									onClick={ this.updateUserType.bind(this, row) }
 									text={ ['启用','禁用'] }
 								/>
-								<Link to={ {pathname:'/detail',state:{name:'用户信息',title:'会员列表',url:'/member/mlist'}} }>
-									<Button type="text" size="small" onClick={ this.props.saveList.bind(this, row) }>{'会员详情'}</Button>
-								</Link>
+								<DetailBtn linkTo={ dmlist } row={ row } />
 							</div>
 						)
 					}

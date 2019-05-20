@@ -1,7 +1,6 @@
 // 催收管理-个人对账
 import React, { Component } from 'react'
 import { Button, Loading, Table, Dialog, Form, Input, Tabs } from 'element-react'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -13,6 +12,8 @@ import filter from '@global/filter'
 import timeDate from '@global/timeDate'
 import SelectPicker from '@components/SelectPicker'
 import { REPAYMENT_TYPE } from '@meta/select'
+import DetailBtn from '@components/DetailBtn'
+import { dwaitHuan } from '@meta/details'
 class WaitHuan extends Component {
 	static propTypes = {
 		list: PropTypes.object.isRequired,
@@ -192,9 +193,7 @@ class WaitHuan extends Component {
 									<Button className="margin_right10" type="primary" size="mini" onClick={ this.openDialog.bind(this,row) }>
 										{'还款'}
 									</Button>
-									<Link to="/borrow/auddetail">
-										<Button type="text" size="small">{'用户详情'}</Button>
-									</Link>
+									<DetailBtn linkTo={ dwaitHuan } row={ row } />
 								</div>
 							)
 					}

@@ -308,6 +308,15 @@ const loanType = (state = 0, action) => {
       return state
   }
 }
+// 手机报表
+const mobileData = (state = {}, action) => {
+  switch (action.type) {
+    case type.SAVE_MOBILE_DATA:
+      return action.data
+    default:
+      return state
+  }
+}
 export default combineReducers({
-  routerReducer, user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, selectClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType
+  routerReducer, user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, selectClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType, mobileData
 })

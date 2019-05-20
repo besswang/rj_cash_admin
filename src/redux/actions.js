@@ -4,7 +4,6 @@ import * as type from './actionTypes'
 import api from '@api/index'
 import { PAGE_SIZE, CURRENT_PAGE } from '@meta/state'
 import timeDate from '@global/timeDate'
-
 // 搜索渠道名称
 export const selectAllChannel = () => {
   return async dispatch => {

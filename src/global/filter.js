@@ -57,7 +57,23 @@ export default {
         return '空值'
     }
   },
-
+  // 打款方式
+  loanModeState(x) {
+    switch (x) {
+      case state.ALI:
+        return '支付宝'
+      case state.WX:
+        return '微信'
+      case state.BANK:
+        return '银行卡'
+      case state.UTL_ALI:
+        return '线下支付宝'
+      case state.UTL_WX:
+        return '线下微信'
+      default:
+        return '空值'
+    }
+  },
   // 订单类型 默认  0 正常 1 延期   2逾期
   loanType (x) {
     switch (x) {
@@ -66,6 +82,19 @@ export default {
       case 1:
         return '延期'
       case 2:
+        return '逾期'
+      default:
+        return '空值'
+    }
+  },
+  // 订单类型 默认  0 正常 1 延期   2逾期
+  loanTyp(x) {
+    switch (x) {
+      case state.NORMAL:
+        return '正常'
+      case state.DEAL:
+        return '延期'
+      case state.OVERDUE:
         return '逾期'
       default:
         return '空值'

@@ -41,3 +41,14 @@ export const deleteBlackphone = subreddit => {
     })
   }
 }
+
+export const download = () => {
+  return dispatch => {
+    const url = `${ process.env.PUBLIC_URL }/api/blackPhone/excelexport`
+    const a = document.createElement('a')
+    a.setAttribute('download', '')
+    a.setAttribute('href', url)
+    a.click()
+    console.log(url)
+  }
+}

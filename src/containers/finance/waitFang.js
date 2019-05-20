@@ -1,7 +1,6 @@
 // 催收管理-个人对账
 import React, { Component } from 'react'
 import { Button, Loading, Table } from 'element-react'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -11,6 +10,8 @@ import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
 import { FALSE } from '@meta/state'
+import DetailBtn from '@components/DetailBtn'
+import { dwaitFang } from '@meta/details'
 class WaitFang extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -101,9 +102,7 @@ class WaitFang extends Component {
 									<Button className="margin_right10" type="danger" size="mini" onClick={ this.props.updateStateLoan.bind(this,{orderId:row.id,phone:row.phone,realName:row.realName,state:FALSE}) }>
 										{'拒绝'}
 									</Button>
-									<Link to="/borrow/auddetail">
-										<Button type="text" size="small">{'用户详情'}</Button>
-									</Link>
+									<DetailBtn linkTo={ dwaitFang } row={ row } />
 								</div>
 							)
 					}
