@@ -12,7 +12,6 @@ class DetailBtn extends Component {
     row: PropTypes.object.isRequired
  }
  render() {
-   console.log(this.props)
     const { linkTo, row } = this.props
     return (
       <Link to={ linkTo }>

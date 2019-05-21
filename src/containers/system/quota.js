@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import { Button, Loading, Table, Dialog,Form, Input, Radio } from 'element-react'
+import { Button, Loading, Table, Dialog,Form, Input } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { pageuserQuota, addAdmin, updateAdmin } from './actions'
+import { pageuserQuota, adduserquota, updateuserquota, deleteuserquota } from './actions'
 import MyPagination from '@components/MyPagination'
-import SelectPicker from '@components/SelectPicker'
 class BlackUser extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -14,10 +13,10 @@ class BlackUser extends Component {
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
 		pageuserQuota: PropTypes.func.isRequired,
-		addAdmin: PropTypes.func.isRequired,
-		updateAdmin: PropTypes.func.isRequired,
-		btnLoading: PropTypes.bool.isRequired,
-		roleList: PropTypes.array
+		adduserquota: PropTypes.func.isRequired,
+		updateuserquota: PropTypes.func.isRequired,
+		deleteuserquota: PropTypes.func.isRequired,
+		btnLoading: PropTypes.bool.isRequired
   }
 	constructor(props) {
 		super(props)
@@ -25,28 +24,25 @@ class BlackUser extends Component {
 			dialogTitle:'',
 			adminDisabled: false,
 			form:{
-				adminName:'',
-				nickName:'',
-				roleId: null,
-				adminState: 1, // 用户状态
-				distribution: 1, // 是否分配
-				password:''
+				orderNumber: null,
+				money: null,
 			},
 			rules: {
-				adminName: [
-					{ required: true, message: '请输入登陆手机号', trigger: 'blur' }
-				],
-				nickName: [
-					{ required: true, message: '请输入昵称', trigger: 'blur' }
-				],
-				password: [
-					{ required: true, message: '请输入密码', trigger: 'blur' }
-				],
-				roleId: [{
+				orderNumber: [{
 					required: true,
 					validator: (rule, value, callback) => {
 						if (value === '' || value === null) {
-							callback(new Error('请选择角色'))
+							callback(new Error('请输入借款次数'))
+						} else {
+							callback()
+						}
+					}
+				}],
+				money: [{
+					required: true,
+					validator: (rule, value, callback) => {
+						if (value === '' || value === null) {
+							callback(new Error('请输入提额额度'))
 						} else {
 							callback()
 						}
@@ -72,7 +68,7 @@ class BlackUser extends Component {
             return (
 							<div>
 								<Button type="primary" size="mini" onClick={ this.openDialog.bind(this,row) }>{'编辑'}</Button>
-								<Button type="danger" size="mini">{'删除'}</Button>
+								<Button type="danger" size="mini" onClick={ this.props.deleteuserquota.bind(this, row.id) }>{'删除'}</Button>
 							</div>
             )
           }
@@ -84,16 +80,6 @@ class BlackUser extends Component {
   }
   componentDidMount() {
     this.props.pageuserQuota()
-	}
-	updateAdmin = (r, type) => {
-		if (type === 'distribution'){
-			const state = r.distribution === 0 ? 1 : 0
-			this.props.updateAdmin({ id:r.id,distribution:state }, 'distribution')
-		}else{
-			const state = r.adminState === 0 ? 1 : 0
-			this.props.updateAdmin({ id:r.id,adminState:state }, 'adminState')
-		}
-
 	}
 	handleSearch = e => {
 		e.preventDefault()
@@ -119,18 +105,15 @@ class BlackUser extends Component {
 		})
 		if (r === 'add') { //添加
 			this.setState({
-				dialogTitle: '添加用户'
+				dialogTitle: '添加提额额度'
 			})
 		} else { // 编辑
 			console.log(r)
 			this.setState({
-				dialogTitle: '编辑用户',
+				dialogTitle: '编辑提额额度',
 				form: {
-					adminName: r.adminName,
-					nickName: r.nickName,
-					roleId: r.roleId,
-					adminState: r.adminState, // 用户状态
-					distribution: r.distribution // 是否分配
+					orderNumber: r.orderNumber,
+					money: r.money,
 				},
 				id:r.id,
 				adminDisabled: true
@@ -144,12 +127,11 @@ class BlackUser extends Component {
 				this.setState({
 					dialogVisible: false
 				})
-				console.log(this.state.form)
 				if (this.state.id) {
 					const trans = Object.assign({},this.state.form,{id:this.state.id})
-					this.props.updateAdmin(trans)
+					this.props.updateuserquota(trans)
 				} else {
-					this.props.addAdmin(this.state.form)
+					this.props.adduserquota(this.state.form)
 				}
 
 			} else {
@@ -162,7 +144,7 @@ class BlackUser extends Component {
 		this.setState({ value })
 	}
 	render() {
-		const { list, btnLoading, roleList } = this.props
+		const { list, btnLoading } = this.props
 		const { form, rules, dialogTitle, adminDisabled } = this.state
 		return (
 			<div>
@@ -187,35 +169,11 @@ class BlackUser extends Component {
 				>
 					<Dialog.Body>
 						<Form labelWidth="120" model={ form } ref={ e => {this.form = e} } rules={ rules }>
-							<Form.Item label="登录手机号" prop="adminName">
-								<Input disabled={ adminDisabled } type="number" value={ form.adminName } onChange={ this.onChange.bind(this, 'adminName') } />
+							<Form.Item label="借款次数" prop="orderNumber">
+								<Input disabled={ adminDisabled } type="number" value={ form.orderNumber } onChange={ this.onChange.bind(this, 'orderNumber') } />
 							</Form.Item>
-							<Form.Item label="昵称" prop="nickName">
-								<Input value={ form.nickName } onChange={ this.onChange.bind(this, 'nickName') } />
-							</Form.Item>
-							{
-								form.roleId !== 18 &&
-								<Form.Item label="角色" prop="roleId">
-									<SelectPicker value={ form.roleId } options={ roleList } onChange={ this.onChange.bind(this, 'roleId') } />
-								</Form.Item>
-							}
-							{
-								form.roleId === 18 &&
-								<Form.Item label="密码" prop="password">
-									<Input value={ form.password } onChange={ this.onChange.bind(this, 'password') } />
-								</Form.Item>
-							}
-							<Form.Item label="用户状态">
-								<Radio.Group value={ form.adminState } onChange={ this.onChange.bind(this, 'adminState') } >
-									<Radio value={ 1 }>{'启用'}</Radio>
-									<Radio value={ 0 }>{'禁用'}</Radio>
-								</Radio.Group>
-							</Form.Item>
-							<Form.Item label="是否分配">
-								<Radio.Group value={ form.distribution } onChange={ this.onChange.bind(this, 'distribution') }>
-									<Radio value={ 1 }>{'是'}</Radio>
-									<Radio value={ 0 }>{'否'}</Radio>
-								</Radio.Group>
+							<Form.Item label="提额额度" prop="money">
+								<Input type="number" value={ form.money } onChange={ this.onChange.bind(this, 'money') } />
 							</Form.Item>
 						</Form>
 					</Dialog.Body>
@@ -230,12 +188,12 @@ class BlackUser extends Component {
 }
 
 const mapStateToProps = state => {
-	const { list, btnLoading, roleList } = state
-	return { list, btnLoading, roleList }
+	const { list, btnLoading } = state
+	return { list, btnLoading }
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, pageuserQuota, addAdmin, updateAdmin}, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, pageuserQuota, adduserquota, updateuserquota,deleteuserquota }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(BlackUser)

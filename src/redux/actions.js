@@ -182,17 +182,6 @@ const saveRoleList = data => ({
   type: type.SAVE_ROLE_LIST,
   data
 })
-// 获取角色select
-export const allRoles = () => {
-  return async dispatch => {
-    const data = await api.allRolesApi()
-    if (data.success) {
-      dispatch(saveRoleList(data.data))
-    }
-    console.log(data)
-  }
-}
-
 export const changeRole = data => ({
   type: type.ROLE_ID,
   data
@@ -202,3 +191,18 @@ export const changeAdminName = data => ({
   type:type.SAVE_ADMIN_NAME,
   data
 })
+// 获取角色select
+export const allRoles = () => {
+  return async dispatch => {
+    const data = await api.allRolesApi()
+    if (data.success) {
+      dispatch(saveRoleList(data.data))
+    }
+  }
+}
+// 根据角色id查询多个用户
+export const selectAllAdmin = id => {
+  return async dispatch => {
+    await api.selectAllAdminApi({roleId:id})
+  }
+}

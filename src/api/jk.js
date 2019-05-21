@@ -52,6 +52,7 @@ export default {
   // 黑名单管理
   'selectblackphone': 'api/blackPhone/selectblackphone', // 黑名单用户
   'deleteBlackphone': 'api/blackPhone/deleteBlackphone', // 删除黑名单
+  'importExcel': 'api/blackPhone/importExcel', // 导入黑明单
   // 认证管理
   'selectEmergency': 'api/emergency/selectEmergency', // 联系人认证
   'deleteEmergency': 'api/emergency/deleteEmergency', // 联系人认证删除
@@ -91,6 +92,13 @@ export default {
   'updateRotationChart': 'api/rotationChart/updateRotationChart', // 上/下架
   // 提额管理
   'pageuserQuota': 'api/userQuota/pageuserQuota', // 列表
+  'adduserquota': 'api/userQuota/adduserquota', // 添加
+  'updateuserquota': 'api/userQuota/updateuserquota', // 编辑
+  'deleteuserquota': 'api/userQuota/deleteuserquota', // 删除
+  // 版本管理
+  'pageAppversion': 'api/appversion/pageAppversion', // 列表
+  'addAppversion': 'api/appversion/addAppversion', // 添加
+  'updateAppversion': 'api/appversion/updateAppversion', // 编辑
   // 推广管理
   'selectChannel': 'api/channel/selectChannel', // 渠道管理
   'insertChannel': 'api/channel/insertChannel', // 渠道管理-添加
@@ -100,5 +108,6 @@ export default {
   'selectChannelMember': 'api/user/selectChannelMember', // 渠道会员
   // select-渠道名称搜索
   'selectAllChannel': 'api/channel/selectAllChannel',
-  'allRoles': 'api/role/allRoles'
+  'allRoles': 'api/role/allRoles',
+  'selectAllAdmin': 'api/admin/selectAllAdmin', // 根据角色id查询多个用户
 }

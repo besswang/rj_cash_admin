@@ -1,6 +1,6 @@
 import api from '@api/index'
 import * as type from '@redux/actionTypes'
-import { requestPosts, receivePosts, failurePosts, shouldFetchPosts } from '@redux/actions'
+import { requestPosts, receivePosts, failurePosts, shouldFetchPosts, btnRequestPosts, btnReceivePosts, btnFailurePosts } from '@redux/actions'
 import { MessageBox, Message } from 'element-react'
 // 数据备份列表
 export const pageBackup = () => {
@@ -43,10 +43,13 @@ export const pageAdmin = () => {
 // 用户-添加
 export const addAdmin = obj => {
   return async dispatch => {
+    dispatch(btnRequestPosts())
     const data = await api.addAdminApi(obj)
     if (data.success) {
-      Message.success('添加成功')
       dispatch(pageAdmin())
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
     }
   }
 }
@@ -107,10 +110,13 @@ export const pageQuota = () => {
 // 借款额度管理-添加
 export const addQuota = obj => {
   return async dispatch => {
+    dispatch(btnRequestPosts())
     const data = await api.addQuotaApi(obj)
     if (data.success) {
-      Message.success(data.msg)
       dispatch(pageQuota())
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
     }
   }
 }
@@ -139,12 +145,15 @@ export const pageRole = () => {
   }
 }
 // 角色添加
-export const addRole = (obj) => {
+export const addRole = obj => {
   return async dispatch => {
+    dispatch(btnRequestPosts())
     const data = await api.addRoleApi(obj)
     if (data.success) {
-      Message.success('添加成功')
       dispatch(pageRole())
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
     }
   }
 }
@@ -154,22 +163,16 @@ export const deleteRole = subreddit => {
     MessageBox.confirm('删除该角色, 是否继续?', '提示', {
       type: 'warning'
     }).then(async () => {
-      dispatch(requestPosts())
+      dispatch(btnRequestPosts())
       const data = await api.deleteRoleApi(subreddit)
       if (data.success) {
         dispatch(pageRole())
-        Message({
-          type: 'success',
-          message: data.msg
-        })
+        dispatch(btnReceivePosts())
       } else {
-        dispatch(failurePosts(data))
+        dispatch(btnFailurePosts())
       }
     }).catch(() => {
-      Message({
-        type: 'info',
-        message: '已取消删除'
-      })
+      Message.info('已取消删除')
     })
   }
 }
@@ -246,13 +249,13 @@ export const deleteRotationChart = subreddit => {
     MessageBox.confirm('删除该图片, 是否继续?', '提示', {
       type: 'warning'
     }).then(async () => {
-      dispatch(requestPosts())
+      dispatch(btnRequestPosts())
       const data = await api.deleteRotationChartApi(subreddit)
       if (data.success) {
         dispatch(pageRotationChart())
-        Message.success('删除成功')
+        dispatch(btnReceivePosts())
       } else {
-        dispatch(failurePosts(data))
+        dispatch(btnFailurePosts())
       }
     }).catch(() => {
       Message.info('取消删除')
@@ -291,6 +294,92 @@ export const pageuserQuota = () => {
       dispatch(receivePosts(data.data))
     } else {
       dispatch(failurePosts(data))
+    }
+  }
+}
+
+// 提额额度-添加
+export const adduserquota = obj => {
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.adduserquotaApi(obj)
+    if (data.success) {
+      dispatch(pageuserQuota())
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
+    }
+  }
+}
+// 提额额度-编辑
+export const updateuserquota = obj => {
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.updateuserquotaApi(obj)
+    if (data.success) {
+      dispatch(pageuserQuota())
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
+    }
+  }
+}
+// 提额额度-删除
+export const deleteuserquota = id => {
+   return dispatch => {
+     MessageBox.confirm('删除该额度, 是否继续?', '提示', {
+       type: 'warning'
+     }).then(async () => {
+       dispatch(btnRequestPosts())
+       const data = await api.deleteuserquotaApi({id:id})
+       if (data.success) {
+         dispatch(pageuserQuota())
+         dispatch(btnReceivePosts(data.msg))
+       } else {
+         dispatch(btnFailurePosts(data.msg))
+       }
+     }).catch(() => {
+       Message.info('已取消删除')
+     })
+   }
+}
+
+// 版本管理-列表
+export const pageAppversion = () => {
+  return async (dispatch, getState) => {
+    dispatch(requestPosts())
+    const searchAll = shouldFetchPosts(getState())
+    const data = await api.pageAppversionApi(searchAll)
+    if (data.success) {
+      dispatch(receivePosts(data.data))
+    } else {
+      dispatch(failurePosts(data))
+    }
+  }
+}
+// 版本管理-添加
+export const addAppversion = obj => {
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.addAppversionApi(obj)
+    if (data.success) {
+      dispatch(pageAppversion())
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
+    }
+  }
+}
+// 版本管理-编辑
+export const updateAppversion = obj => {
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.updateAppversionApi(obj)
+    if (data.success) {
+      dispatch(pageAppversion())
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
     }
   }
 }

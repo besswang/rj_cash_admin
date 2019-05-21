@@ -4,7 +4,7 @@ import { Button, Loading, Table } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { sizeChange, currentChange, initSearch, saveList } from '@redux/actions'
+import { sizeChange, currentChange, initSearch, selectAllAdmin, allRoles } from '@redux/actions'
 import { selectOverdueByParam, addUserBlack, removeUserBlack } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
@@ -22,7 +22,9 @@ class Overdue extends Component{
 		selectOverdueByParam: PropTypes.func.isRequired,
 		addUserBlack: PropTypes.func.isRequired,
 		removeUserBlack: PropTypes.func.isRequired,
-		saveList: PropTypes.func.isRequired,
+		selectAllAdmin: PropTypes.func.isRequired,
+		roleList: PropTypes.array,
+		allRoles: PropTypes.func.isRequired
   }
 	constructor(props) {
 		super(props)
@@ -151,11 +153,21 @@ class Overdue extends Component{
 		}
 	}
 	componentWillMount() {
-    this.props.initSearch()
+		this.props.initSearch()
+		this.props.allRoles()
   }
   componentDidMount() {
-    this.props.selectOverdueByParam()
-  }
+		this.props.selectOverdueByParam()
+	}
+	shouldComponentUpdate(nextProps, nextState){
+		console.log('update')
+		console.log(nextProps.roleList)
+		const { roleList } = nextProps
+		const obj = roleList.filter(item => item.roleName === '催收员')
+		if (obj[0]) {
+			this.props.selectAllAdmin(obj[0].id)
+		}
+	}
   handleSearch = e => {
     e.preventDefault()
     this.props.selectOverdueByParam()
@@ -208,12 +220,12 @@ class Overdue extends Component{
 }
 
 const mapStateToProps = state => {
-	const { list } = state
-	return { list }
+	const { list, roleList } = state
+	return { list, roleList }
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectOverdueByParam, addUserBlack, removeUserBlack, saveList }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectOverdueByParam, addUserBlack, removeUserBlack, selectAllAdmin, allRoles }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Overdue)

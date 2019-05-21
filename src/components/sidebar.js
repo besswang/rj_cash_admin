@@ -46,6 +46,7 @@ class Sidebar extends Component{
     return (
       <Menu theme="dark" style={ { width:230 } } defaultActive={ router.defaultActive }>
         { this.recursion(router.routerArr) }
+        <div style={ {height:120} } />
       </Menu>
     )
   }

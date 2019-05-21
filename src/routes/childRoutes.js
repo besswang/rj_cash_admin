@@ -56,6 +56,7 @@ import Borrowlimit from '@containers/system/borrowlimit'
 import Help from '@containers/system/help'
 import Banner from '@containers/system/banner'
 import Quota from '@containers/system/quota'
+import Versions from '@containers/system/versions'
 // 推广管理
 import ChannelManage from '@containers/generalize/channelManage'
 import Statistics from '@containers/generalize/statistics'
@@ -303,6 +304,11 @@ export const CHILD_ROUTES = [
         path: '/system/quota',
         exact: true,
         component: Quota
+      }, {
+        name: '版本管理',
+        path: '/system/versions',
+        exact: true,
+        component: Versions
       }
     ]
   }, {

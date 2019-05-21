@@ -95,7 +95,8 @@ class Banner extends Component {
 				<Upload
 					className = "margin-bottom15"
 					ref={ e => {this.upload = e} }
-					action = "/rjwl/api/rotationChart/addRotationChart"
+					action="/rjwl/api/rotationChart/addRotationChart"
+					accept=".jpg,.jpeg,.png,.gif,.bmp,.pdf,.JPG,.JPEG,.PBG,.GIF,.BMP,.PDF"
 					onSuccess={ (response) => this.handleSuccess(response) }
 					limit={ 1 }
 					autoUpload={ false }
