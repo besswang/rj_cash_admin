@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectblackphone, deleteBlackphone, download } from './actions'
+import { selectblackphone, deleteBlackphone, download, importExcel } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import XLSX from 'xlsx'
@@ -18,10 +18,12 @@ class BlackUser extends Component {
 		selectblackphone: PropTypes.func.isRequired,
 		deleteBlackphone: PropTypes.func.isRequired,
 		download: PropTypes.func.isRequired,
+		importExcel: PropTypes.func.isRequired,
   }
 	constructor(props) {
 		super(props)
 		this.state = {
+			d:[],
 			columns: [{
 					type: 'index',
 					fixed: 'left'
@@ -58,10 +60,6 @@ class BlackUser extends Component {
 		console.log(id)
 		this.props.deleteBlackphone({id:id})
 	}
-  handleSearch = e => {
-    e.preventDefault()
-    this.props.selectblackphone()
-  }
   sizeChange = e => {
     this.props.sizeChange(e)
     this.props.selectblackphone()
@@ -91,7 +89,7 @@ class BlackUser extends Component {
 		}
 		const f = obj.target.files[0]
 		const reader = new FileReader()
-			reader.onload = function(e) {
+			reader.onload = (e) => {
 				const data = e.target.result
 				if(rABS) {
 					wb = XLSX.read(btoa(this.fixdata(data)), {//手动转化
@@ -107,20 +105,22 @@ class BlackUser extends Component {
 				// document.getElementById("demo").innerHTML= JSON.stringify(
 				//XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]) );
 				const sheetInner = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]])
-				console.log(sheetInner)
-				const reqList=[]
-					for(const i in sheetInner){
-						const listObj = {
-							realName: sheetInner[i].realName,
-							phone: sheetInner[i].phone,
-							idCard: sheetInner[i].idCard
-						}
-						reqList.push(listObj)
-					}
-					const r = reqList.slice(1)
+				// console.log(sheetInner)
+				// const reqList=[]
+				// 	for(const i in sheetInner){
+				// 		const listObj = {
+				// 			realName: sheetInner[i].realName,
+				// 			phone: sheetInner[i].phone,
+				// 			idCard: sheetInner[i].idCard
+				// 		}
+				// 		reqList.push(listObj)
+				// 	}
+					// const r = reqList.slice(1)
+					if (sheetInner.length > 0) {
 				// if(reqList.length === sheetInner.length && reqList.length !== 0){
-				if (r.length === sheetInner.length && r.length !== 0) {
-					console.log(r)
+				// if (r.length === sheetInner.length && r.length !== 0) {
+					console.log(sheetInner)
+					this.props.importExcel(sheetInner)
 		// 			axios.post(url , JSON.stringify(reqList), {
 		// 					headers: {
 		// 							'Accept': 'application/json',
@@ -156,6 +156,10 @@ class BlackUser extends Component {
 				o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)))
 				return o
 	}
+	handleSearch = e => {
+    e.preventDefault()
+    this.props.selectblackphone()
+  }
 	render() {
 		const { list } = this.props
 		return (
@@ -174,7 +178,7 @@ class BlackUser extends Component {
 				{/* <a id="downlink" /> */}
 				<Search showSelect2>
 					<div>
-						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+					 	<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 						<Button onClick={ this.props.download } type="primary">{'模版下载'}</Button>
 					</div>
 				</Search>
@@ -215,7 +219,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectblackphone, deleteBlackphone, download }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectblackphone, deleteBlackphone, download, importExcel }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(BlackUser)

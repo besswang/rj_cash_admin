@@ -4,8 +4,12 @@ import { MessageBox, Message } from 'element-react'
 // 列表
 export const selectblackphone = () => {
   return async (dispatch, getState) => {
-    dispatch(requestPosts())
     const searchAll = shouldFetchPosts(getState())
+    if (searchAll.typeId && !searchAll.typeName) {
+      Message.warning('请输入搜索内容')
+      return false
+    }
+    dispatch(requestPosts())
     const data = await api.selectblackphoneApi(searchAll)
     if (data.success) {
       dispatch(receivePosts(data.data))
@@ -44,11 +48,21 @@ export const deleteBlackphone = subreddit => {
 
 export const download = () => {
   return dispatch => {
-    const url = `${ process.env.PUBLIC_URL }/api/blackPhone/excelexport`
+    const url = `${ process.env.PUBLIC_URL }/api/blackPhone/exblackPhone`
     const a = document.createElement('a')
     a.setAttribute('download', '')
     a.setAttribute('href', url)
     a.click()
     console.log(url)
+  }
+}
+
+// 导入
+export const importExcel = subreddit => {
+  return async dispatch => {
+    const data = await api.importExcelApi(subreddit)
+    if (data.success) {
+      dispatch(selectblackphone())
+    }
   }
 }

@@ -11,6 +11,7 @@ import * as type from '../actionTypes'
 import { PAGE_SIZE, CURRENT_PAGE } from '@meta/state'
 import treeData from '@containers/system/reducers/treeData'
 import roleList from './roleList'
+import collList from './collList'
 import { Message } from 'element-react'
 import { Notification } from 'element-react'
 // 搜索方式
@@ -29,7 +30,17 @@ const typeId = (state = 0, action) => {
       return state
   }
 }
-
+const typeName = (state = '', action) => {
+  switch (action.type) {
+    case type.SELECT_SEARCH_TEXT:
+      return action.text
+    case type.CLEAR_SEARCH_ALL:
+    case type.SELECT_SUBREDDIT:
+      return ''
+    default:
+      return state
+  }
+}
 // 新老客户
 const selectClient = (state = 0, action) => {
   switch (action.type) {
@@ -64,16 +75,6 @@ const selectTime = (state = 0, action) => {
   }
 }
 
-const typeName = (state = '', action) => {
-  switch (action.type){
-    case type.SELECT_SEARCH_TEXT:
-      return action.text
-    case type.CLEAR_SEARCH_ALL:
-      return ''
-    default:
-      return state
-  }
-}
 const time = (state = [], action) => {
   switch (action.type) {
     case type.SAVE_TIME:
@@ -141,10 +142,13 @@ const search = {
   typeId: 0,
   typeName: '',
   realName: '',
-  loanType: 0
+  loanType: 0,
+  neiCuiId:0
 }
 const searchAll = (state = search, action) => {
   switch (action.type) {
+    case type.SELECT_COLL_TYPE:
+      return { ...state, neiCuiId: action.data}
     case type.SELECT_LOAN_TYPE:
       return { ...state, loanType: action.data}
     case type.SAVE_ADMIN_NAME:
@@ -162,7 +166,7 @@ const searchAll = (state = search, action) => {
       } else {
         id = 0
       }
-      return {...state, typeId: id}
+      return {...state, typeId: id,typeName: ''}
     }
     case type.SELECT_CLIENT: {
       let newClient = ''
@@ -317,6 +321,25 @@ const mobileData = (state = {}, action) => {
       return state
   }
 }
+// 催收人员id
+const neiCuiId = (state = 0, action) => {
+  switch (action.type) {
+    case type.SELECT_COLL_TYPE:
+      {
+        let t = null
+        if (action.data !== '') {
+          t = action.data
+        } else {
+          t = 0
+        }
+        return t
+      }
+    case type.CLEAR_SEARCH_ALL:
+      return 0
+    default:
+      return state
+  }
+}
 export default combineReducers({
-  routerReducer, user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, selectClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType, mobileData
+  routerReducer, user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, selectClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType, mobileData, collList, neiCuiId
 })

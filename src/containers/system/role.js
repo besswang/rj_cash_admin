@@ -87,12 +87,7 @@ class BlackUser extends Component {
 			roleId: roleId,
 			treeDialogVisible: true
 		})
-		console.log(this.props.treeData.data)
-		if(this.props.treeData.data.length>0){
-			console.log('xuanran')
-			this.tree.setCheckedKeys([2,3,4])
-		}
-		this.renderTree()
+		// this.renderTree()
 	}
 	renderTree = () => {
 		this.setState({
@@ -110,18 +105,12 @@ class BlackUser extends Component {
 	}
 	getCheckedKeys = e => {
 		e.preventDefault()
-		console.log(this.tree)
-
-		console.log(this.tree.getCheckedKeys(true))
-		// console.log(this.tree.getCheckedNodes())
-
 		const brr = this.tree.getCheckedKeys(true)
 		const arr = []
 		for(let i=0;i<brr.length;i++){
 			arr.push({menuId:brr[i], roleId: this.state.roleId})
 		}
-		console.log(arr)
-		// this.props.updateRolemenus(arr)
+		this.props.updateRolemenus(arr)
 		this.setState({
 			treeDialogVisible: false
 		})
@@ -131,7 +120,6 @@ class BlackUser extends Component {
 	}
 	render() {
 		const { list, btnLoading, treeData } = this.props
-		console.log(treeData)
 		const { dialogVisible,treeKey, treeDialogVisible, roleName } = this.state
 		return (
 			<div>
@@ -181,7 +169,7 @@ class BlackUser extends Component {
 								key={ treeKey }
 								isShowCheckbox
 								nodeKey="id"
-								defaultCheckedKeys={ treeData.defaultCheckedKeys }
+								defaultCheckedKeys={ [2,3,4,5] }
 								defaultExpandedKeys={ [1] }
 							/>
 						{/* </Loading> */}

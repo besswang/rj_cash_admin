@@ -3,7 +3,7 @@ import { Form, Input } from 'element-react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
-import { selectSubreddit, selectSearchText,saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType, selectAllChannel,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType } from '@redux/actions'
+import { selectSubreddit, selectSearchText,saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType, selectAllChannel,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl } from '@redux/actions'
 import SelectPicker from '@components/SelectPicker'
 import Time from '@components/Settime'
 import { MLIST_SELECT, AUDIT_SELECT, AUDIT_SELECT_LESS, CUSTOMER_SELECT, TIME_SELECT, TIME_SELECT_LESS, LOAN_TYPE, LOAN_MODE,ALLOT_TYPE } from '@meta/select'
@@ -52,6 +52,10 @@ class Search extends Component {
     adminName:PropTypes.string,
     changeLoanType: PropTypes.func.isRequired,
     loanType: PropTypes.number,
+    showColl: PropTypes.bool,
+    neiCuiId: PropTypes.number,
+    changeColl: PropTypes.func.isRequired,
+    collList: PropTypes.array
   }
   componentWillMount() {
     // 查询表单的初始化
@@ -62,9 +66,12 @@ class Search extends Component {
     if(this.props.showRole){
       this.props.allRoles()
     }
+    if (this.props.showColl){
+      this.props.allRoles(true)
+    }
   }
   render() {
-    const { typeId, typeName, realName, time, regTime, selectClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType, showRealName, showChannel, channelList,channelName, roleList, showRole, roleId, showAdminName, adminName, loanType } = this.props
+    const { typeId, typeName, realName, time, regTime, selectClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType, showRealName, showChannel, channelList,channelName, roleList, showRole, roleId, showAdminName, adminName, loanType,showColl, neiCuiId, collList } = this.props
     return (
       <Form inline>
         {
@@ -143,13 +150,24 @@ class Search extends Component {
           </Form.Item>
         }
         {
-          (showSelect1 || showSelect2 || showSelect3) &&
+          (showSelect1 || showSelect2 || showSelect3) && typeId !== 0 &&
           <Form.Item>
             <Input
               value={ typeName }
               onChange={ val => this.props.selectSearchText(val) }
               placeholder="请输入内容"
               clearable="true"
+            />
+          </Form.Item>
+        }
+        {
+          showColl &&
+          <Form.Item>
+            <SelectPicker
+              value={ neiCuiId }
+              onChange={ e => this.props.changeColl(e) }
+              options={ collList }
+              placeholder={ '选择催收人员' }
             />
           </Form.Item>
         }
@@ -245,14 +263,14 @@ class Search extends Component {
 const mapStateToProps = state => {
 	const {
 		typeId, typeName, time, regTime, selectClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName
-	,loanType} = state
+	,loanType, neiCuiId, collList} = state
 	return {
-		typeId, typeName, time, regTime, selectClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName,loanType
+		typeId, typeName, time, regTime, selectClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName, loanType, neiCuiId, collList
 	}
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ selectSubreddit, selectSearchText, saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType,selectAllChannel ,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType }, dispatch)
+		...bindActionCreators({ selectSubreddit, selectSearchText, saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType,selectAllChannel ,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Search)

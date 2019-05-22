@@ -209,7 +209,7 @@ class Collection extends Component {
 		const { list, btnLoading } = this.props
 		return (
 			<div>
-				<Search showSelect2 showSelectClient showSelectTime showTime>
+				<Search showSelect2 showColl showSelectClient showSelectTime showTime>
 					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 				</Search>
 				<Loading loading={ list.loading }>

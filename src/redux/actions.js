@@ -39,7 +39,8 @@ export const initSearch = () => ({
     typeName: '',
     realName: '',
     channelName:'',
-    loanType: 0
+    loanType: 0,
+    neiCuiId: 0
   }
 })
 // menu选中状态
@@ -177,11 +178,6 @@ export const saveIdCardInfo = data => ({
   data
 })
 
-// 存储角色列表
-const saveRoleList = data => ({
-  type: type.SAVE_ROLE_LIST,
-  data
-})
 export const changeRole = data => ({
   type: type.ROLE_ID,
   data
@@ -191,18 +187,43 @@ export const changeAdminName = data => ({
   type:type.SAVE_ADMIN_NAME,
   data
 })
+// 存储角色列表
+const saveRoleList = data => ({
+  type: type.SAVE_ROLE_LIST,
+  data
+})
 // 获取角色select
-export const allRoles = () => {
+export const allRoles = coll => {
   return async dispatch => {
     const data = await api.allRolesApi()
     if (data.success) {
-      dispatch(saveRoleList(data.data))
+      if(coll){
+        const obj = data.data.filter(item => item.roleName === '催收员')
+        if (obj[0]) {
+          dispatch(selectAllAdmin(obj[0].id))
+        }
+      }else{
+        dispatch(saveRoleList(data.data))
+      }
     }
   }
 }
+// 存储催收员
+const saveCollList = data => ({
+  type: type.SAVE_COLL_LIST,
+  data
+})
+// select催收员
+export const changeColl = data => ({
+  type: type.SELECT_COLL_TYPE,
+  data
+})
 // 根据角色id查询多个用户
 export const selectAllAdmin = id => {
   return async dispatch => {
-    await api.selectAllAdminApi({roleId:id})
+    const data = await api.selectAllAdminApi({roleId:id})
+    if (data.success) {
+      dispatch(saveCollList(data.data))
+    }
   }
 }

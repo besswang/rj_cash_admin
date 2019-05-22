@@ -14,7 +14,19 @@ export const selectOverdueByParam = () => {
     }
   }
 }
-
+// 催收管理--逾期列表-分配
+export const updateOrderCuishou = obj => {
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.updateOrderCuishouApi(obj)
+    if (data.success) {
+      dispatch(btnReceivePosts(data.msg))
+      dispatch(selectOverdueByParam())
+    } else {
+      dispatch(btnFailurePosts())
+    }
+  }
+}
 // 催收管理--催收列表
 export const selectCollectionByParam = () => {
   return async (dispatch, getState) => {

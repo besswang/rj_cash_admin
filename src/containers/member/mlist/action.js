@@ -4,8 +4,12 @@ import { requestPosts, receivePosts, failurePosts, shouldFetchPosts } from '@red
 // 会员管理-会员列表
 export const handelSearch = () => {
   return async (dispatch, getState) => {
-    dispatch(requestPosts())
     const searchAll = shouldFetchPosts(getState())
+    if (searchAll.typeId && !searchAll.typeName) {
+      Message.warning('请输入搜索内容')
+      return false
+    }
+    dispatch(requestPosts())
     const data = await api.selectUserBySeachApi(searchAll)
     if(data.success){
       dispatch(receivePosts(data.data))
@@ -94,9 +98,9 @@ const formdate = (state) => {
   const params = state.searchAll
   const arr = []
   for (var name in params) {
-    // if (params[name]) {
-    arr.push(encodeURIComponent(name) + '=' + encodeURIComponent(params[name]))
-    // }
+    if (params[name]) {
+      arr.push(encodeURIComponent(name) + '=' + encodeURIComponent(params[name]))
+    }
   }
   return arr.join('&')
 }

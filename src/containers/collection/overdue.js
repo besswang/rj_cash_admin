@@ -1,11 +1,11 @@
 // 催收管理-逾期列表
 import React, { Component } from 'react'
-import { Button, Loading, Table } from 'element-react'
+import { Button, Loading, Table, Dialog, Form, Message } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { sizeChange, currentChange, initSearch, selectAllAdmin, allRoles } from '@redux/actions'
-import { selectOverdueByParam, addUserBlack, removeUserBlack } from './actions'
+import { sizeChange, currentChange, initSearch } from '@redux/actions'
+import { selectOverdueByParam, addUserBlack, removeUserBlack, updateOrderCuishou } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import DisableBtn from '@components/DisableBtn'
@@ -13,6 +13,7 @@ import DetailBtn from '@components/DetailBtn'
 import filter from '@global/filter'
 import timeDate from '@global/timeDate'
 import { doverdue } from '@meta/details'
+import SelectPicker from '@components/SelectPicker'
 class Overdue extends Component{
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -22,13 +23,30 @@ class Overdue extends Component{
 		selectOverdueByParam: PropTypes.func.isRequired,
 		addUserBlack: PropTypes.func.isRequired,
 		removeUserBlack: PropTypes.func.isRequired,
-		selectAllAdmin: PropTypes.func.isRequired,
-		roleList: PropTypes.array,
-		allRoles: PropTypes.func.isRequired
+		collList: PropTypes.array,
+		btnLoading: PropTypes.bool.isRequired,
+		updateOrderCuishou: PropTypes.func.isRequired
   }
 	constructor(props) {
 		super(props)
 		this.state = {
+			ids:[],
+			dialogVisible:false,
+			form:{
+				id: null
+			},
+			rules: {
+				id: [{
+					required: true,
+					validator: (rule, value, callback) => {
+						if (value === '' || value === null) {
+							callback(new Error('请选择催收人员'))
+						} else {
+							callback()
+						}
+					}
+				}]
+			},
 			columns: [
 				{
 					type: 'selection'
@@ -123,10 +141,15 @@ class Overdue extends Component{
 					prop: 'loanNumber'
 				}, {
 					label: '打款方式',
-					prop: 'loanMode'
+					prop: 'loanMode',
+					render: row => {
+						const t = filter.loanModeState(row.loanMode)
+						return t
+					}
 				}, {
 					label: '跟单人',
-					prop: 'tracker'
+					prop: 'neicuiCustomerName',
+					fixed: 'right'
 				}, {
 				 	label: '黑名单',
 					fixed:'right',
@@ -154,19 +177,9 @@ class Overdue extends Component{
 	}
 	componentWillMount() {
 		this.props.initSearch()
-		this.props.allRoles()
   }
   componentDidMount() {
 		this.props.selectOverdueByParam()
-	}
-	shouldComponentUpdate(nextProps, nextState){
-		console.log('update')
-		console.log(nextProps.roleList)
-		const { roleList } = nextProps
-		const obj = roleList.filter(item => item.roleName === '催收员')
-		if (obj[0]) {
-			this.props.selectAllAdmin(obj[0].id)
-		}
 	}
   handleSearch = e => {
     e.preventDefault()
@@ -193,11 +206,55 @@ class Overdue extends Component{
 			this.props.removeUserBlack({phone: r.phone},'overdue')
 		}
 	}
+	openDialog = r => {
+		if(this.state.ids.length !==0){
+			this.form.resetFields()
+			this.setState({
+				dialogVisible: true
+			})
+		}else{
+			Message.warning('请勾选订单')
+		}
+
+	}
+	saveContent = e => {
+		e.preventDefault()
+		this.form.validate((valid) => {
+			if (valid) {
+				this.setState({
+					dialogVisible: false
+				})
+				const trans = Object.assign({},{ids:this.state.ids},{adminId:this.state.form.id})
+				this.props.updateOrderCuishou(trans)
+			} else {
+				console.log('error submit!!')
+				return false
+			}
+		})
+	}
+	onChange(key, value) {
+		this.setState({
+			form: Object.assign({}, this.state.form, { [key]: value })
+		})
+	}
+	onSelectChange = v => {
+		const listid = v.map(item => item.id)
+		this.setState({
+			ids: listid
+		})
+	}
+	onSelectAll = v => {
+		const listid = v.filter(item => item.id)
+		this.setState({
+			ids: listid
+		})
+	}
 	render() {
-		const { list } = this.props
+		const { list, collList, btnLoading } = this.props
+		const { form, rules, dialogVisible } = this.state
 		return (
 			<div>
-				<Search showSelect2 showSelectClient showSelectTime showTime>
+				<Search showSelect2 showColl showSelectClient showSelectTime showTime>
 					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 				</Search>
 				<Loading loading={ list.loading }>
@@ -206,26 +263,47 @@ class Overdue extends Component{
 						columns={ this.state.columns }
 						data={ list.data }
 						border
+						onSelectChange={ (selection) => { this.onSelectChange(selection)} }
+      			onSelectAll={ (selection) => { this.onSelectAll(selection)} }
 					/>
 				</Loading>
-				<Button type="primary">{'批量分配'}</Button>
+				<Button type="primary" onClick={ this.openDialog.bind(this) }>{'批量分配'}</Button>
         <MyPagination
           total={ list.total }
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />
+				<Dialog
+					title="分配催收员"
+					visible={ dialogVisible }
+					onCancel={ () => this.setState({ dialogVisible: false }) }
+				>
+					<Dialog.Body>
+						<Form labelWidth="120" model={ form } ref={ e => {this.form = e} } rules={ rules }>
+							{
+								<Form.Item label="催收人员" prop="id">
+									<SelectPicker value={ form.id } options={ collList } onChange={ this.onChange.bind(this, 'id') } />
+								</Form.Item>
+							}
+						</Form>
+					</Dialog.Body>
+					<Dialog.Footer className="dialog-footer">
+						<Button onClick={ () => this.setState({ dialogVisible: false }) }>{'取 消'}</Button>
+						<Button type="primary" onClick={ this.saveContent } loading={ btnLoading }>{'确 定'}</Button>
+					</Dialog.Footer>
+				</Dialog>
 			</div>
 		)
 	}
 }
 
 const mapStateToProps = state => {
-	const { list, roleList } = state
-	return { list, roleList }
+	const { list, collList, btnLoading } = state
+	return { list, collList, btnLoading }
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectOverdueByParam, addUserBlack, removeUserBlack, selectAllAdmin, allRoles }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectOverdueByParam, addUserBlack, removeUserBlack, updateOrderCuishou }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Overdue)

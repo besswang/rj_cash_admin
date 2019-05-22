@@ -37,6 +37,7 @@ export default {
   'updataState': 'api/order/updataState', // 操作-通过/拒绝
   // 催收管理-逾期列表
   'selectCollectionByParam': 'api/order/selectCollectionByParam', // 催收列表
+  'updateOrderCuishou': 'api/order/updateOrderCuishou', // 分配催收人员
   'selectOverdueByParam': 'api/order/selectOverdueByParam', // 逾期列表
   'selectthePersion': 'api/order/selectthePersion', // 个人对账
   // 财务管理

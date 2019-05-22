@@ -43,7 +43,7 @@ export default {
   selectEmergencyApi: params => Fetch(jk.selectEmergency, {method: 'post', body: params}),
   deleteEmergencyApi: params => Fetch(jk.deleteEmergency, {method: 'get', data: params}),
   selectPhoneDateApi: params => Fetch(jk.selectPhoneDate, {method: 'post', body: params}),
-  deletePhoneReportApi: params => Fetch(jk.deleteEmergency, {method: 'get', data: params}),
+  deletePhoneReportApi: params => Fetch(jk.deletePhoneReport, {method: 'get', data: params}),
   selectBankApi: params => Fetch(jk.selectBank, {method: 'post', body: params}),
   deleteBankByUserIdApi: params => Fetch(jk.deleteBankByUserId, {method: 'get', data: params}),
   selectIdCardApi: params => Fetch(jk.selectIdCard, {method: 'post', body: params}),
@@ -94,7 +94,7 @@ export default {
   addAppversionApi: params => Fetch(jk.addAppversion, {method: 'post', body: params}),
   updateAppversionApi: params => Fetch(jk.updateAppversion, {method: 'put', body: params}),
   selectAllAdminApi: params => Fetch(jk.selectAllAdmin, {method: 'get', data: params}),
-  // importExcel
-
+  updateOrderCuishouApi: params => Fetch(jk.updateOrderCuishou, {method: 'put', body: params}),
+  importExcelApi: params => Fetch(jk.importExcel, {method: 'post', body: params}),
 }
 
