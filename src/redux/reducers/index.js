@@ -148,17 +148,17 @@ const search = {
 const searchAll = (state = search, action) => {
   switch (action.type) {
     case type.SELECT_COLL_TYPE:
-      return { ...state, neiCuiId: action.data}
+      return { ...state, neiCuiId: action.data, pageNum:1}
     case type.SELECT_LOAN_TYPE:
-      return { ...state, loanType: action.data}
+      return { ...state, loanType: action.data, pageNum:1}
     case type.SAVE_ADMIN_NAME:
-      return {...state,adminName:action.data}
+      return {...state,adminName:action.data, pageNum:1}
     case type.ROLE_ID:
-      return {...state, roleId: action.data}
+      return {...state, roleId: action.data, pageNum:1}
     case type.SELECT_CHANNEL_NAME:
-      return {...state, channelName: action.data}
+      return {...state, channelName: action.data, pageNum:1}
     case type.SAVE_REAL_NAME:
-      return { ...state, realName: action.text }
+      return { ...state, realName: action.text, pageNum:1}
     case type.SELECT_SUBREDDIT:{
       let id = ''
       if (action.typeId !== ''){
@@ -166,7 +166,7 @@ const searchAll = (state = search, action) => {
       } else {
         id = 0
       }
-      return {...state, typeId: id,typeName: ''}
+      return {...state, typeId: id, typeName: '', pageNum:1}
     }
     case type.SELECT_CLIENT: {
       let newClient = ''
@@ -175,7 +175,7 @@ const searchAll = (state = search, action) => {
       } else {
         newClient = 0
       }
-      return { ...state, newClient: newClient }
+      return { ...state, newClient: newClient, pageNum:1 }
     }
     case type.SELECT_TIME_TYPE: {
       let timeType = ''
@@ -184,7 +184,7 @@ const searchAll = (state = search, action) => {
       } else {
         timeType = 0
       }
-      return { ...state, timeType: timeType }
+      return { ...state, timeType: timeType, pageNum:1 }
     }
     case type.SAVE_TIME: {
       let startTime = ''
@@ -214,7 +214,7 @@ const searchAll = (state = search, action) => {
       return { ...state, beginTime1, endTime1, pageNum:1 }
     }
     case type.SELECT_SEARCH_TEXT:
-      return { ...state, typeName: action.text }
+      return { ...state, typeName: action.text, pageNum:1 }
     case type.SIZE_CHANGE:
       return { ...state, pageSize: action.size }
     case type.CURRENT_CHANGE:

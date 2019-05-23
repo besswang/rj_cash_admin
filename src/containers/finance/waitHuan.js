@@ -274,7 +274,7 @@ class WaitHuan extends Component {
 		const { columns, dialogVisible, form, rules, orderNumber, realRepaymentMoney, applyMoney, serviceMoney, loanDate, repaymentDate, activeName } = this.state
 		return (
 			<div>
-				<Search showSelect2 showLoanType showSelectClient showSelectTime showTime>
+				<Search showSelect2 showLoanType showSelectClient showSelectTime>
 					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 				</Search>
 				<Loading loading={ list.loading }>

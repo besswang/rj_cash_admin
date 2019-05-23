@@ -25,7 +25,12 @@ class BlackUser extends Component {
 		this.state = {
 			treeKey: '',
 			roleId: null,
-			roleName: null,
+			form:{
+				roleName: null
+			},
+			rules: {
+				roleName: [{required: true,message: '请输入角色名称',trigger: 'blur'}]
+			},
 			dialogVisible: false,
 			treeDialogVisible: false,
 			columns: [{
@@ -41,7 +46,7 @@ class BlackUser extends Component {
 							<div>
 								<Button type="primary" size="mini" onClick={ this.openRules.bind(this,row.id) }>{'权限设置'}</Button>
 								{
-									row.id !== 1 &&
+									(row.id !== 1 && row.roleName !== '催收员') &&
 									<Button type="danger" size="mini" onClick={ this.props.deleteRole.bind(this, {roleId:row.id, state: 1}) }>{'删除'}</Button>
 								}
 							</div>
@@ -64,13 +69,14 @@ class BlackUser extends Component {
     this.props.currentChange(e)
     this.props.pageRole()
 	}
-	onChange = e => {
+	onChange(key, value) {
 		this.setState({
-			roleName: e
+			form: Object.assign({}, this.state.form, { [key]: value })
 		})
 	}
 	openDialog = e => {
-    e.preventDefault()
+		e.preventDefault()
+		this.form.resetFields()
 		this.setState({
 			dialogVisible: true,
 			roleName: null
@@ -90,11 +96,18 @@ class BlackUser extends Component {
 	}
 	saveContent = e => {
 		e.preventDefault()
-		this.props.addRole({
-			roleName: this.state.roleName,
-		})
-		this.setState({
-			dialogVisible: false
+		this.form.validate((valid) => {
+			if (valid) {
+				this.props.addRole({
+					roleName: this.state.form.roleName,
+				})
+				this.setState({
+					dialogVisible: false
+				})
+			} else {
+				console.log('error submit!!')
+				return false
+			}
 		})
 	}
 	getCheckedKeys = e => {
@@ -118,7 +131,7 @@ class BlackUser extends Component {
 	}
 	render() {
 		const { list, btnLoading, treeData } = this.props
-		const { dialogVisible,treeKey, treeDialogVisible, roleName } = this.state
+		const { dialogVisible,treeKey, treeDialogVisible, rules, form } = this.state
 		return (
 			<div>
         <Button className="margin-bottom15" type="primary" onClick={ e => this.openDialog(e) }>{'添加'}</Button>
@@ -141,9 +154,9 @@ class BlackUser extends Component {
 					onCancel={ () => this.setState({ dialogVisible: false }) }
 				>
 					<Dialog.Body>
-						<Form labelWidth="40">
-							<Form.Item label="角色">
-								<Input value={ roleName } onChange={ e => this.onChange(e) } />
+						<Form labelWidth="120" ref={ e => {this.form=e} } model={ form } rules={ rules }>
+							<Form.Item label="角色" prop="roleName">
+								<Input value={ form.roleName } onChange={ this.onChange.bind(this, 'roleName') } />
 							</Form.Item>
 						</Form>
 					</Dialog.Body>

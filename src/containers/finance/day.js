@@ -168,7 +168,7 @@ class WaitHuan extends Component {
 		const { list, btnLoading } = this.props
 		return (
 			<div>
-				<Search showSelect2 showSelectClient showAllotType showSelectTime2 showBeginTime>
+				<Search showSelect2 showSelectClient showAllotType showSelectTime2>
 					<div>
 						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 						<Button type="primary">{'分配'}</Button>

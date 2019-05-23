@@ -27,6 +27,7 @@ class BlackUser extends Component {
 		this.state = {
 			dialogTitle:'',
 			adminDisabled: false,
+			rid: null,
 			form:{
 				adminName:'',
 				nickName:'',
@@ -110,9 +111,17 @@ class BlackUser extends Component {
 	}
 	componentWillMount() {
 		this.props.initSearch()
-  }
+	}
   componentDidMount() {
-    this.props.pageAdmin()
+		this.props.pageAdmin()
+	}
+	componentWillReceiveProps(nextProps){
+		const obj = nextProps.roleList.filter(item => item.roleName === '催收员')
+		if(obj[0]){
+			this.setState({
+				rid: obj[0].id
+			})
+		}
 	}
 	updateAdmin = (r, type) => {
 		if (type === 'distribution'){
@@ -148,10 +157,10 @@ class BlackUser extends Component {
 		})
 		if (r === 'add') { //添加
 			this.setState({
-				dialogTitle: '添加用户'
+				dialogTitle: '添加用户',
+				adminDisabled: false
 			})
 		} else { // 编辑
-			console.log(r)
 			this.setState({
 				dialogTitle: '编辑用户',
 				form: {
@@ -173,7 +182,6 @@ class BlackUser extends Component {
 				this.setState({
 					dialogVisible: false
 				})
-				console.log(this.state.form)
 				if (this.state.id) {
 					const trans = Object.assign({},this.state.form,{id:this.state.id})
 					this.props.updateAdmin(trans)
@@ -192,7 +200,7 @@ class BlackUser extends Component {
 	}
 	render() {
 		const { list, btnLoading, roleList } = this.props
-		const { form, rules, dialogTitle, adminDisabled } = this.state
+		const { form, rules, dialogTitle, adminDisabled, rid } = this.state
 		return (
 			<div>
 				<Search showRole showAdminName>
@@ -228,13 +236,13 @@ class BlackUser extends Component {
 								<Input value={ form.nickName } onChange={ this.onChange.bind(this, 'nickName') } />
 							</Form.Item>
 							{
-								form.roleId !== 18 &&
+								form.roleId !== rid &&
 								<Form.Item label="角色" prop="roleId">
 									<SelectPicker value={ form.roleId } options={ roleList } onChange={ this.onChange.bind(this, 'roleId') } />
 								</Form.Item>
 							}
 							{
-								form.roleId === 18 &&
+								form.roleId === rid &&
 								<Form.Item label="密码" prop="password">
 									<Input value={ form.password } onChange={ this.onChange.bind(this, 'password') } />
 								</Form.Item>

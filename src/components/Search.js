@@ -236,7 +236,8 @@ class Search extends Component {
           </Form.Item>
         }
         {
-          showTime &&
+
+          (showTime || selectTime !==0) &&
           <Form.Item>
             <Time
               value={ time }
