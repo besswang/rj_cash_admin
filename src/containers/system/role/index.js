@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import { Button, Loading, Table, Dialog,Form, Input, Tree } from 'element-react'
+import { Button, Loading, Table, Dialog,Form, Input, Tree, Notification } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { pageRole, deleteRole, addRole, selectRolemenus, updateRolemenus } from './actions'
+import { pageRole, deleteRole, addRole, selectRolemenus, updateRolemenus } from './action'
 import MyPagination from '@components/MyPagination'
-// import filter from '@global/filter'
 class BlackUser extends Component {
 	static propTypes = {
 		list: PropTypes.object.isRequired,
@@ -52,14 +51,10 @@ class BlackUser extends Component {
 		}
 	}
 	componentWillMount() {
-    this.props.initSearch()
+		this.props.initSearch()
   }
   componentDidMount() {
 		this.props.pageRole()
-	}
-	componentWillUnmount() {
-		// this.ztreeObj.destory();
-		console.log('销毁')
 	}
   sizeChange = e => {
     this.props.sizeChange(e)
@@ -82,12 +77,11 @@ class BlackUser extends Component {
 		})
 	}
 	openRules = roleId => {
-		this.props.selectRolemenus({roleId:roleId})
+		this.props.selectRolemenus({roleId:roleId},this.tree)
 		this.setState({
 			roleId: roleId,
 			treeDialogVisible: true
 		})
-		// this.renderTree()
 	}
 	renderTree = () => {
 		this.setState({
@@ -106,17 +100,21 @@ class BlackUser extends Component {
 	getCheckedKeys = e => {
 		e.preventDefault()
 		const brr = this.tree.getCheckedKeys(true)
-		const arr = []
-		for(let i=0;i<brr.length;i++){
-			arr.push({menuId:brr[i], roleId: this.state.roleId})
+		if(brr.length >0){
+			const arr = []
+			for (let i = 0; i < brr.length; i++) {
+				arr.push({
+					menuId: brr[i],
+					roleId: this.state.roleId
+				})
+			}
+			this.props.updateRolemenus(arr)
+			this.setState({
+				treeDialogVisible: false
+			})
+		}else{
+			Notification.warning('请勾选权限')
 		}
-		this.props.updateRolemenus(arr)
-		this.setState({
-			treeDialogVisible: false
-		})
-	}
-	setCheckedKeys() {
-		this.tree.setCheckedKeys([4])
 	}
 	render() {
 		const { list, btnLoading, treeData } = this.props
@@ -161,7 +159,7 @@ class BlackUser extends Component {
 					onCancel={ () => this.setState({ treeDialogVisible: false }) }
 				>
 					<Dialog.Body>
-						{/* <Loading loading={ treeData.loading }> */}
+						<Loading loading={ treeData.loading }>
 							<Tree
 								ref={ e => {this.tree = e} }
 								data={ treeData.data }
@@ -169,15 +167,14 @@ class BlackUser extends Component {
 								key={ treeKey }
 								isShowCheckbox
 								nodeKey="id"
-								defaultCheckedKeys={ [2,3,4,5] }
-								defaultExpandedKeys={ [1] }
+								defaultCheckedKeys={ treeData.defaultCheckedKeys }
+								defaultExpandedKeys={ treeData.defaultExpandedKeys }
 							/>
-						{/* </Loading> */}
+						</Loading>
 					</Dialog.Body>
 					<Dialog.Footer className="dialog-footer">
 						<Button onClick={ () => this.setState({ treeDialogVisible: false }) }>{'取 消'}</Button>
 						<Button type="primary" onClick={ this.getCheckedKeys }>{'确定'}</Button>
-						<Button onClick={ ()=>this.setCheckedKeys() }>{'通过 key 设置'}</Button>
 					</Dialog.Footer>
 				</Dialog>
 			</div>

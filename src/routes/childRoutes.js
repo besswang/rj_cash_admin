@@ -50,7 +50,7 @@ import Idcard from '@containers/attestation/idcard'
 import Setting from '@containers/attestation/setting'
 // 系统管理
 import Admin from '@containers/system/admin'
-import Role from '@containers/system/role'
+import Role from '@containers/system/role/index'
 import Backup from '@containers/system/backup'
 import Borrowlimit from '@containers/system/borrowlimit'
 import Help from '@containers/system/help'

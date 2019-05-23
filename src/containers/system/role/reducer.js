@@ -14,19 +14,8 @@ const initTree = {
 const treeData = (state = initTree, action) => {
   switch (action.type) {
     case type.MENU_REQUEST_POSTS:
-      return {...state, loading: true}
+      return {...state, loading: true, data:[], defaultCheckedKeys:[],defaultExpandedKeys:[]}
     case type.MENU_RECEIVE_POSTS:{
-      // const a = action.posts.map(item => item.id+','+item.pid+','+item.zid)
-      // console.log(a)
-      // const keys = action.posts.map(item => {
-      //     let id = null
-      //     if(item.state1 !== null){
-      //       if (item.state1 === '1') {
-      //         id = item.id
-      //       }
-      //     }
-      //     return id
-      // })
       const b = action.posts.filter(item => {
         let data = null
         if (item.pid === 0){
@@ -36,6 +25,7 @@ const treeData = (state = initTree, action) => {
         return data
       })
       const keys = []
+      const expandedKeys = []
       for(let i=0;i<action.posts.length;i++){
         for(let j=0;j<b.length;j++){
           if (action.posts[i].pid === b[j].zid){
@@ -45,14 +35,18 @@ const treeData = (state = initTree, action) => {
         if (action.posts[i].state1 === '1'){
           keys.push(action.posts[i].id)
         }
+        if(action.posts[i].state === 1){
+          expandedKeys.push(action.posts[i].id)
+        }
+
       }
       return {
-        ...state, data: b, loading: false, defaultCheckedKeys:keys
+        ...state, data: b, loading: false, defaultCheckedKeys: keys, defaultExpandedKeys: expandedKeys
       }
     }
     case type.MENU_FAILURE_POSTS:{
       Notification.warning(action.posts.msg)
-      return {...state, loading: false, data: []}
+      return {...state, loading: false, data: [], defaultCheckedKeys:[]}
     }
     default:
       return state

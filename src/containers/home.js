@@ -9,8 +9,8 @@ class Home extends Component {
     history: PropTypes.object.isRequired
   }
 	componentDidMount() {
-		console.log('home')
-		console.log(this.props)
+		// console.log('home')
+		// console.log(this.props)
 	}
 	render() {
 		const { children } = this.props

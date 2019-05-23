@@ -10,7 +10,7 @@ class Sidebar extends Component{
 		router: PropTypes.object
 	}
   componentDidMount(){
-    console.log(this.props)
+    // console.log(this.props)
   }
   recursion = arr => {
     const menu = arr.map((item) => {
