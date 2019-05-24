@@ -58,7 +58,7 @@ export default {
   'selectEmergency': 'api/emergency/selectEmergency', // 联系人认证
   'deleteEmergency': 'api/emergency/deleteEmergency', // 联系人认证删除
   'selectPhoneDate': 'api/phone/selectPhoneDate', // 手机认证
-  'deletePhoneReport': 'api/phone/deletePhoneReport', // 手机认证删除
+  'deletePhoneDate': 'api/phone/deletePhoneDate', // 手机认证删除
   'selectBank': 'api/bank/selectBank', // 银行卡认证
   'deleteBankByUserId': 'api/bank/deleteBankByUserId', // 银行卡认证-删除
   'selectIdCard': 'api/idCard/selectIdCard', // 身份证认证
@@ -83,7 +83,8 @@ export default {
   // 系统管理-借款额度管理
   'pageQuota': 'api/quota/pageQuota', //列表
   'addQuota': 'api/quota/addQuota', // 添加
-  'deleteQuota': 'api/quota/deleteQuota', // 设置为默认，删除
+  'deleteQuota': 'api/quota/deleteQuota', // 删除
+  'updateQuota': 'api/quota/updateQuota', // 修改
   // 系统管理-帮助中心
   'pageGlobalconfig': 'api/globalConfig/pageGlobalconfig', //列表
   'updateGlobalConfig': 'api/globalConfig/updateGlobalConfig', // 编辑

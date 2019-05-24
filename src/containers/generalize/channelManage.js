@@ -172,8 +172,6 @@ class Apply extends Component {
 				id: obj.id
 			})
 		}
-
-
 	}
 	saveContent = e => {
 		e.preventDefault()

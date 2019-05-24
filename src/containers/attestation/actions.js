@@ -58,13 +58,13 @@ export const selectPhoneDate = () => {
 }
 
 // 手机认证-删除
-export const deletePhoneReport = subreddit => {
+export const deletePhoneDate = subreddit => {
   return dispatch => {
     MessageBox.confirm('删除该用户的手机认证, 是否继续?', '提示', {
       type: 'warning'
     }).then(async () => {
       dispatch(requestPosts())
-      const data = await api.deletePhoneReportApi(subreddit)
+      const data = await api.deletePhoneDateApi(subreddit)
       if (data.success) {
         dispatch(selectPhoneDate())
         Message({

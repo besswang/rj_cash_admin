@@ -121,7 +121,7 @@ class BlackUser extends Component {
 					roleId: this.state.roleId
 				})
 			}
-			this.props.updateRolemenus(arr)
+			this.props.updateRolemenus({rolemenus:arr})
 			this.setState({
 				treeDialogVisible: false
 			})
@@ -187,7 +187,7 @@ class BlackUser extends Component {
 					</Dialog.Body>
 					<Dialog.Footer className="dialog-footer">
 						<Button onClick={ () => this.setState({ treeDialogVisible: false }) }>{'取 消'}</Button>
-						<Button type="primary" onClick={ this.getCheckedKeys }>{'确定'}</Button>
+						<Button type="primary" onClick={ this.getCheckedKeys } loading={ btnLoading }>{'确定'}</Button>
 					</Dialog.Footer>
 				</Dialog>
 			</div>

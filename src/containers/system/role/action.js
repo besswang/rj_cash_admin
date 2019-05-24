@@ -80,13 +80,12 @@ export const selectRolemenus = (obj, tree) => {
 // 角色-权限-提交
 export const updateRolemenus = (obj) => {
   return async dispatch => {
-    // dispatch(menuRequestPosts())
+    dispatch(btnRequestPosts())
     const data = await api.updateRolemenusApi(obj)
-    // if (data.success) {
-    //   dispatch(menuReceivePosts(data.data))
-    // } else {
-    //   dispatch(menuFailurePosts(data))
-    // }
-    console.log(data)
+    if (data.success) {
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
+    }
   }
 }

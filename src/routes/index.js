@@ -4,8 +4,8 @@ import { BrowserRouter as Router,Route, Switch, Redirect } from 'react-router-do
 // import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import Login from '@containers/user/login'
 import Home from '@containers/home'
+import Login from '@containers/user/login'
 // import { CHILD_ROUTES } from './childRoutes'
 //路由操作
 class App extends Component {
@@ -40,17 +40,15 @@ class App extends Component {
                 }
               }
             />
-              <Route exact path="/login" component={ Login } />
-              {/* <Home>
-                { router.routerArr.map(item => {
-                  return <Route key={ item.id } path={ item.path } component={ item.main } />
-                }) }
-              </Home> */}
-              <Home>
-                { router.defaultRouter.map(item => {
-                  return <Route key={ item.name } path={ item.path } component={ item.component } />
-                }) }
-              </Home>
+            <Route exact path="/login" component={ Login } />
+            <Home>
+              { router.defaultRouter.map(item => {
+                return <Route key={ item.name } path={ item.path } component={ item.component } />
+              }) }
+            </Home>
+            {/* { router.defaultRouter.map((item) => (
+              <Route exact key={ item.path } path={ item.path } component={ item.component } />
+            )) } */}
           </Switch>
         </Router>
     )

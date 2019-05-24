@@ -75,7 +75,6 @@ export const updateAdmin = (obj, t) => {
         dispatch(pageAdmin())
       }
     }
-
   }
 }
 // 借款额度管理列表
@@ -105,14 +104,35 @@ export const addQuota = obj => {
     }
   }
 }
-// 借款额度管理-删除
-export const deleteQuota = obj => {
+// 借款额度管理-编辑
+export const updateQuota = obj => {
   return async dispatch => {
-    const data = await api.deleteQuotaApi(obj)
+    dispatch(btnRequestPosts())
+    const data = await api.updateQuotaApi(obj)
     if (data.success) {
-      Message.success(data.msg)
       dispatch(pageQuota())
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
     }
+  }
+}
+// 借款额度管理-删除
+export const deleteQuota = id => {
+  return dispatch => {
+    MessageBox.confirm('删除该额度, 是否继续?', '提示', {
+      type: 'warning'
+    }).then(async () => {
+      const data = await api.deleteQuotaApi({id:id})
+      if (data.success) {
+        dispatch(pageQuota())
+        Message.success(data.msg)
+      } else {
+        Message.warning(data.msg)
+      }
+    }).catch(() => {
+      Message.info('取消删除')
+    })
   }
 }
 

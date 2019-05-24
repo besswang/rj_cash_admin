@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectPhoneDate, deletePhoneReport } from './actions'
+import { selectPhoneDate, deletePhoneDate } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
@@ -17,7 +17,7 @@ class BlackUser extends Component {
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
 		selectPhoneDate: PropTypes.func.isRequired,
-		deletePhoneReport: PropTypes.func.isRequired
+		deletePhoneDate: PropTypes.func.isRequired
   }
 	constructor(props) {
 		super(props)
@@ -49,7 +49,7 @@ class BlackUser extends Component {
 					label: '操作',
 					render: row => {
 						return (
-              <Button type="danger" size="mini" onClick={ this.props.deletePhoneReport.bind(this, { userId: row.userId }) }>{'删除'}</Button>
+              <Button type="danger" size="mini" onClick={ this.props.deletePhoneDate.bind(this, { userId: row.userId }) }>{'删除'}</Button>
 						)
 					}
       }]
@@ -104,7 +104,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectPhoneDate, deletePhoneReport }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectPhoneDate, deletePhoneDate }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(BlackUser)
