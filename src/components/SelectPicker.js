@@ -10,7 +10,7 @@ const SelectPicker = ({ value, stringValue, onChange, options, optionsArr, place
     {
       options &&
       options.map(el =>{
-          if (el.value) {
+          if (el.value || el.value === 0) {
             return (<Select.Option key={ el.value } label={ el.label } value={ el.value } />)
           }else{
             return(<Select.Option key={ el.id } label={ el.channelName } value={ el.channelName } />)

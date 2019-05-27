@@ -95,10 +95,10 @@ export const LOAN_MODE = [{
 }]
 
 export const ALLOT_TYPE = [{
-  value: 1,
+  value: 0,
   label: '已分配'
 }, {
-  value: 2,
+  value: 1,
   label: '未分配'
 }]
 

@@ -8,8 +8,9 @@ require('es6-promise').polyfill()
 const luoHost = '/rjwl/'
 // 自定义headers
 const headers = {
-  'Accept': 'application/json',
+  // 'Accept': 'application/json',
   // 'Content-Type': 'application/x-www-form-urlencoded'
+  'Content-Type': 'application/json'
 }
 
 // 处理get请求，传入参数对象拼接
@@ -37,9 +38,11 @@ const Fetch = (url, option = {}) => {
 
   // 对非get类请求头和请求体做处理
   if (option.method === 'post' || option.method === 'put') {
-    option.headers['Content-Type'] = option.headers['Content-Type'] || 'application/json'
+    // option.headers['Content-Type'] = option.headers['Content-Type'] || 'application/json'
     // option.body = qs.stringify(option.body)
-    option.body = JSON.stringify(option.body)
+    if (option.headers['Content-Type'] === 'application/json') {
+      option.body = JSON.stringify(option.body)
+    }
   }
   delete option.data
   return addTimeout(fetch(luoHost + url, option), timeout)

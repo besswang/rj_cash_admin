@@ -184,9 +184,9 @@ export const deleteRotationChart = subreddit => {
       const data = await api.deleteRotationChartApi(subreddit)
       if (data.success) {
         dispatch(pageRotationChart())
-        dispatch(btnReceivePosts())
+        dispatch(btnReceivePosts(data.msg))
       } else {
-        dispatch(btnFailurePosts())
+        dispatch(btnFailurePosts(data.msg))
       }
     }).catch(() => {
       Message.info('取消删除')

@@ -13,6 +13,7 @@ class Home extends Component {
 		// console.log(this.props)
 	}
 	render() {
+		const time = new Date()
 		const { children } = this.props
 		return (
 			<div className="flex flex-direction_column">
@@ -24,7 +25,7 @@ class Home extends Component {
 						<Sidebar />
 					</li>
 					<li className="main">
-						<div className="content">
+						<div className="content" key={ time }>
 							{ children }
 						</div>
 					</li>

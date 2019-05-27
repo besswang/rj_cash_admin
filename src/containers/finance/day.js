@@ -1,15 +1,16 @@
 // 催收管理-当日到期
 import React, { Component } from 'react'
-import { Button, Loading, Table, Dialog, Form, Input } from 'element-react'
+import { Button, Loading, Table, Dialog, Form, Input, Message } from 'element-react'
 // import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectTheDayLoan, insertRemarks } from './actions'
+import { selectTheDayLoan, insertRemarks, distributionsCuiShou } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
+import SelectPicker from '@components/SelectPicker'
 class WaitHuan extends Component {
 	static propTypes = {
 		btnLoading: PropTypes.bool.isRequired,
@@ -18,15 +19,34 @@ class WaitHuan extends Component {
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
 		selectTheDayLoan: PropTypes.func.isRequired,
-		insertRemarks: PropTypes.func.isRequired
+		insertRemarks: PropTypes.func.isRequired,
+		collList: PropTypes.array,
+		distributionsCuiShou: PropTypes.func.isRequired
   }
 	constructor(props) {
 		super(props)
 		this.state = {
-			dialogVisible: false,
+			ids: [],
+			dialogVisible: false,// 备注
+			dialogVisible2: false, // 分配
 			content: '',
 			orderNumber: '',
 			orderId: null,
+			form:{
+				id: null
+			},
+			rules: {
+				id: [{
+					required: true,
+					validator: (rule, value, callback) => {
+						if (value === '' || value === null) {
+							callback(new Error('请选择催收人员'))
+						} else {
+							callback()
+						}
+					}
+				}]
+			},
 			columns: [
 				{
 					type: 'selection'
@@ -164,14 +184,66 @@ class WaitHuan extends Component {
 			dialogVisible: false
 		})
 	}
+	openDialog2 = () => {
+		if(this.state.ids.length !==0){
+			this.form.resetFields()
+			this.setState({
+				dialogVisible2: true
+			})
+		}else{
+			Message.warning('请勾选订单')
+		}
+	}
+	onChange2(key, value) {
+		this.setState({
+			form: Object.assign({}, this.state.form, { [key]: value })
+		})
+	}
+	saveContent2 = e => {
+		e.preventDefault()
+		this.form.validate((valid) => {
+			if (valid) {
+				this.setState({
+					dialogVisible2: false
+				})
+				const trans = Object.assign({},{ids:this.state.ids},{adminId:this.state.form.id})
+				this.props.distributionsCuiShou(trans)
+			} else {
+				console.log('error submit!!')
+				return false
+			}
+		})
+	}
+	onSelectChange = v => {
+		const listid = v.map(item => item.id)
+		this.setState({
+			ids: listid
+		})
+	}
+	onSelectAll = v => {
+		const listid = v.filter(item => item.id)
+		this.setState({
+			ids: listid
+		})
+	}
+	cancelAllot = () => {
+		if(this.state.ids.length !==0){
+			const trans = Object.assign({},{ids:this.state.ids},{adminId:''})
+			this.props.distributionsCuiShou(trans)
+		}else{
+			Message.warning('请勾选订单')
+		}
+	}
 	render() {
-		const { list, btnLoading } = this.props
+		const { list, collList, btnLoading } = this.props
+		const { dialogVisible, dialogVisible2, form, rules } = this.state
 		return (
 			<div>
-				<Search showSelect2 showSelectClient showAllotType showSelectTime2>
+				<Search showSelect2 showColl showSelectClient showAllotType showSelectTime2>
 					<div>
 						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
-						<Button type="primary">{'分配'}</Button>
+						<Button type="primary" onClick={ this.openDialog2.bind(this) }>{'批量分配'}</Button>
+						<Button type="warning" onClick={ this.cancelAllot.bind(this) }>{'取消分配'}</Button>
 					</div>
 				</Search>
 
@@ -181,6 +253,8 @@ class WaitHuan extends Component {
 						columns={ this.state.columns }
 						data={ list.data }
 						border
+						onSelectChange={ (selection) => { this.onSelectChange(selection)} }
+      			onSelectAll={ (selection) => { this.onSelectAll(selection)} }
 					/>
 				</Loading>
         <MyPagination
@@ -190,7 +264,7 @@ class WaitHuan extends Component {
         />
 				<Dialog
 					title="修改备注"
-					visible={ this.state.dialogVisible }
+					visible={ dialogVisible }
 					onCancel={ () => this.setState({ dialogVisible: false }) }
 				>
 					<Dialog.Body>
@@ -208,18 +282,37 @@ class WaitHuan extends Component {
 						<Button type="primary" onClick={ this.saveContent } loading={ btnLoading }>{'确 定'}</Button>
 					</Dialog.Footer>
 				</Dialog>
+				<Dialog
+					title="分配催收员"
+					visible={ dialogVisible2 }
+					onCancel={ () => this.setState({ dialogVisible2: false }) }
+				>
+					<Dialog.Body>
+						<Form labelWidth="120" model={ form } ref={ e => {this.form = e} } rules={ rules }>
+							{
+								<Form.Item label="催收人员" prop="id">
+									<SelectPicker placeholder="请选择催收人员" value={ form.id } options={ collList } onChange={ this.onChange2.bind(this, 'id') } />
+								</Form.Item>
+							}
+						</Form>
+					</Dialog.Body>
+					<Dialog.Footer className="dialog-footer">
+						<Button onClick={ () => this.setState({ dialogVisible2: false }) }>{'取 消'}</Button>
+						<Button type="primary" onClick={ this.saveContent2 } loading={ btnLoading }>{'确 定'}</Button>
+					</Dialog.Footer>
+				</Dialog>
 			</div>
 		)
 	}
 }
 
 const mapStateToProps = state => {
-	const { list, btnLoading } = state
-	return { list, btnLoading }
+	const { list, collList, btnLoading } = state
+	return { list, collList, btnLoading }
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectTheDayLoan, insertRemarks }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectTheDayLoan, insertRemarks, distributionsCuiShou }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(WaitHuan)

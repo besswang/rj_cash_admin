@@ -134,3 +134,17 @@ export const insertRemarks = (obj) => {
     }
   }
 }
+
+// 当日到期-分配
+export const distributionsCuiShou = obj => {
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.distributionsCuiShouApi(obj)
+    if (data.success) {
+      dispatch(btnReceivePosts(data.msg))
+      dispatch(selectTheDayLoan())
+    } else {
+      dispatch(btnFailurePosts())
+    }
+  }
+}

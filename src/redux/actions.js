@@ -40,7 +40,8 @@ export const initSearch = () => ({
     realName: '',
     channelName:'',
     loanType: 0,
-    neiCuiId: 0
+    neiCuiId: 0,
+    isTheDay: null
   }
 })
 // menu选中状态
@@ -145,6 +146,9 @@ export const shouldFetchPosts = (state) => {
     if (params[i]) {
       pam[i] = params[i]
     }
+    if (params['isTheDay'] === 0) {
+      pam['isTheDay'] = params['isTheDay']
+    }
   }
   return pam
 }
@@ -227,3 +231,7 @@ export const selectAllAdmin = id => {
     }
   }
 }
+export const changeAllot = data => ({
+  type: type.SELECT_ALLOT_TYPE,
+  data
+})

@@ -107,11 +107,11 @@ const formdate = (state) => {
 export const exportUser = () => {
   return (dispatch, getState) => {
     const data = formdate(getState())
-		const url = `${ process.env.PUBLIC_URL }/api/user/exportUser?${ data }`
+    const url = `${ process.env.PUBLIC_URL }/api/user/exportUser?${ data }`
+    console.log(url)
 		const a = document.createElement('a')
 		a.setAttribute('download', '')
 		a.setAttribute('href', url)
 		a.click()
-		console.log(url)
   }
 }

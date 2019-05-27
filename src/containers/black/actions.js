@@ -49,20 +49,21 @@ export const deleteBlackphone = subreddit => {
 export const download = () => {
   return dispatch => {
     const url = `${ process.env.PUBLIC_URL }/api/blackPhone/exblackPhone`
+    console.log(url)
     const a = document.createElement('a')
     a.setAttribute('download', '')
     a.setAttribute('href', url)
     a.click()
-    console.log(url)
   }
 }
 
 // 导入
-export const importExcel = subreddit => {
-  return async dispatch => {
-    const data = await api.importExcelApi(subreddit)
-    if (data.success) {
-      dispatch(selectblackphone())
-    }
-  }
-}
+// export const importExcel = (subreddit,input) => {
+//   return async dispatch => {
+//     const data = await api.importExcelApi(subreddit)
+//     if (data.success) {
+//       dispatch(selectblackphone())
+//       input.target.value = '' // 上传之后还原
+//     }
+//   }
+// }

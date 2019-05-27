@@ -96,6 +96,10 @@ export default {
   updateAppversionApi: params => Fetch(jk.updateAppversion, {method: 'put', body: params}),
   selectAllAdminApi: params => Fetch(jk.selectAllAdmin, {method: 'get', data: params}),
   updateOrderCuishouApi: params => Fetch(jk.updateOrderCuishou, {method: 'put', body: params}),
-  importExcelApi: params => Fetch(jk.importExcel, {method: 'post', body: params}),
+  importExcelApi: params => Fetch(jk.importExcel, {method: 'post', body: params, headers:{
+    'Content-Type': 'multipart/form-data'
+    // 'Content-Type': 'application/x-www-form-urlencoded'
+  }}),
+  distributionsCuiShouApi: params => Fetch(jk.distributionsCuiShou, {method: 'put', body: params}),
 }
 

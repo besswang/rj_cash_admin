@@ -51,7 +51,7 @@ class BlackUser extends Component {
 		}
 	}
 	componentWillMount() {
-    this.props.initSearch()
+		this.props.initSearch()
   }
   componentDidMount() {
     this.props.selectblackphone()
@@ -78,7 +78,7 @@ class BlackUser extends Component {
 			this.upload.clearFiles()
 		}
 	}
-	importf = (obj,parm,parm1) => {
+	onChange = (obj, parm, parm1) => {
 		// https: //www.jianshu.com/p/d70bca7681ab
 		// let list = []
 		// let that = this
@@ -88,7 +88,6 @@ class BlackUser extends Component {
 			return
 		}
 		const f = obj.target.files[0]
-		console.log(f)
 		const reader = new FileReader()
 			reader.onload = (e) => {
 				const data = e.target.result
@@ -160,25 +159,27 @@ class BlackUser extends Component {
 	handleSearch = e => {
     e.preventDefault()
     this.props.selectblackphone()
-  }
+	}
+	up = () => {
+		this.inputRef.click()
+	}
 	render() {
 		const { list } = this.props
 		return (
 			<div>
-				<a className="upload">{'导入'}
-					<input type="file"
-						className="change"
-						ref={ e => {this.haveFile = e} }
-						id="fileInput"
-						name="fileInput"
-						onChange={ (e)=> this.importf(e) }
-						accept=".csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-					/>
-				</a>
+				<input
+					type="file"
+					name="file"
+					ref={ e => {this.inputRef = e} }
+					onChange={ (e)=> this.onChange(e) }
+					style={ {display:'none'} }
+					accept=".csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+				/>
 				<Search showSelect2>
 					<div>
 					 	<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 						<Button onClick={ this.props.download } type="primary">{'模版下载'}</Button>
+						<Button onClick={ this.up } type="primary">{'上传'}</Button>
 					</div>
 				</Search>
 				<Upload

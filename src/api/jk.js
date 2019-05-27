@@ -50,6 +50,7 @@ export default {
   'selectBill': 'api/bill/selectBill', // 已还款
   'selectTheDayLoan': 'api/order/selectTheDayLoan', // 当日到期
   'insertRemarks': 'api/remarks/insertRemarks', // 备注
+  'distributionsCuiShou': 'api/order/distributionsCuiShou', // 分配
   // 黑名单管理
   'selectblackphone': 'api/blackPhone/selectblackphone', // 黑名单用户
   'deleteBlackphone': 'api/blackPhone/deleteBlackphone', // 删除黑名单

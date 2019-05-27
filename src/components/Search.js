@@ -3,7 +3,7 @@ import { Form, Input } from 'element-react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
-import { selectSubreddit, selectSearchText,saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType, selectAllChannel,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl } from '@redux/actions'
+import { selectSubreddit, selectSearchText,saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType, selectAllChannel,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl, changeAllot } from '@redux/actions'
 import SelectPicker from '@components/SelectPicker'
 import Time from '@components/Settime'
 import { MLIST_SELECT, AUDIT_SELECT, AUDIT_SELECT_LESS, CUSTOMER_SELECT, TIME_SELECT, TIME_SELECT_LESS, LOAN_TYPE, LOAN_MODE,ALLOT_TYPE } from '@meta/select'
@@ -55,7 +55,9 @@ class Search extends Component {
     showColl: PropTypes.bool,
     neiCuiId: PropTypes.number,
     changeColl: PropTypes.func.isRequired,
-    collList: PropTypes.array
+    collList: PropTypes.array,
+    changeAllot: PropTypes.func.isRequired,
+    isTheDay:PropTypes.number
   }
   componentWillMount() {
     // 查询表单的初始化
@@ -71,7 +73,7 @@ class Search extends Component {
     }
   }
   render() {
-    const { typeId, typeName, realName, time, regTime, selectClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType, showRealName, showChannel, channelList,channelName, roleList, showRole, roleId, showAdminName, adminName, loanType,showColl, neiCuiId, collList } = this.props
+    const { typeId, typeName, realName, time, regTime, selectClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType, showRealName, showChannel, channelList,channelName, roleList, showRole, roleId, showAdminName, adminName, loanType,showColl, neiCuiId, collList, isTheDay } = this.props
     return (
       <Form inline>
         {
@@ -206,8 +208,8 @@ class Search extends Component {
          { showAllotType &&
           <Form.Item>
             <SelectPicker
-              value={ selectClient }
-              onChange={ e => this.props.changeClient(e) }
+              value={ isTheDay }
+              onChange={ e => this.props.changeAllot(e) }
               options={ ALLOT_TYPE }
               placeholder={ '选择分配状态' }
             />
@@ -264,14 +266,14 @@ class Search extends Component {
 const mapStateToProps = state => {
 	const {
 		typeId, typeName, time, regTime, selectClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName
-	,loanType, neiCuiId, collList} = state
+	,loanType, neiCuiId, collList, isTheDay} = state
 	return {
-		typeId, typeName, time, regTime, selectClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName, loanType, neiCuiId, collList
+		typeId, typeName, time, regTime, selectClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName, loanType, neiCuiId, collList, isTheDay
 	}
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ selectSubreddit, selectSearchText, saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType,selectAllChannel ,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl }, dispatch)
+		...bindActionCreators({ selectSubreddit, selectSearchText, saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType,selectAllChannel ,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl, changeAllot }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Search)

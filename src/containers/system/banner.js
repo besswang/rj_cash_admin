@@ -20,6 +20,7 @@ class Banner extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			btnLoading: false,
 			dialogVisible: false,
 			dialogImageUrl: '',
 			columns: [{
@@ -79,17 +80,26 @@ class Banner extends Component {
 	}
 	submitUpload() {
 		this.upload.submit()
+		this.setState({
+			btnLoading: true
+		})
 	}
-	handleSuccess = res => {
-		if(res.success){
-			Message.success('上传成功')
+	onChange = (file) => {
+		const { success, msg } = file.response
+		if(success){
+			Message.success(msg)
 			this.props.pageRotationChart()
-			this.upload.clearFiles()
+		}else{
+			Message.error(msg)
 		}
+		this.upload.clearFiles()
+		this.setState({
+			btnLoading: false
+		})
 	}
 	render() {
 		const { list } = this.props
-		const { columns, dialogVisible, dialogImageUrl } = this.state
+		const { columns, dialogVisible, dialogImageUrl, btnLoading } = this.state
 		return (
 			<div>
 				<Upload
@@ -97,13 +107,13 @@ class Banner extends Component {
 					ref={ e => {this.upload = e} }
 					action="/rjwl/api/rotationChart/addRotationChart"
 					accept=".jpg,.jpeg,.png,.gif,.bmp,.pdf,.JPG,.JPEG,.PBG,.GIF,.BMP,.PDF"
-					onSuccess={ (response) => this.handleSuccess(response) }
 					limit={ 1 }
 					autoUpload={ false }
 					tip={ <div className="el-upload__tip">{'只能上传jpg/png文件，且不超过500kb'}</div> }
 					trigger={ <Button size="small" type="primary">{'选取文件'}</Button> }
+					onChange={ this.onChange }
 				>
-					<Button style={ { marginLeft: '10px'} } size="small" type="success" onClick={ () => this.submitUpload() }>{'上传到服务器'}</Button>
+					<Button style={ { marginLeft: '10px'} } size="small" type="success" onClick={ () => this.submitUpload() } loading={ btnLoading }>{'上传到服务器'}</Button>
 				</Upload>
 				<Loading loading={ list.loading }>
 					<Table
