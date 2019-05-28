@@ -78,6 +78,9 @@ export default {
   'addRole': 'api/role/addRole', // 添加
   'selectRolemenus': 'api/rolemenu/selectRolemenus', // 权限设置-menu
   'updateRolemenus': 'api/rolemenu/updateRolemenus', //权限设置-提交
+  // 系统管理-区域管理
+  'selectAreas': 'api/area/selectAreas', // 列表
+  'updateAreaState': 'api/area/updateAreaState', // 启用/禁用
   // 系统管理-数据备份
   'pageBackup': 'api/sqlCopy/pageBackup',
   'backup': 'api/sqlCopy/backup', // 备份

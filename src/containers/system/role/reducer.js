@@ -38,7 +38,6 @@ const treeData = (state = initTree, action) => {
         if(action.posts[i].state === 1){
           expandedKeys.push(action.posts[i].id)
         }
-
       }
       return {
         ...state, data: b, loading: false, defaultCheckedKeys: keys, defaultExpandedKeys: expandedKeys

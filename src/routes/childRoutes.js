@@ -51,6 +51,7 @@ import Setting from '@containers/attestation/setting'
 // 系统管理
 import Admin from '@containers/system/admin'
 import Role from '@containers/system/role/index'
+import Area from '@containers/system/area'
 import Backup from '@containers/system/backup'
 import Borrowlimit from '@containers/system/borrowlimit'
 import Help from '@containers/system/help'
@@ -289,6 +290,11 @@ export const CHILD_ROUTES = [
         path: '/system/role',
         exact: true,
         component: Role
+      }, {
+        name: '区域管理',
+        path: '/system/area',
+        exact: true,
+        component: Area
       }, {
         name: '数据备份',
         path: '/system/backup',

@@ -248,13 +248,25 @@ class Overdue extends Component{
 			ids: listid
 		})
 	}
+	cancelAllot = () => {
+		if(this.state.ids.length !==0){
+			const trans = Object.assign({},{ids:this.state.ids},{adminId:''})
+			this.props.updateOrderCuishou(trans)
+		}else{
+			Message.warning('请勾选订单')
+		}
+	}
 	render() {
 		const { list, collList, btnLoading } = this.props
 		const { form, rules, dialogVisible } = this.state
 		return (
 			<div>
 				<Search showSelect2 showColl showSelectClient showSelectTime>
-					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+					<div>
+						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+						<Button type="primary" onClick={ this.openDialog.bind(this) }>{'批量分配'}</Button>
+						<Button type="warning" onClick={ this.cancelAllot.bind(this) }>{'取消分配'}</Button>
+					</div>
 				</Search>
 				<Loading loading={ list.loading }>
 					<Table
@@ -266,7 +278,7 @@ class Overdue extends Component{
       			onSelectAll={ (selection) => { this.onSelectAll(selection)} }
 					/>
 				</Loading>
-				<Button type="primary" onClick={ this.openDialog.bind(this) }>{'批量分配'}</Button>
+
         <MyPagination
           total={ list.total }
           onSizeChange={ this.sizeChange }

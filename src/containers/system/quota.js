@@ -105,7 +105,13 @@ class BlackUser extends Component {
 		})
 		if (r === 'add') { //添加
 			this.setState({
-				dialogTitle: '添加提额额度'
+				dialogTitle: '添加提额额度',
+				form: {
+					orderNumber: null,
+					money: null,
+				},
+				id: null,
+				adminDisabled: false
 			})
 		} else { // 编辑
 			console.log(r)

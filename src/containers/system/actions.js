@@ -64,6 +64,8 @@ export const updateAdmin = (obj, t) => {
         if (data.success) {
           Message.success('修改成功')
           dispatch(pageAdmin())
+        }else{
+          Message.error(data.msg)
         }
 			}).catch(() => {
         Message.info('取消操作')
@@ -73,6 +75,8 @@ export const updateAdmin = (obj, t) => {
       if (data.success) {
         Message.success('保存成功')
         dispatch(pageAdmin())
+      }else{
+        Message.error(data.msg)
       }
     }
   }
@@ -314,4 +318,21 @@ export const updateAppversion = obj => {
     }
   }
 }
-
+// 区域管理-启用/禁用
+// export const updateAreaState = obj => {
+//   return dispatch => {
+//     MessageBox.confirm('删除该额度, 是否继续?', '提示', {
+//       type: 'warning'
+//     }).then(async () => {
+//       const data = await api.updateAreaStateApi(obj)
+//       if (data.success) {
+//         dispatch(pageQuota())
+//         Message.success(data.msg)
+//       } else {
+//         Message.warning(data.msg)
+//       }
+//     }).catch(() => {
+//       Message.info('取消删除')
+//     })
+//   }
+// }

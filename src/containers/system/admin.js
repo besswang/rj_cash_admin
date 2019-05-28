@@ -32,8 +32,8 @@ class BlackUser extends Component {
 				adminName:'',
 				nickName:'',
 				roleId: null,
-				adminState: 1, // 用户状态
-				distribution: 1, // 是否分配
+				adminState: 0, // 用户状态
+				distribution: 0, // 是否分配
 				password:''
 			},
 			rules: {
@@ -158,6 +158,15 @@ class BlackUser extends Component {
 		if (r === 'add') { //添加
 			this.setState({
 				dialogTitle: '添加用户',
+				form: {
+					adminName:'',
+					nickName:'',
+					roleId: null,
+					adminState: 0, // 用户状态
+					distribution: 0, // 是否分配
+					password:''
+				},
+				id: null,
 				adminDisabled: false
 			})
 		} else { // 编辑
@@ -249,14 +258,14 @@ class BlackUser extends Component {
 							}
 							<Form.Item label="用户状态">
 								<Radio.Group value={ form.adminState } onChange={ this.onChange.bind(this, 'adminState') } >
-									<Radio value={ 1 }>{'启用'}</Radio>
-									<Radio value={ 0 }>{'禁用'}</Radio>
+									<Radio value={ 0 }>{'启用'}</Radio>
+									<Radio value={ 1 }>{'禁用'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 							<Form.Item label="是否分配">
 								<Radio.Group value={ form.distribution } onChange={ this.onChange.bind(this, 'distribution') }>
-									<Radio value={ 1 }>{'是'}</Radio>
-									<Radio value={ 0 }>{'否'}</Radio>
+									<Radio value={ 0 }>{'是'}</Radio>
+									<Radio value={ 1 }>{'否'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 						</Form>
