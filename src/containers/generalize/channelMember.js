@@ -7,6 +7,7 @@ import { sizeChange, currentChange, initSearch, menuActive } from '@redux/action
 import { selectChannelMember } from './actions'
 import MyPagination from '@components/MyPagination'
 import Search from '@components/Search'
+import timeDate from '@global/timeDate'
 class Apply extends Component {
 	static propTypes = {
 		location: PropTypes.object.isRequired,
@@ -33,7 +34,11 @@ class Apply extends Component {
 					prop: 'phone'
 				}, {
 					label: '注册时间',
-					prop: 'gmt'
+					prop: 'gmt',
+					render: row => {
+						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 			}]
 		}
 	}

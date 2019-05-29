@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { Tree, Button, Message, Loading } from 'element-react'
+import { Select, Message, Button } from 'element-react'
 // import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 // import { bindActionCreators } from 'redux'
-// import { area } from '../../mock/system/area'
 import api from '@api/index'
 class Backup extends Component {
 	static propTypes = {
@@ -12,91 +11,201 @@ class Backup extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			loading: false,
-			data: [],
-			options: {
-				children: 'children',
-				label: 'areaname'
-			}
+			btnLoading: false,
+			province: [], // 省
+			city: [], // 市
+			area: [], // 区
+			country: [], //乡
+			provinceId: null,
+			cityId: null,
+			areaId: null,
+			countryId:null,
+			id:null
 		}
 	}
 	componentWillMount() {
-		this.selectAreas()
+
   }
   componentDidMount() {
-		// console.log(this.state.data)
-		// this.zdata(area[0].data)
-		// this.zdata(this.state.data)
+		this.selectProvince()
 	}
-	zdata = data => {
-		const b = data.filter(item => {
-			let d = null
-			item['children'] = []
-			d = item
-			return d
-		})
-		for (let i = 0; i < data.length; i++) {
-			for (let j = 0; j < b.length; j++) {
-				if (data[i].parentid === b[j].id) {
-						b[j].children.push(data[i])
-				}
-			}
-		}
-		// 过滤掉parentid不是1的对象
-		const c = b.filter(item => item.parentid === 1)
-		console.log(b)
-		console.log(c)
-		this.setState({
-			data:c
-		})
-	}
-	selectAreas = async () => {
-		this.setState({
-			loading:true
-		})
-		const data = await api.selectAreasApi()
-		console.log(data)
+	selectProvince = async () => {
+		const data = await api.selectAreasByIdApi()
 		if(data.success){
 			this.setState({
-				loading:false
+				province: data.data,
 			})
-			this.zdata(data.data)
-		}
-
-	}
-	updateAreaState = async data => {
-		const res = await api.updateAreaStateApi({id:data.id,state:data.state})
-		if(res.success){
-			this.selectAreas()
-			Message.success(res.msg)
 		}else{
-			Message.error(res.msg)
+			Message.error(data.msg)
 		}
-		console.log(res)
 	}
-	renderContent(nodeModel, data, store) {
-		return (
-			<div style={ { width: 'calc(100% - 30px)', display:'inline-block',position:'relative'} }>
-				<span>{ data.areaname }</span>
-				{/* <div style={ {display:'inline-block', width:'calc(100% - 70px)',textAlign:'center'} } className="">{ data.state === 1 ? '正常' : '禁用' }</div> */}
-				<div style={ {position:'absolute',right:'50%',top:0, zIndex: 10} } className="">{ data.state === 1 ? '正常' : '禁用' }</div>
-				<Button style={ { position:'absolute',right:'4px',top:'7px',zIndex: 10} } size="mini" onClick={ () => this.updateAreaState(data) } type="primary">{ '启用' }</Button>
-			</div>
-		)
+	selectCity = async id => {
+		const data = await api.selectAreasByIdApi({id:id})
+		if (data.success) {
+			this.setState({
+				city: data.data
+			})
+		} else {
+			Message.error(data.msg)
+		}
+	}
+	selectArea = async id => {
+		const data = await api.selectAreasByIdApi({
+			id: id
+		})
+		if (data.success) {
+			this.setState({
+				area: data.data
+			})
+		} else {
+			Message.error(data.msg)
+		}
+	}
+	selectCountry = async id => {
+		const data = await api.selectAreasByIdApi({
+			id: id
+		})
+		if (data.success) {
+			this.setState({
+				country: data.data
+			})
+		} else {
+			Message.error(data.msg)
+		}
+	}
+	onChangePro = e => {
+		this.setState({
+			id: e,
+			provinceId: e,
+			cityId:null,
+			areaId:null,
+			countryId: null
+		})
+		if(e !== ''){
+			this.selectCity(e)
+		}else{
+			this.setState({
+				provinceId: null,
+				cityId: null,
+				areaId: null,
+				countryId: null
+			})
+		}
+	}
+	onChangeCity = e => {
+		this.setState({
+			id: e,
+			cityId:e,
+			areaId: null,
+			countryId: null
+		})
+		if (e !== '') {
+			this.selectArea(e)
+		}
+	}
+	onChangeArea = e => {
+		this.setState({
+			id: e,
+			areaId:e,
+			countryId: null
+		})
+		if( e !== ''){
+			this.selectCountry(e)
+		}
+	}
+	onChangeCountry = e => {
+		this.setState({
+			id: e,
+			countryId:e
+		})
+	}
+	updateAreaState = async () => {
+		this.setState({
+			btnLoading: true
+		})
+		const id = this.state.id
+		if(id){
+			const res = await api.updateAreaStateApi({id:id,state:0})
+			if(res.success){
+				Message.success(res.msg)
+				this.setState({
+					provinceId: null,
+					cityId: null,
+					areaId: null,
+					countryId: null
+				})
+			}else{
+				Message.error(res.msg)
+			}
+			this.setState({
+				btnLoading: false
+			})
+		}else{
+			Message.warning('请选择禁用的地区')
+		}
 	}
 	render() {
-		const { data, options, loading } = this.state
-		console.log(data)
+		const { province, city, area, country, provinceId, cityId , areaId, countryId, btnLoading } = this.state
 		return (
-			<Loading loading={ loading }>
-				<Tree
-					data={ data }
-					options={ options }
-					nodeKey="id"
-					expandOnClickNode={ false }
-					renderContent={ (...args) => this.renderContent(...args) }
-				/>
-			</Loading>
+			<div>
+				<Select
+					onChange={ e => this.onChangePro(e) }
+					value={ provinceId }
+					clearable
+					placeholder="选择省"
+				>
+					{
+						province &&
+						province.map(el => {
+							return (<Select.Option key={ el.id } label={ el.areaname } value={ el.id } />)
+						})
+					}
+				</Select>
+				{ city.length>0 && provinceId !=='' && provinceId !==null &&
+					<Select
+						onChange={ e => this.onChangeCity(e) }
+						value={ cityId }
+						clearable
+						placeholder="选择市"
+					>
+						{
+							city.map(el => {
+								return (<Select.Option key={ el.id } label={ el.areaname } value={ el.id } />)
+							})
+						}
+					</Select>
+				}
+				{
+					area.length > 0 && cityId !== '' && cityId !== null && provinceId !== null &&
+					<Select
+						onChange={ e => this.onChangeArea(e) }
+						value={ areaId }
+						clearable
+						placeholder="选择区"
+					>
+						{
+							area.map(el => {
+								return (<Select.Option key={ el.id } label={ el.areaname } value={ el.id } />)
+							})
+						}
+					</Select>
+				}
+				{ country.length>0 && areaId !=='' && areaId !== null && provinceId !==null &&
+					<Select
+						onChange={ e => this.onChangeCountry(e) }
+						value={ countryId }
+						clearable
+						placeholder="选择乡"
+					>
+						{
+							country.map(el => {
+								return (<Select.Option key={ el.id } label={ el.areaname } value={ el.id } />)
+							})
+						}
+					</Select>
+				}
+				<Button className="margin_left15" onClick={ this.updateAreaState.bind(this) } type="warning" loading={ btnLoading }>{ '禁用' }</Button>
+			</div>
 		)
 	}
 }

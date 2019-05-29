@@ -77,7 +77,7 @@ class AlreadyHuan extends Component {
 					prop: 'shouldMoney'
 				}, {
 					label: '实还金额',
-					prop: 'loanMoney'
+					prop: 'money'
 				}, {
 					label: '放款客服',
 					prop: 'loanCustomer'

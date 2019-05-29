@@ -5,18 +5,20 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { sizeChange, currentChange, initSearch } from '@redux/actions'
+import { sizeChange, currentChange, initSearch, menuActive } from '@redux/actions'
 import { handleSearch } from './action'
 import MyPagination from '@components/MyPagination'
 import Search from '@components/Search'
 // import num from '@global/num'
 class Ditch extends Component {
   static propTypes = {
+    location: PropTypes.object.isRequired,
     list: PropTypes.object.isRequired,
     sizeChange: PropTypes.func.isRequired,
 		currentChange: PropTypes.func.isRequired,
 		initSearch: PropTypes.func.isRequired,
-		handleSearch: PropTypes.func.isRequired,
+    handleSearch: PropTypes.func.isRequired,
+    menuActive: PropTypes.func.isRequired
 	}
   constructor(props){
     super(props)
@@ -98,7 +100,8 @@ class Ditch extends Component {
     }
   }
   componentWillMount() {
-		this.props.initSearch()
+    this.props.initSearch()
+    this.props.menuActive(this.props.location.pathname)
 	}
 	componentDidMount() {
 		this.props.handleSearch()
@@ -145,7 +148,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, handleSearch}, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, handleSearch, menuActive}, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Ditch)

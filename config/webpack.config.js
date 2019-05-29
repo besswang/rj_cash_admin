@@ -53,6 +53,7 @@ module.exports = function(webpackEnv) {
   // In development, we always serve from the root. This makes config easier.
   const publicPath = isEnvProduction
     ? paths.servedPath
+    // ? 'http://47.94.142.215:8081/rjwl'
     : isEnvDevelopment && '/';
   // Some apps do not use client-side routing with pushState.
   // For these, "homepage" can be set to "." to enable relative asset paths.
@@ -63,7 +64,9 @@ module.exports = function(webpackEnv) {
   // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
   const publicUrl = isEnvProduction
     ? publicPath.slice(0, -1)
-    : isEnvDevelopment && 'http://47.94.142.215:8081/rjwl';
+    // : isEnvDevelopment && 'http://47.94.142.215:8081/rjwl';
+    // ? publicPath
+    : isEnvDevelopment && ''
   // Get environment variables to inject into our app.
   const env = getClientEnvironment(publicUrl);
 

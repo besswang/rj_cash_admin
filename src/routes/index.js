@@ -10,7 +10,8 @@ import Login from '@containers/user/login'
 //路由操作
 class App extends Component {
   static propTypes = {
-		router: PropTypes.object
+    router: PropTypes.object,
+    // location: PropTypes.object.isRequired,
 	}
   constructor(props){
     super(props)
@@ -18,9 +19,23 @@ class App extends Component {
       loginSuccess:false
     }
   }
-  componentDidMount() {
-    // console.log('路由index')
-    // console.log(this.props)
+	componentDidMount() {
+	  this.setDefault()
+	}
+	componentDidUpdate() {
+	  this.setDefault()
+  }
+  //设置侧边栏选中选项
+  setDefault() {
+    console.log(this.props)
+    // this.props.router.routerName = this.findNameByPath(this.props.router.routerArr, this.props.location.pathname)
+    // if (this.props.router.routerName[0].hideChildren) {
+    //   this.props.router.defaultActive = this.props.router.routerName[0].path
+    // } else {
+    //   this.props.router.defaultActive = this.props.router.routerName[
+    //     this.props.router.routerName.length - 1
+    //   ].path
+    // }
   }
   render() {
     const { loginSuccess } = this.state

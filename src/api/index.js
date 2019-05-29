@@ -101,7 +101,7 @@ export default {
     // 'Content-Type': 'application/x-www-form-urlencoded'
   }}),
   distributionsCuiShouApi: params => Fetch(jk.distributionsCuiShou, {method: 'put', body: params}),
-  selectAreasApi: () => Fetch(jk.selectAreas, {method: 'get'}),
+  selectAreasByIdApi: params => Fetch(jk.selectAreasById, {method: 'get', data: params}),
   updateAreaStateApi: params => Fetch(jk.updateAreaState, {method: 'put', body: params}),
 }
 

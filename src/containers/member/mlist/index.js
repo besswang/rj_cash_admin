@@ -132,10 +132,10 @@ class Mlist extends Component{
 	componentWillMount() {
 		this.props.initSearch()
 		this.props.menuActive(this.props.location.pathname)
+		console.log(process.env)
+		console.log(process.env.PUBLIC_URL)
 	}
 	componentDidMount() {
-		console.log('mlist')
-		console.log(this.props)
 		this.props.handelSearch()
 	}
 	handleSearch = e => {
