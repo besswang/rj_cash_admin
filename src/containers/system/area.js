@@ -120,11 +120,11 @@ class Backup extends Component {
 		})
 	}
 	updateAreaState = async () => {
-		this.setState({
-			btnLoading: true
-		})
 		const id = this.state.id
 		if(id){
+			this.setState({
+				btnLoading: true
+			})
 			const res = await api.updateAreaStateApi({id:id,state:0})
 			if(res.success){
 				Message.success(res.msg)
