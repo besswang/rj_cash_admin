@@ -221,7 +221,7 @@
     ]
   },
   "devDependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "eslint": "^5.15.1",
     "mockjs": "^1.0.1-beta3",
